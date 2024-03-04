@@ -7,7 +7,12 @@ from common.acl.helpers import CommonGroups
 from config import settings
 from graphene_file_upload.django.testing import file_graphql_query
 from rest_framework_simplejwt.settings import api_settings as jwt_api_settings
-from rest_framework_simplejwt.tokens import RefreshToken, BlacklistedToken, AccessToken
+from rest_framework_simplejwt.tokens import (
+    AccessToken,
+    BlacklistedToken,
+    RefreshToken,
+)
+
 from .. import models, tokens
 from ..utils import generate_otp_auth_token
 
@@ -47,14 +52,18 @@ class TestSignup:
     def test_return_error_with_invalid_email(self, graphene_client, faker):
         password = faker.password()
         executed = graphene_client.mutate(
-            self.MUTATION, variable_values={'input': {'email': 'wrong-email', 'password': password}}
+            self.MUTATION,
+            variable_values={'input': {'email': 'wrong-email', 'password': password}},
         )
 
         assert len(executed["errors"]) == 1
         assert executed["errors"][0]["message"] == "GraphQlValidationError"
 
     def test_return_error_with_missing_password(self, graphene_client, faker):
-        executed = graphene_client.mutate(self.MUTATION, variable_values={'input': {'email': 'test@example.com'}})
+        executed = graphene_client.mutate(
+            self.MUTATION,
+            variable_values={'input': {'email': 'test@example.com'}},
+        )
         err1 = "Variable '$input' got invalid value {'email': 'test@example.com'}; "
         err2 = "Field 'password' of required type 'String!' was not provided."
 
@@ -64,13 +73,17 @@ class TestSignup:
     def test_create_user(self, graphene_client, faker):
         email = faker.email()
         password = faker.password()
-        graphene_client.mutate(self.MUTATION, variable_values={'input': {'email': email, 'password': password}})
+        graphene_client.mutate(
+            self.MUTATION,
+            variable_values={'input': {'email': email, 'password': password}},
+        )
 
         assert models.User.objects.get(email=email)
 
     def test_create_user_profile_instance(self, graphene_client, faker):
         executed = graphene_client.mutate(
-            self.MUTATION, variable_values={'input': {'email': faker.email(), 'password': faker.password()}}
+            self.MUTATION,
+            variable_values={'input': {'email': faker.email(), 'password': faker.password()}},
         )
 
         user = models.User.objects.get(id=executed['data']['signUp']["id"])
@@ -78,7 +91,8 @@ class TestSignup:
 
     def test_add_to_user_group(self, graphene_client, faker):
         executed = graphene_client.mutate(
-            self.MUTATION, variable_values={'input': {'email': faker.email(), 'password': faker.password()}}
+            self.MUTATION,
+            variable_values={'input': {'email': faker.email(), 'password': faker.password()}},
         )
 
         user = models.User.objects.get(id=executed['data']['signUp']["id"])
@@ -98,7 +112,8 @@ class TestObtainToken:
 
     def test_return_invalid_credentials_error(self, graphene_client, user):
         executed = graphene_client.mutate(
-            self.MUTATION, variable_values={'input': {'email': user.email, 'password': "wrong-password"}}
+            self.MUTATION,
+            variable_values={'input': {'email': user.email, 'password': "wrong-password"}},
         )
 
         assert len(executed["errors"]) == 1
@@ -109,7 +124,8 @@ class TestObtainToken:
         user.save()
 
         executed = graphene_client.mutate(
-            self.MUTATION, variable_values={'input': {'email': user.email, 'password': password}}
+            self.MUTATION,
+            variable_values={'input': {'email': user.email, 'password': password}},
         )
 
         assert validate_jwt(executed["data"]["tokenAuth"], user)
@@ -123,7 +139,10 @@ class TestObtainToken:
 
         response = api_client.post(
             path=API_GRAPHQL_PATH,
-            data={"query": self.MUTATION, "variables": {"input": {'email': user.email, 'password': password}}},
+            data={
+                "query": self.MUTATION,
+                "variables": {"input": {'email': user.email, 'password': password}},
+            },
             format="json",
         )
         otp_auth_token = response.json()["data"]["tokenAuth"]["otpAuthToken"]
@@ -169,7 +188,8 @@ class TestCurrentUserQuery:
         assert data["lastName"] == "Brzęczyszczykiewicz"
         assert set(data["roles"]) == {"user", "admin"}
         assert re.match(
-            "https://cdn.example.com/public/avatars/thumbnails/[a-z0-9]{16}/avatar.jpg", data["avatar"]
+            "https://cdn.example.com/public/avatars/thumbnails/[a-z0-9]{16}/avatar.jpg",
+            data["avatar"],
         ), data["avatar"]
         assert data["otpEnabled"] == user.otp_enabled
         assert data["otpVerified"] == user.otp_verified
@@ -273,6 +293,63 @@ class TestUpdateCurrentUserMutation:
         assert executed["errors"][0]["message"] == "permission_denied"
         assert executed["data"] == {'updateCurrentUser': None}
 
+    def test_update_many_fields(self, graphene_client, user_factory):
+        user = user_factory(
+            profile__first_name="FIRSTNAME",
+            profile__last_name="LASTNAME",
+        )
+        query = '''
+            mutation($input: UpdateCurrentUserMutationInput!)  {
+              updateCurrentUser(input: $input) {
+                userProfile {
+                  user {
+                    vat
+                    phoneNumber
+                    street
+                    number
+                    complement
+                    neighborhood
+                    city
+                    postalCode
+                    state
+                  }
+                }
+              }
+            }
+        '''
+
+        graphene_client.force_authenticate(user)
+
+        executed = graphene_client.mutate(
+            query,
+            variables={
+                "input": {
+                    "vat": "987654321",
+                    "phoneNumber": "21987654321",
+                    "street": "Street Santiago",
+                    "number": "23",
+                    "complement": "In front of McDonalds",
+                    "neighborhood": "Brooklyn",
+                    "city": "New York",
+                    "postalCode": "12123-12",
+                    "state": "AM",
+                }
+            },
+        )
+
+        assert "errors" not in executed
+        assert executed["data"]["updateCurrentUser"]["userProfile"]["user"] == {
+            "vat": "987654321",
+            "phoneNumber": "21987654321",
+            "street": "Street Santiago",
+            "number": "23",
+            "complement": "In front of McDonalds",
+            "neighborhood": "Brooklyn",
+            "city": "New York",
+            "postalCode": "12123-12",
+            "state": "AM",
+        }
+
 
 class TestChangePasswordMutation:
     MUTATION = '''
@@ -292,7 +369,12 @@ class TestChangePasswordMutation:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={'input': {"oldPassword": old_password, "newPassword": new_password}},
+            variable_values={
+                'input': {
+                    "oldPassword": old_password,
+                    "newPassword": new_password,
+                }
+            },
         )
 
         user.refresh_from_db()
@@ -305,7 +387,12 @@ class TestChangePasswordMutation:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={'input': {"oldPassword": "wrong_old_password", "newPassword": faker.password()}},
+            variable_values={
+                'input': {
+                    "oldPassword": "wrong_old_password",
+                    "newPassword": faker.password(),
+                }
+            },
         )
 
         assert len(executed["errors"]) == 1
@@ -317,7 +404,12 @@ class TestChangePasswordMutation:
         new_password = faker.password()
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={'input': {"oldPassword": old_password, "newPassword": new_password}},
+            variable_values={
+                'input': {
+                    "oldPassword": old_password,
+                    "newPassword": new_password,
+                }
+            },
         )
 
         assert len(executed["errors"]) == 1
@@ -444,7 +536,13 @@ class TestResetPasswordConfirm:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={'input': {"user": str(user.pk), "token": password_token, "newPassword": new_password}},
+            variable_values={
+                'input': {
+                    "user": str(user.pk),
+                    "token": password_token,
+                    "newPassword": new_password,
+                }
+            },
         )
 
         assert "errors" not in executed
@@ -458,7 +556,13 @@ class TestResetPasswordConfirm:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={"input": {"user": str(user.pk), "token": "wrong_token", "newPassword": new_password}},
+            variable_values={
+                "input": {
+                    "user": str(user.pk),
+                    "token": "wrong_token",
+                    "newPassword": new_password,
+                }
+            },
         )
 
         assert len(executed["errors"]) == 1
@@ -471,7 +575,13 @@ class TestResetPasswordConfirm:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={"input": {"user": str(user.pk), "token": password_token, "newPassword": new_password}},
+            variable_values={
+                "input": {
+                    "user": str(user.pk),
+                    "token": password_token,
+                    "newPassword": new_password,
+                }
+            },
         )
 
         assert len(executed["errors"]) == 1
@@ -484,7 +594,13 @@ class TestResetPasswordConfirm:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={"input": {"user": "abc", "token": password_token, "newPassword": new_password}},
+            variable_values={
+                "input": {
+                    "user": "abc",
+                    "token": password_token,
+                    "newPassword": new_password,
+                }
+            },
         )
 
         assert len(executed["errors"]) == 1
@@ -497,7 +613,13 @@ class TestResetPasswordConfirm:
 
         executed = graphene_client.mutate(
             self.MUTATION,
-            variable_values={"input": {"user": str(user.pk), "token": password_token, "newPassword": faker.password()}},
+            variable_values={
+                "input": {
+                    "user": str(user.pk),
+                    "token": password_token,
+                    "newPassword": faker.password(),
+                }
+            },
         )
 
         assert "errors" not in executed
@@ -546,7 +668,10 @@ class TestVerifyOTPMutation:
     '''
 
     def test_return_error_for_unauthorized_user(self, graphene_client):
-        executed = graphene_client.mutate(self.VERIFY_OTP_MUTATION, variable_values={'input': {'otpToken': 'token'}})
+        executed = graphene_client.mutate(
+            self.VERIFY_OTP_MUTATION,
+            variable_values={'input': {'otpToken': 'token'}},
+        )
 
         assert executed["errors"]
         assert executed["errors"][0]["message"] == "permission_denied"
@@ -555,7 +680,10 @@ class TestVerifyOTPMutation:
         totp_mock(verify=True)
 
         graphene_client.force_authenticate(user)
-        executed = graphene_client.mutate(self.VERIFY_OTP_MUTATION, variable_values={'input': {'otpToken': 'token'}})
+        executed = graphene_client.mutate(
+            self.VERIFY_OTP_MUTATION,
+            variable_values={'input': {'otpToken': 'token'}},
+        )
 
         assert executed['data']['verifyOtp']['otpVerified'] is True
         assert models.User.objects.filter(id=user.id, otp_enabled=True, otp_verified=True).exists()
@@ -564,7 +692,10 @@ class TestVerifyOTPMutation:
         totp_mock(verify=False)
 
         graphene_client.force_authenticate(user)
-        executed = graphene_client.mutate(self.VERIFY_OTP_MUTATION, variable_values={'input': {'otpToken': 'token'}})
+        executed = graphene_client.mutate(
+            self.VERIFY_OTP_MUTATION,
+            variable_values={'input': {'otpToken': 'token'}},
+        )
 
         assert executed["errors"][0]["message"] == "Verification token is invalid"
         assert models.User.objects.filter(id=user.id, otp_enabled=False, otp_verified=False).exists()
@@ -585,14 +716,20 @@ class TestValidateOTPMutation:
 
         response = api_client.post(
             path=API_GRAPHQL_PATH,
-            data={"query": self.VALIDATE_OTP_MUTATION, "variables": {'input': {'otpToken': 'token'}}},
+            data={
+                "query": self.VALIDATE_OTP_MUTATION,
+                "variables": {'input': {'otpToken': 'token'}},
+            },
             format="json",
         )
 
         assert str(response.json()["errors"][0]["extensions"]) == str(
             {
                 'non_field_errors': [
-                    {'message': "No valid token found in cookie 'otp_auth_token'", 'code': 'invalid_token'}
+                    {
+                        'message': "No valid token found in cookie 'otp_auth_token'",
+                        'code': 'invalid_token',
+                    }
                 ]
             }
         )
@@ -605,7 +742,10 @@ class TestValidateOTPMutation:
 
         response = api_client.post(
             path=API_GRAPHQL_PATH,
-            data={"query": self.VALIDATE_OTP_MUTATION, "variables": {'input': {'otpToken': 'token'}}},
+            data={
+                "query": self.VALIDATE_OTP_MUTATION,
+                "variables": {'input': {'otpToken': 'token'}},
+            },
             format="json",
         )
 
@@ -618,7 +758,10 @@ class TestValidateOTPMutation:
 
         response = api_client.post(
             path=API_GRAPHQL_PATH,
-            data={"query": self.VALIDATE_OTP_MUTATION, "variables": {'input': {'otpToken': 'token'}}},
+            data={
+                "query": self.VALIDATE_OTP_MUTATION,
+                "variables": {'input': {'otpToken': 'token'}},
+            },
             format="json",
         )
         response_data = response.json()["data"]
@@ -636,7 +779,12 @@ class TestValidateOTPMutation:
             path=API_GRAPHQL_PATH,
             data={
                 "query": self.VALIDATE_OTP_MUTATION,
-                "variables": {'input': {'otpToken': 'token', 'otpAuthToken': str(generate_otp_auth_token(user))}},
+                "variables": {
+                    'input': {
+                        'otpToken': 'token',
+                        'otpAuthToken': str(generate_otp_auth_token(user)),
+                    }
+                },
             },
             format="json",
         )
@@ -666,5 +814,9 @@ class TestDisableOTPMutation:
 
         assert executed['data']['disableOtp']['ok'] is True
         assert models.User.objects.filter(
-            id=user.id, otp_enabled=False, otp_verified=False, otp_base32="", otp_auth_url=""
+            id=user.id,
+            otp_enabled=False,
+            otp_verified=False,
+            otp_base32="",
+            otp_auth_url="",
         ).exists()

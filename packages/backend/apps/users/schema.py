@@ -133,12 +133,39 @@ class AuthenticatedMutation(graphene.ObjectType):
 class CurrentUserType(DjangoObjectType):
     first_name = graphene.String()
     last_name = graphene.String()
+    vat = graphene.String()
+    phone_number = graphene.String()
+    street = graphene.String()
+    number = graphene.String()
+    complement = graphene.String()
+    neighborhood = graphene.String()
+    city = graphene.String()
+    state = graphene.String()
+    postal_code = graphene.String()
     roles = graphene.List(of_type=graphene.String)
     avatar = graphene.String()
 
     class Meta:
         model = models.User
-        fields = ("id", "email", "first_name", "last_name", "roles", "avatar", "otp_enabled", "otp_verified")
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "vat",
+            "phone_number",
+            "street",
+            "number",
+            "complement",
+            "neighborhood",
+            "city",
+            "state",
+            "postal_code",
+            "roles",
+            "avatar",
+            "otp_enabled",
+            "otp_verified",
+        )
 
     @staticmethod
     def resolve_first_name(parent, info):
@@ -147,6 +174,42 @@ class CurrentUserType(DjangoObjectType):
     @staticmethod
     def resolve_last_name(parent, info):
         return get_user_from_resolver(info).profile.last_name
+
+    @staticmethod
+    def resolve_vat(parent, info):
+        return get_user_from_resolver(info).profile.vat
+
+    @staticmethod
+    def resolve_phone_number(parent, info):
+        return get_user_from_resolver(info).profile.phone_number
+
+    @staticmethod
+    def resolve_street(parent, info):
+        return get_user_from_resolver(info).profile.street
+
+    @staticmethod
+    def resolve_number(parent, info):
+        return get_user_from_resolver(info).profile.number
+
+    @staticmethod
+    def resolve_complement(parent, info):
+        return get_user_from_resolver(info).profile.complement
+
+    @staticmethod
+    def resolve_neighborhood(parent, info):
+        return get_user_from_resolver(info).profile.neighborhood
+
+    @staticmethod
+    def resolve_city(parent, info):
+        return get_user_from_resolver(info).profile.city
+
+    @staticmethod
+    def resolve_state(parent, info):
+        return get_user_from_resolver(info).profile.state
+
+    @staticmethod
+    def resolve_postal_code(parent, info):
+        return get_user_from_resolver(info).profile.postal_code
 
     @staticmethod
     def resolve_roles(parent, info):
@@ -173,7 +236,20 @@ class UpdateCurrentUserMutation(mutations.UpdateModelMutation):
     class Meta:
         serializer_class = serializers.UserProfileSerializer
         edge_class = CurrentUserConnection.Edge
-        only_fields = ("first_name", "last_name", "avatar")
+        only_fields = (
+            "first_name",
+            "last_name",
+            "vat",
+            "phone_number",
+            "street",
+            "number",
+            "complement",
+            "neighborhood",
+            "city",
+            "state",
+            "postal_code",
+            "avatar",
+        )
         model_operations = ("update",)
 
     @classmethod

@@ -28,7 +28,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ("id", "first_name", "last_name", "email", "roles", "avatar")
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "vat",
+            "phone_number",
+            "street",
+            "number",
+            "complement",
+            "neighborhood",
+            "city",
+            "state",
+            "postal_code",
+            "email",
+            "roles",
+            "avatar",
+        )
 
     @staticmethod
     def validate_avatar(avatar):

@@ -1,0 +1,6 @@
+import pytest_factoryboy
+from apps.certificates.tests import factories
+
+pytest_factoryboy.register(factories.RequestedCertificateFactory)
+pytest_factoryboy.register(factories.DocumentFactory)
+pytest_factoryboy.register(factories.IssuedCertificateFactory)

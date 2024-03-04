@@ -1,11 +1,16 @@
 import hashid_field
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group
-from django.contrib.auth.models import BaseUserManager
-from django.db import models
-
 from common.acl.helpers import CommonGroups
 from common.models import ImageWithThumbnailMixin
-from common.storages import UniqueFilePathGenerator, PublicS3Boto3StorageWithCDN
+from common.storages import PublicS3Boto3StorageWithCDN, UniqueFilePathGenerator
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    Group,
+    PermissionsMixin,
+)
+from django.db import models
+
+from ..certificates.utils import state_options
 
 
 class UserManager(BaseUserManager):
@@ -55,8 +60,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     otp_enabled = models.BooleanField(default=False)
     otp_verified = models.BooleanField(default=False)
-    otp_base32 = models.CharField(max_length=255, blank=True, default='')
-    otp_auth_url = models.CharField(max_length=255, blank=True, default='')
+    otp_base32 = models.CharField(max_length=255, blank=True, default="")
+    otp_auth_url = models.CharField(max_length=255, blank=True, default="")
 
     objects = UserManager()
 
@@ -75,10 +80,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class UserAvatar(ImageWithThumbnailMixin, models.Model):
     original = models.ImageField(
-        storage=PublicS3Boto3StorageWithCDN, upload_to=UniqueFilePathGenerator("avatars"), null=True
+        storage=PublicS3Boto3StorageWithCDN,
+        upload_to=UniqueFilePathGenerator("avatars"),
+        null=True,
     )
     thumbnail = models.ImageField(
-        storage=PublicS3Boto3StorageWithCDN, upload_to=UniqueFilePathGenerator("avatars/thumbnails"), null=True
+        storage=PublicS3Boto3StorageWithCDN,
+        upload_to=UniqueFilePathGenerator("avatars/thumbnails"),
+        null=True,
     )
 
     THUMBNAIL_SIZE = (128, 128)
@@ -90,11 +99,32 @@ class UserAvatar(ImageWithThumbnailMixin, models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    first_name = models.CharField(max_length=40, blank=True, default='')
-    last_name = models.CharField(max_length=40, blank=True, default='')
+    first_name = models.CharField(max_length=40, blank=True, default="")
+    last_name = models.CharField(max_length=40, blank=True, default="")
     avatar = models.OneToOneField(
-        UserAvatar, on_delete=models.SET_NULL, null=True, blank=True, related_name="user_profile"
+        UserAvatar,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="user_profile",
     )
+
+    vat = models.CharField(max_length=17, blank=True, default="")
+    phone_number = models.CharField(max_length=17, blank=True, default="")
+    postal_code = models.CharField(max_length=9, blank=True, default="")
+    street = models.CharField(max_length=255, blank=True, default="")
+    number = models.CharField(max_length=20, blank=True, default="")
+    complement = models.CharField(max_length=255, blank=True, default="")
+    neighborhood = models.CharField(max_length=255, blank=True, default="")
+    city = models.CharField(max_length=255, blank=True, default="")
+    state = models.CharField(
+        max_length=2,
+        blank=True,
+        default="",
+        choices=state_options,
+    )
+
+    certificate_credits = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
