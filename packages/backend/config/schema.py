@@ -18,6 +18,7 @@ schema = graphene.Schema(
             notifications_schema.Query,
             users_schema.Query,
             finances_schema.Query,
+            certificates_schema.Query,
         ]
     ),
     mutation=graphql_mutation(

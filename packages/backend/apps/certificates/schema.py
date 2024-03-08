@@ -9,7 +9,7 @@ from .serializers import (
     IssuedCertificateSerializer,
     RequestedCertificateSerializer,
 )
-from .utils import AuthenticationRequired, NoCertificatesFound
+from .utils import AuthenticationRequired
 
 
 class RequestedCertificateType(DjangoObjectType):
@@ -121,24 +121,16 @@ class Query(graphene.ObjectType):
     requested_certificates = graphene.List(RequestedCertificateType)
     issued_certificates = graphene.List(IssuedCertificateType)
 
-    def verify_auth(self, info):
-        user = info.context.user
-        if user.is_anonymous:
-            raise AuthenticationRequired("Not logged in.")
-        return user
-
-    def verify_objects_related_to_user(self, model, user):
-        objects_related = model.objects.filter(user=user)
-        if not objects_related.exists():
-            raise NoCertificatesFound(f"No {model.__name__.lower()} found for this user.")
-        return objects_related
-
     def resolve_requested_certificates(self, info):
-        user = self.verify_auth(info)
-        requested_certificates = self.verify_objects_related_to_user(RequestedCertificate, user)
+        if not info.context.user.is_authenticated:
+            raise AuthenticationRequired("Not logged in.")
+
+        requested_certificates = RequestedCertificate.objects.filter(user=info.context.user)
         return requested_certificates
 
     def resolve_issued_certificates(self, info):
-        user = self.verify_auth(info)
-        issued_certificates = self.verify_objects_related_to_user(IssuedCertificate, user)
+        if not info.context.user.is_authenticated:
+            raise AuthenticationRequired("Not logged in.")
+
+        issued_certificates = IssuedCertificate.objects.filter(request__user=info.context.user)
         return issued_certificates

@@ -1,4 +1,5 @@
 import hashid_field
+from common.storages import UniqueFilePathGenerator
 from django.db import models
 
 from ..users.models import User
@@ -43,11 +44,20 @@ class RequestedCertificate(models.Model):
 
 class Document(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    file = models.FileField(upload_to="certificate-documents/")
-    link = models.CharField(max_length=200)
+    file = models.FileField(
+        upload_to=UniqueFilePathGenerator("certificate-documents/"),
+        blank=True,
+        null=True,
+    )
+    link = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.file.name
+
+    def save(self, *args, **kwargs):
+        if not self.link:
+            self.link = self.file.url
+        super().save(*args, **kwargs)
 
 
 class IssuedCertificate(models.Model):

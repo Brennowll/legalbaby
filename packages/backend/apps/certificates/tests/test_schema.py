@@ -1,9 +1,11 @@
 import base64
+import json
 import os
 
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
+from graphene_file_upload.django.testing import file_graphql_query
 from graphql_relay import to_global_id
 
 pytestmark = pytest.mark.django_db
@@ -12,79 +14,107 @@ User = get_user_model()
 
 
 class TestRequestedCertificateQuery:
-    REQUESTED_CERTIFICATE_QUERY = """
-        query($id: ID!) {
-          requestedCertificate(id: $id) {
+    class TestRequestedCertificateQuery:
+        def test_resolve_requested_certificates(self, graphene_client, user_factory, requested_certificate_factory):
+            query = """
+          query {
+            requestedCertificates {
             id
             fullName
-            state
-            certificateType
             isLegalEntity
-            vat
-          }
-        }
-    """
-
-    def test_return_requested_certificate(self, graphene_client, requested_certificate):
-        requested_certificate_global_id = to_global_id("RequestedCertificateType", requested_certificate.id)
-
-        executed = graphene_client.query(
-            self.REQUESTED_CERTIFICATE_QUERY,
-            variable_values={"id": requested_certificate_global_id},
-        )
-
-        assert executed == {
-            "data": {
-                "requestedCertificate": {
-                    "id": requested_certificate_global_id,
-                    "fullName": requested_certificate.full_name,
-                    "state": requested_certificate.state,
-                    "certificateType": requested_certificate.certificate_type,
-                    "isLegalEntity": requested_certificate.is_legal_entity,
-                    "vat": requested_certificate.vat,
-                }
             }
-        }
+          }
+        """
+
+            user = user_factory(
+                profile__first_name="FIRSTNAME",
+                profile__last_name="LASTNAME",
+            )
+            graphene_client.force_authenticate(user)
+
+            numbers_for_name = ["one", "two", "three"]
+
+            requested_certificates = [
+                requested_certificate_factory(
+                    is_legal_entity=True,
+                    user=user,
+                    full_name=f"name {numbers_for_name[i]}",
+                )
+                for i in range(3)
+            ]
+
+            executed = graphene_client.query(query)
+
+            assert "errors" not in executed
+
+            returned_certificates = executed["data"]["requestedCertificates"]
+            assert len(returned_certificates) == len(requested_certificates)
+
+            for returned_certificate, requested_certificate in zip(returned_certificates, requested_certificates):
+                assert returned_certificate["fullName"] == requested_certificate.full_name
+                assert returned_certificate["isLegalEntity"] == requested_certificate.is_legal_entity
 
 
 class TestIssuedCertificateQuery:
-    ISSUED_CERTIFICATE_QUERY = """
-        query($id: ID!) {
-          issuedCertificate(id: $id) {
-            id
-            request {
-              fullName
-              certificateType
+    def test_return_issued_certificate(
+        self,
+        graphene_client,
+        issued_certificate_factory,
+        document_factory,
+        user_factory,
+        requested_certificate_factory,
+        image_factory,
+    ):
+        query = """
+            query {
+              issuedCertificates {
+                request {
+                  fullName
+                  isLegalEntity
+                }
+                document {
+                  file {
+                    name
+                  }
+                  link
+                }
+              }
             }
-            document {
-              file
-              link
-            }
-          }
-        }
-    """
+        """
 
-    def test_return_issued_certificate(self, graphene_client, issued_certificate):
-        issued_certificate_global_id = to_global_id("IssuedCertificateType", issued_certificate.id)
-
-        executed = graphene_client.query(
-            self.ISSUED_CERTIFICATE_QUERY,
-            variable_values={"id": issued_certificate_global_id},
+        user = user_factory(
+            profile__first_name="FIRSTNAME",
+            profile__last_name="LASTNAME",
         )
+        graphene_client.force_authenticate(user)
 
+        file = image_factory(name="document.png", params={"width": 1})
+        request = requested_certificate_factory(is_legal_entity=True, user=user, full_name="Mark Zuck")
+        document = document_factory(file=file)
+
+        issued_certificate = issued_certificate_factory(request_id=request.id, document_id=document.id)
+
+        executed = graphene_client.query(query)
+
+        print(executed)
+
+        assert "errors" not in executed
         assert executed == {
             "data": {
-                "issuedCertificate": {
-                    "id": issued_certificate_global_id,
-                    "request": {
-                        "fullName": issued_certificate.request.full_name,
-                        "certificateType": issued_certificate.request.certificate_type,
-                    },
-                    "document": {
-                        "file": issued_certificate.document.file.name,
-                        "link": issued_certificate.document.link,
-                    },
-                }
+                "issuedCertificates": [
+                    {
+                        "request": {
+                            "fullName": issued_certificate.request.full_name,
+                            "isLegalEntity": issued_certificate.request.is_legal_entity,
+                        },
+                        "document": {
+                            "file": {
+                                "name": "document.png",
+                            },
+                            "link": issued_certificate.document.link,
+                        },
+                    }
+                ]
             }
         }
 
@@ -142,46 +172,44 @@ class TestMutations:
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["vat"] == "123.456.789-00"
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["serviceId"] == "123.123.123"
 
-    # def test_create_document_mutation(self, graphene_client):
-    #     mutation = """
-    #         mutation($input: CreateDocumentInput!) {
-    #           createDocument(input: $input) {
-    #             document {
-    #               file
-    #               link
-    #             }
-    #           }
-    #         }
-    #     """
+    def test_create_document_mutation(self, api_client, image_factory, user_factory):
+        user = user_factory(profile__first_name="FIRSTNAME", profile__last_name="LASTNAME")
+        file = image_factory(name="document.png", params={"width": 1})
+        mutation = """
+            mutation($input: CreateDocumentInput!) {
+              createDocument(input: $input) {
+                document {
+                  file {
+                    name
+                  }
+                }
+              }
+            }
+        """
 
-    #     # Create a test file
-    #     file_name = "test_file.pdf"
-    #     file_content = b"Test file content"
-    #     with open(file_name, "wb") as f:
-    #         f.write(file_content)
+        api_client.force_authenticate(user)
 
-    #     # Read the file and encode it in base64
-    #     with open(file_name, "rb") as f:
-    #         encoded_file = base64.b64encode(f.read()).decode()
+        response = file_graphql_query(
+            mutation,
+            client=api_client,
+            variables={"input": {"file": None}},
+            files={"file": file},
+            graphql_url="/api/graphql/",
+        )
 
-    #     # Delete the test file
-    #     os.remove(file_name)
+        executed = json.loads(response.content)
 
-    #     input_data = {
-    #         "file": encoded_file,
-    #         "link": "http://example.com/file.pdf",
-    #     }
+        assert "errors" not in executed
 
-    #     executed = graphene_client.mutate(
-    #         mutation,
-    #         variable_values={"input": input_data},
-    #     )
-
-    #     assert "errors" not in executed
-    #     assert executed["data"]["createDocument"]["document"]["link"] == "http://example.com/file.pdf"
-    #     assert executed["data"]["createDocument"]["document"]["file"] == "testando caminho"
-
-    def test_create_issued_certificate_mutation(self, graphene_client, requested_certificate, document):
+    def test_create_issued_certificate_mutation(
+        self,
+        graphene_client,
+        requested_certificate_factory,
+        document_factory,
+        image_factory,
+        issued_certificate_factory,
+        user_factory,
+    ):
         mutation = """
             mutation($input: CreateIssuedCertificateInput!) {
               createIssuedCertificate(input: $input) {
@@ -192,7 +220,9 @@ class TestMutations:
                     certificateType
                   }
                   document {
-                    file
+                    file {
+                      name
+                    }
                     link
                   }
                 }
@@ -200,23 +230,37 @@ class TestMutations:
             }
         """
 
+        user = user_factory(profile__first_name="FIRSTNAME", profile__last_name="LASTNAME")
+        file = image_factory(name="document.png", params={"width": 1})
+
+        request = requested_certificate_factory(
+            user=user,
+            certificate_type="Federal",
+            is_legal_entity=True,
+            full_name="Mark Zuck",
+        )
+        document = document_factory(file=file)
+        issued_certificate = issued_certificate_factory(request_id=request.id, document_id=document.id)
+
+        graphene_client.force_authenticate(user)
+
         input_data = {
-            "requestId": to_global_id("RequestedCertificateType", requested_certificate.id),
-            "documentId": to_global_id("DocumentType", document.id),
+            "request": str(request.id),
+            "document": str(document.id),
         }
 
         executed = graphene_client.mutate(
             mutation,
-            variable_values=input_data,
+            variable_values={"input": input_data},
         )
 
         assert "errors" not in executed
         assert executed["data"]["createIssuedCertificate"]["issuedCertificate"]["request"] == {
-            "fullName": requested_certificate.full_name,
-            "certificateType": requested_certificate.certificate_type,
+            "fullName": request.full_name,
+            "certificateType": "FEDERAL",
         }
         assert executed["data"]["createIssuedCertificate"]["issuedCertificate"]["document"] == {
-            "file": document.file.name,
+            "file": {'name': 'document.png'},
             "link": document.link,
         }
 
