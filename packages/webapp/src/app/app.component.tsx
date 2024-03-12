@@ -1,20 +1,6 @@
-import { DemoItem, DemoItems, PrivacyPolicy, TermsAndConditions } from '@sb/webapp-contentful/routes';
+import { PrivacyPolicy, TermsAndConditions } from '@sb/webapp-contentful/routes';
 import { DEFAULT_LOCALE, translationMessages } from '@sb/webapp-core/config/i18n';
-import { CrudDemoItem } from '@sb/webapp-crud-demo/routes';
-import { Documents } from '@sb/webapp-documents/routes';
-import { ActiveSubscriptionContext } from '@sb/webapp-finances/components/activeSubscriptionContext';
-import {
-  CancelSubscription,
-  CurrentSubscriptionContent,
-  EditPaymentMethod,
-  EditSubscription,
-  PaymentConfirm,
-  PaymentMethodContent,
-  Subscriptions,
-  TransactionHistory,
-  TransactionsHistoryContent,
-} from '@sb/webapp-finances/routes';
-import { SaasIdeas } from '@sb/webapp-generative-ai/routes';
+import { PaymentConfirm, TransactionHistory } from '@sb/webapp-finances/routes';
 import { IntlProvider } from 'react-intl';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
@@ -71,25 +57,6 @@ export const App = () => {
           </Route>
 
           <Route path={RoutesConfig.issuedCertificates} element={<IssuedCertificates />} />
-
-          {/* <Route path={RoutesConfig.demoItems} element={<DemoItems />} />
-          <Route path={RoutesConfig.demoItem} element={<DemoItem routesConfig={RoutesConfig} />} />
-          <Route path={RoutesConfig.crudDemoItem.index} element={<CrudDemoItem routesConfig={RoutesConfig} />} />
-          <Route element={<ActiveSubscriptionContext />}>
-            <Route element={<Subscriptions />}>
-              <Route index path={RoutesConfig.subscriptions.index} element={<CurrentSubscriptionContent />} />
-              <Route path={RoutesConfig.subscriptions.paymentMethods.index} element={<PaymentMethodContent />} />
-              <Route
-                path={RoutesConfig.subscriptions.transactionHistory.index}
-                element={<TransactionsHistoryContent />}
-              />
-            </Route>
-            <Route path={RoutesConfig.subscriptions.currentSubscription.edit} element={<EditSubscription />} />
-            <Route path={RoutesConfig.subscriptions.currentSubscription.cancel} element={<CancelSubscription />} />
-            <Route path={RoutesConfig.subscriptions.paymentMethods.edit} element={<EditPaymentMethod />} />
-          </Route>
-          <Route path={RoutesConfig.documents} element={<Documents />} />
-          <Route path={RoutesConfig.saasIdeas} element={<SaasIdeas />} /> */}
         </Route>
         <Route path={LANG_PREFIX} element={<AuthRoute allowedRoles={Role.ADMIN} />}>
           <Route path={RoutesConfig.admin} element={<Admin />} />
@@ -101,8 +68,6 @@ export const App = () => {
           <Route path={RoutesConfig.termsAndConditions} element={<TermsAndConditions />} />
           <Route path={RoutesConfig.passwordReset.index} element={<PasswordReset />} />
         </Route>
-
-        {/* <-- INJECT ROUTE --> */}
 
         <Route
           path="*"
