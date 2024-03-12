@@ -1,4 +1,3 @@
-import { Alert, AlertDescription, AlertTitle } from '@sb/webapp-core/components/alert';
 import { Link } from '@sb/webapp-core/components/buttons';
 import { buttonVariants } from '@sb/webapp-core/components/buttons/button/button.styles';
 import { Separator } from '@sb/webapp-core/components/separator';
@@ -85,7 +84,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                   onClick={closeSidebar}
                   navLink
                 >
-                  <FormattedMessage defaultMessage="Dashboard" id="Home / dashboard link" />
+                  <FormattedMessage defaultMessage="Painel de controle" id="Home / dashboard link" />
                 </Link>
               </RoleAccess>
 
@@ -96,11 +95,33 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                   onClick={closeSidebar}
                   navLink
                 >
-                  <FormattedMessage defaultMessage="Payments" id="Home / payments link" />
+                  <FormattedMessage defaultMessage="Comprar créditos" id="Home / payments link" />
                 </Link>
               </RoleAccess>
 
               <RoleAccess>
+                <Link
+                  className={menuItemClassName}
+                  to={generateLocalePath(RoutesConfig.requestCertificate.index)}
+                  onClick={closeSidebar}
+                  navLink
+                >
+                  <FormattedMessage defaultMessage="Pedir certificado" id="Home / payments link" />
+                </Link>
+              </RoleAccess>
+
+              <RoleAccess>
+                <Link
+                  className={menuItemClassName}
+                  to={generateLocalePath(RoutesConfig.issuedCertificates)}
+                  onClick={closeSidebar}
+                  navLink
+                >
+                  <FormattedMessage defaultMessage="Certificados emitidos" id="Home / payments link" />
+                </Link>
+              </RoleAccess>
+
+              {/* <RoleAccess>
                 <Link
                   className={menuItemClassName}
                   to={generateLocalePath(RoutesConfig.subscriptions.index)}
@@ -109,9 +130,9 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 >
                   <FormattedMessage defaultMessage="Subscriptions" id="Home / subscriptions link" />
                 </Link>
-              </RoleAccess>
+              </RoleAccess> */}
 
-              <RoleAccess>
+              {/* <RoleAccess>
                 <Link
                   className={menuItemClassName}
                   to={generateLocalePath(RoutesConfig.saasIdeas)}
@@ -120,9 +141,9 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 >
                   <FormattedMessage defaultMessage="OpenAI Integration" id="Home / openai integration link" />
                 </Link>
-              </RoleAccess>
+              </RoleAccess> */}
 
-              <RoleAccess>
+              {/* <RoleAccess>
                 <Link
                   className={menuItemClassName}
                   to={generateLocalePath(RoutesConfig.demoItems)}
@@ -131,9 +152,9 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 >
                   <FormattedMessage defaultMessage="Content items" id="Home / content items link" />
                 </Link>
-              </RoleAccess>
+              </RoleAccess> */}
 
-              <RoleAccess>
+              {/* <RoleAccess>
                 <Link
                   className={menuItemClassName}
                   to={generateLocalePath(RoutesConfig.documents)}
@@ -142,9 +163,9 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 >
                   <FormattedMessage defaultMessage="Documents" id="Home / documents link" />
                 </Link>
-              </RoleAccess>
+              </RoleAccess> */}
 
-              <RoleAccess>
+              {/* <RoleAccess>
                 <Link
                   className={menuItemClassName}
                   to={generateLocalePath(RoutesConfig.crudDemoItem.list)}
@@ -153,7 +174,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 >
                   <FormattedMessage defaultMessage="CRUD" id="Home / CRUD link" />
                 </Link>
-              </RoleAccess>
+              </RoleAccess> */}
 
               <RoleAccess allowedRoles={Role.ADMIN}>
                 <Link
@@ -162,12 +183,12 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                   onClick={closeSidebar}
                   navLink
                 >
-                  <FormattedMessage defaultMessage="Admin" id="Home / admin link" />
+                  <FormattedMessage defaultMessage="Administrador" id="Home / admin link" />
                 </Link>
               </RoleAccess>
 
               <p className="my-2 ml-2 mt-4 text-sm text-muted-foreground">
-                <FormattedMessage defaultMessage="Static pages" id="Sidebar / static pages" />
+                <FormattedMessage defaultMessage="Termos" id="Sidebar / static pages" />
               </p>
 
               <Link
@@ -176,7 +197,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 onClick={closeSidebar}
                 navLink
               >
-                <FormattedMessage defaultMessage="Privacy policy" id="Home / privacy policy link" />
+                <FormattedMessage defaultMessage="Políticas de privacidade" id="Home / privacy policy link" />
               </Link>
 
               <Link
@@ -185,10 +206,10 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 onClick={closeSidebar}
                 navLink
               >
-                <FormattedMessage defaultMessage="Terms and conditions" id="Home / t&c link" />
+                <FormattedMessage defaultMessage="Termos e condições" id="Home / t&c link" />
               </Link>
             </nav>
-            <Alert variant="info">
+            {/* <Alert variant="info">
               <AlertTitle className="text-sm">
                 SaaS Boilerplate by{' '}
                 <a href="https://apptension.com" target="_blank" rel="noreferrer">
@@ -209,7 +230,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                   Documentation
                 </a>
               </AlertDescription>
-            </Alert>
+            </Alert> */}
           </div>
           <nav className="-mx-2 flex flex-col gap-y-1 px-6 pb-2">
             {!isDesktop && (

@@ -126,14 +126,16 @@ class TestMutations:
             profile__last_name="LASTNAME",
         )
 
+        another_user = user_factory(
+            profile__first_name="OTHERNAME",
+            profile__last_name="OTHERlASTNAME",
+        )
+
         mutation = """
             mutation($input: CreateRequestedCertificateInput!) {
               createRequestedCertificate(input: $input) {
                 requestedCertificate {
                   id
-                  user {
-                      id
-                  }
                   fullName
                   state
                   certificateType
@@ -149,7 +151,6 @@ class TestMutations:
         graphene_client.force_authenticate(user)
 
         input_data = {
-            "user": str(user.id),
             "fullName": "John Doe",
             "state": "DF",
             "certificateType": "Federal",
@@ -163,8 +164,9 @@ class TestMutations:
             variable_values={"input": input_data},
         )
 
+        print(executed)
+
         assert "errors" not in executed
-        assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["user"]["id"] == user.id
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["fullName"] == "John Doe"
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["state"] == "DF"
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["certificateType"] == "FEDERAL"

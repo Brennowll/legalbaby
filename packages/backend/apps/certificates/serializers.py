@@ -8,16 +8,23 @@ from .models import Document, IssuedCertificate, RequestedCertificate
 
 
 class RequestedCertificateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.RequestedCertificate.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.RequestedCertificate.id", read_only=True
+    )
 
     class Meta:
         model = RequestedCertificate
         fields = "__all__"
+        read_only_fields = ('user',)
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return RequestedCertificate.objects.create(user=user, **validated_data)
 
     def validate_full_name(self, value):
         full_name_validator = RegexValidator(
-            regex=r"^[a-zA-Z\s]*$",
-            message="O nome completo só pode conter letras e espaços.",
+            regex=r"^[a-zA-Z\u00C0-\u017F\s]*$",
+            message="O nome completo só pode conter letras (incluindo acentuadas) e espaços.",
             code="invalid_full_name",
         )
 
@@ -35,16 +42,22 @@ class RequestedCertificateSerializer(serializers.ModelSerializer):
         cpf_regex = re.compile(r"^\d{3}\.\d{3}\.\d{3}-\d{2}$")
 
         if is_legal_entity and not cnpj_regex.match(value):
-            return serializers.ValidationError("Invalid VAT for PJ (XX.XXX.XXX/XXXX-XX).")
+            return serializers.ValidationError(
+                "Invalid VAT for PJ (XX.XXX.XXX/XXXX-XX)."
+            )
 
         if not is_legal_entity and not cpf_regex.match(value):
-            return serializers.ValidationError("Invalide VAT for PF (XXX.XXX.XXX-XX).")
+            return serializers.ValidationError(
+                "Invalide VAT for PF (XXX.XXX.XXX-XX)."
+            )
 
         return value
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.Document.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.Document.id", read_only=True
+    )
 
     class Meta:
         model = Document
@@ -52,7 +65,9 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 
 class IssuedCertificateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.IssuedCertificate.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.IssuedCertificate.id", read_only=True
+    )
 
     class Meta:
         model = IssuedCertificate

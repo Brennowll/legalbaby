@@ -18,11 +18,11 @@ export type SocialLoginButtonsProps = HTMLAttributes<HTMLDivElement> & {
 export const SocialLoginButtons = ({ variant, ...props }: SocialLoginButtonsProps) => {
   const oAuthLogin = useOAuthLogin();
   const handleGoogleLogin = () => oAuthLogin(OAuthProvider.Google);
-  const handleFacebookLogin = () => oAuthLogin(OAuthProvider.Facebook);
+  // const handleFacebookLogin = () => oAuthLogin(OAuthProvider.Facebook);
 
   return (
     <div className="flex w-full flex-col gap-4" {...props}>
-      <Button
+      {/* <Button
         className="flex gap-1"
         icon={<FacebookIcon />}
         variant={ButtonVariant.SECONDARY}
@@ -33,7 +33,7 @@ export const SocialLoginButtons = ({ variant, ...props }: SocialLoginButtonsProp
         ) : (
           <FormattedMessage defaultMessage="Sign up with Facebook" id="Auth / Signup / Facebook signup button" />
         )}
-      </Button>
+      </Button> */}
 
       <Button
         className="flex gap-1"

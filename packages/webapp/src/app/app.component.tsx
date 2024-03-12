@@ -23,7 +23,21 @@ import { Admin } from '../routes/admin';
 import { PasswordReset } from '../routes/auth/passwordReset';
 import ValidateOtp from '../routes/auth/validateOtp';
 import { AnonymousRoute, AuthRoute } from '../shared/components/routes';
-import { ConfirmEmail, Home, Login, Logout, NotFound, Profile, Signup } from './asyncComponents';
+import {
+  ConfirmEmail,
+  FederalFormContent,
+  Home,
+  IssuedCertificates,
+  LaborFormContent,
+  Login,
+  Logout,
+  MilitaryFormContent,
+  NotFound,
+  Profile,
+  RequestCertificate,
+  Signup,
+  StateFormContent,
+} from './asyncComponents';
 import { LANG_PREFIX, RoutesConfig } from './config/routes';
 import { ValidRoutesProviders } from './providers';
 
@@ -45,7 +59,20 @@ export const App = () => {
         <Route path={LANG_PREFIX} element={<AuthRoute />}>
           <Route index element={<Home />} />
           <Route path={RoutesConfig.profile} element={<Profile />} />
-          <Route path={RoutesConfig.demoItems} element={<DemoItems />} />
+          <Route path={RoutesConfig.finances.paymentConfirm} element={<PaymentConfirm />} />
+          <Route path={RoutesConfig.subscriptions.transactionHistory.history} element={<TransactionHistory />} />
+          <Route path="*" element={<NotFound />} />
+
+          <Route element={<RequestCertificate />}>
+            <Route path={RoutesConfig.requestCertificate.index} element={<MilitaryFormContent />} />
+            <Route path={RoutesConfig.requestCertificate.state} element={<StateFormContent />} />
+            <Route path={RoutesConfig.requestCertificate.labor} element={<LaborFormContent />} />
+            <Route path={RoutesConfig.requestCertificate.federal} element={<FederalFormContent />} />
+          </Route>
+
+          <Route path={RoutesConfig.issuedCertificates} element={<IssuedCertificates />} />
+
+          {/* <Route path={RoutesConfig.demoItems} element={<DemoItems />} />
           <Route path={RoutesConfig.demoItem} element={<DemoItem routesConfig={RoutesConfig} />} />
           <Route path={RoutesConfig.crudDemoItem.index} element={<CrudDemoItem routesConfig={RoutesConfig} />} />
           <Route element={<ActiveSubscriptionContext />}>
@@ -61,11 +88,8 @@ export const App = () => {
             <Route path={RoutesConfig.subscriptions.currentSubscription.cancel} element={<CancelSubscription />} />
             <Route path={RoutesConfig.subscriptions.paymentMethods.edit} element={<EditPaymentMethod />} />
           </Route>
-          <Route path={RoutesConfig.finances.paymentConfirm} element={<PaymentConfirm />} />
-          <Route path={RoutesConfig.subscriptions.transactionHistory.history} element={<TransactionHistory />} />
           <Route path={RoutesConfig.documents} element={<Documents />} />
-          <Route path={RoutesConfig.saasIdeas} element={<SaasIdeas />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={RoutesConfig.saasIdeas} element={<SaasIdeas />} /> */}
         </Route>
         <Route path={LANG_PREFIX} element={<AuthRoute allowedRoles={Role.ADMIN} />}>
           <Route path={RoutesConfig.admin} element={<Admin />} />
