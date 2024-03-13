@@ -30,9 +30,20 @@ class TestRequestedCertificateQuery:
                 profile__first_name="FIRSTNAME",
                 profile__last_name="LASTNAME",
             )
+            another_user = user_factory(
+                profile__first_name="FIRSTNAME",
+                profile__last_name="LASTNAME",
+            )
+
             graphene_client.force_authenticate(user)
 
             numbers_for_name = ["one", "two", "three"]
+
+            another_user_requested_certificate = requested_certificate_factory(
+                is_legal_entity=True,
+                user=another_user,
+                full_name="another name",
+            )
 
             requested_certificates = [
                 requested_certificate_factory(
@@ -86,17 +97,27 @@ class TestIssuedCertificateQuery:
             profile__first_name="FIRSTNAME",
             profile__last_name="LASTNAME",
         )
+        another_user = user_factory(
+            profile__first_name="ANOTHERFIRSTNAME",
+            profile__last_name="ANOTHERLASTNAME",
+        )
+
         graphene_client.force_authenticate(user)
 
         file = image_factory(name="document.png", params={"width": 1})
+
+        another_request = requested_certificate_factory(is_legal_entity=True, user=another_user, full_name="Mark Zuck")
         request = requested_certificate_factory(is_legal_entity=True, user=user, full_name="Mark Zuck")
+
+        another_document = document_factory(file=file)
         document = document_factory(file=file)
 
+        another_issued_certificate = issued_certificate_factory(
+            request_id=another_request.id, document_id=another_document.id
+        )
         issued_certificate = issued_certificate_factory(request_id=request.id, document_id=document.id)
 
         executed = graphene_client.query(query)
-
-        print(executed)
 
         assert "errors" not in executed
         assert executed == {
@@ -163,8 +184,6 @@ class TestMutations:
             mutation,
             variable_values={"input": input_data},
         )
-
-        print(executed)
 
         assert "errors" not in executed
         assert executed["data"]["createRequestedCertificate"]["requestedCertificate"]["fullName"] == "John Doe"

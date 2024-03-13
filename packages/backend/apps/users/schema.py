@@ -11,7 +11,11 @@ from common.graphql import ratelimit
 from common.graphql.acl.decorators import permission_classes
 from . import models
 from . import serializers
-from .services.users import get_user_from_resolver, get_role_names, get_user_avatar_url
+from .services.users import (
+    get_user_from_resolver,
+    get_role_names,
+    get_user_avatar_url,
+)
 
 
 class ObtainTokenMutation(mutations.SerializerMutation):
@@ -144,6 +148,7 @@ class CurrentUserType(DjangoObjectType):
     postal_code = graphene.String()
     roles = graphene.List(of_type=graphene.String)
     avatar = graphene.String()
+    certificate_credits = graphene.Int()
 
     class Meta:
         model = models.User
@@ -165,6 +170,7 @@ class CurrentUserType(DjangoObjectType):
             "avatar",
             "otp_enabled",
             "otp_verified",
+            "certificate_credits",
         )
 
     @staticmethod
@@ -219,6 +225,10 @@ class CurrentUserType(DjangoObjectType):
     def resolve_avatar(parent, info):
         return get_user_avatar_url(get_user_from_resolver(info))
 
+    @staticmethod
+    def resolve_certificate_credits(parent, info):
+        return get_user_from_resolver(info).profile.certificate_credits
+
 
 class UserProfileType(DjangoObjectType):
     class Meta:
@@ -249,6 +259,7 @@ class UpdateCurrentUserMutation(mutations.UpdateModelMutation):
             "state",
             "postal_code",
             "avatar",
+            "certificate_credits",
         )
         model_operations = ("update",)
 

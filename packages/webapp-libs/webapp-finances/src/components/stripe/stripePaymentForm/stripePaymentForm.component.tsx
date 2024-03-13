@@ -44,11 +44,11 @@ export const StripePaymentForm = ({ onSuccess }: StripePaymentFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <FormattedMessage defaultMessage="Choose the amount" id="Stripe / payment form / product label" />
+                <FormattedMessage defaultMessage="Escolha uma opção" id="Stripe / payment form / Choose an option" />
               </FormLabel>
               <FormDescription>
                 <FormattedMessage
-                  defaultMessage="Select amount you would like to donate"
+                  defaultMessage="Selecione a quantidade que queira adquirir"
                   id="Stripe / payment form / product description"
                 />
               </FormDescription>
@@ -58,7 +58,7 @@ export const StripePaymentForm = ({ onSuccess }: StripePaymentFormProps) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid max-w-md grid-cols-3 gap-8 pt-2"
+                className="grid grid-cols-3 gap-8 pt-2"
               >
                 {Object.values(TestProduct).map((amount) => (
                   <FormItem key={amount}>
@@ -66,8 +66,8 @@ export const StripePaymentForm = ({ onSuccess }: StripePaymentFormProps) => {
                       <FormControl>
                         <RadioGroupItem value={amount} className="sr-only" />
                       </FormControl>
-                      <div className="flex justify-center items-center rounded-md border-2 border-muted p-1 aspect-square cursor-pointer font-semibold text-lg">
-                        ${amount}
+                      <div className="flex justify-center w-56 items-center rounded-md border-2 border-muted px-9 py-4 cursor-pointer font-semibold text-base">
+                        {amount}
                       </div>
                     </FormLabel>
                   </FormItem>
@@ -80,8 +80,8 @@ export const StripePaymentForm = ({ onSuccess }: StripePaymentFormProps) => {
             required: {
               value: true,
               message: intl.formatMessage({
-                defaultMessage: 'Product is required',
-                id: 'Stripe / Payment / Product required',
+                defaultMessage: 'Selecione a quantidade',
+                id: 'Stripe / Payment / Select quantity',
               }),
             },
           }}
