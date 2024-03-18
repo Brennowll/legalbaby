@@ -1,70 +1,101 @@
 import hashid_field
-from common.storages import UniqueFilePathGenerator
 from django.db import models
 
+from django.utils import timezone
 from ..users.models import User
 from .utils import state_options
 
 
-class RequestedCertificate(models.Model):
+class State(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    full_name = models.CharField(max_length=60)
-    state = models.CharField(max_length=2, choices=state_options)
-    certificate_type = models.CharField(
-        max_length=20,
-        choices=[
-            ("Military", "Military"),
-            ("State", "State"),
-            ("Labor", "Labor"),
-            ("Federal", "Federal"),
-        ],
-    )
-    is_legal_entity = models.BooleanField()
-    vat = models.CharField(max_length=20)
-
-    service_id = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    # category = models.CharField(max_length=30, default="distribuicao")
-
-    class Meta:
-        unique_together = [
-            "user",
-            "full_name",
-            "state",
-            "certificate_type",
-            "is_legal_entity",
-        ]
+    name = models.CharField(max_length=20)
+    uf = models.CharField(max_length=2, choices=state_options)
 
     def __str__(self):
-        return f"{self.full_name} - {self.certificate_type}"
+        return f"{self.name} - {self.uf}"
+
+
+class Court(models.Model):
+    id = hashid_field.HashidAutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    states = models.ManyToManyField(State)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class CertificateSubCategorie(models.Model):
+    id = hashid_field.HashidAutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class CertificateCategorie(models.Model):
+    id = hashid_field.HashidAutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    sub_categories = models.ManyToManyField(CertificateSubCategorie)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Document(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    file = models.FileField(
-        upload_to=UniqueFilePathGenerator("certificate-documents/"),
-        blank=True,
-        null=True,
-    )
-    link = models.CharField(max_length=200, blank=True)
+    doc_id = models.CharField(max_length=50, default='default_doc_id')  # input
+    doc_id_state = models.CharField(max_length=50, default='default_doc_id_state')
+    rg = models.CharField(max_length=50, default='default_rg')  # input
+    rg_ssp = models.CharField(max_length=50, default='default_rg_ssp')  # input
+    name = models.CharField(max_length=50, default='default_name')
+    mother = models.CharField(max_length=50, default='default_mother')
+    father = models.CharField(max_length=50, default='default_father')
+    gender = models.CharField(max_length=50, default='default_gender')
+    birth_date = models.DateTimeField(default=timezone.now)
+    marital_status = models.CharField(max_length=50, default='default_marital_status')
+    city_residence = models.CharField(max_length=50, default='default_city_residence')
+    social_security_number = models.CharField(max_length=50, default='default_social_security_number')
 
     def __str__(self):
-        return self.file.name
-
-    def save(self, *args, **kwargs):
-        if not self.link:
-            self.link = self.file.url
-        super().save(*args, **kwargs)
+        return f"{self.name} - {self.doc_id}"
 
 
-class IssuedCertificate(models.Model):
+class Certificate(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    request = models.ForeignKey(RequestedCertificate, on_delete=models.CASCADE)
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=50)
+    court = models.ForeignKey(Court, blank=True, null=True, on_delete=models.PROTECT)
+    available_person_type = models.CharField(
+        max_length=50,
+        choices=[
+            ("PF", "Pessoa Física"),
+            ("PJ", "Pessoa Jurídica"),
+            ("PF_PJ", "Pessoa Física e Pessoa Jurídica"),
+        ],
+    )
+    category = models.ForeignKey(CertificateSubCategorie, on_delete=models.PROTECT)
+    credits_needed = models.IntegerField()
+    deadline_days = models.IntegerField()
 
     def __str__(self):
-        return f"{self.request.full_name} - {self.request.certificate_type}"
+        return f"{self.name} - {self.court}"
+
+
+class RequestedCertificate(models.Model):
+    id = hashid_field.HashidAutoField(primary_key=True)
+    certificate = models.ForeignKey(Certificate, on_delete=models.PROTECT, default='0')
+    url = models.CharField(max_length=200, blank=True)
+    issued = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.certificate.name} - {self.certificate.court}"
+
+
+class Request(models.Model):
+    id = hashid_field.HashidAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    document = models.ForeignKey(Document, on_delete=models.PROTECT)
+    requested_certificates = models.ManyToManyField(RequestedCertificate)
+    status = models.CharField(max_length=50, choices=[("AN", "Em andamento"), ("FN", "Finalizado")])
+
+    def __str__(self):
+        return f"{self.user} - {self.document.doc_id}"

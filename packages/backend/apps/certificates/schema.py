@@ -3,48 +3,143 @@ from common.graphql import mutations
 from graphene import relay
 from graphene_django import DjangoObjectType
 
-from .models import Document, IssuedCertificate, RequestedCertificate
-from .serializers import (
-    DocumentSerializer,
-    IssuedCertificateSerializer,
-    RequestedCertificateSerializer,
-)
 from .utils import AuthenticationRequired
+from .models import (
+    State,
+    Court,
+    CertificateSubCategorie,
+    CertificateCategorie,
+    Document,
+    Certificate,
+    RequestedCertificate,
+    Request,
+)
+from .serializers import (
+    StateSerializer,
+    CourtSerializer,
+    CertificateSubCategorieSerializer,
+    CertificateCategorieSerializer,
+    DocumentSerializer,
+    CertificateSerializer,
+    RequestedCertificateSerializer,
+    RequestSerializer,
+)
 
 
-class RequestedCertificateType(DjangoObjectType):
+class StateType(DjangoObjectType):
     class Meta:
-        model = RequestedCertificate
+        model = State
         interfaces = (relay.Node,)
         fields = "__all__"
 
 
-class RequestedCertificateConnection(graphene.Connection):
+class StateConnection(graphene.Connection):
     class Meta:
-        node = RequestedCertificateType
+        node = StateType
 
 
-class CreateRequestedCertificate(mutations.CreateModelMutation):
+class CreateState(mutations.CreateModelMutation):
     class Meta:
-        serializer_class = RequestedCertificateSerializer
-        edge_class = RequestedCertificateConnection.Edge
+        serializer_class = StateSerializer
+        edge_class = StateConnection.Edge
 
 
-class UpdateRequestedCertificate(mutations.UpdateModelMutation):
+class UpdateState(mutations.UpdateModelMutation):
     class Meta:
-        serializer_class = RequestedCertificateSerializer
-        edge_class = RequestedCertificateConnection.Edge
+        serializer_class = StateSerializer
+        edge_class = StateConnection.Edge
 
 
-class DeleteRequestedCertificate(mutations.DeleteModelMutation):
+class DeleteState(mutations.DeleteModelMutation):
     class Meta:
-        model = RequestedCertificate
+        model = State
 
 
-class RequestedCertificateMutation(graphene.ObjectType):
-    create_requested_certificate = CreateRequestedCertificate.Field()
-    update_requested_certificate = UpdateRequestedCertificate.Field()
-    delete_requested_certificate = DeleteRequestedCertificate.Field()
+class CourtType(DjangoObjectType):
+    class Meta:
+        model = Court
+        interfaces = (relay.Node,)
+        fields = "__all__"
+
+
+class CourtConnection(graphene.Connection):
+    class Meta:
+        node = CourtType
+
+
+class CreateCourt(mutations.CreateModelMutation):
+    class Meta:
+        serializer_class = CourtSerializer
+        edge_class = CourtConnection.Edge
+
+
+class UpdateCourt(mutations.UpdateModelMutation):
+    class Meta:
+        serializer_class = CourtSerializer
+        edge_class = CourtConnection.Edge
+
+
+class DeleteCourt(mutations.DeleteModelMutation):
+    class Meta:
+        model = Court
+
+
+class CertificateSubCategorieType(DjangoObjectType):
+    class Meta:
+        model = CertificateSubCategorie
+        interfaces = (relay.Node,)
+        fields = "__all__"
+
+
+class CertificateSubCategorieConnection(graphene.Connection):
+    class Meta:
+        node = CertificateSubCategorieType
+
+
+class CreateCertificateSubCategorie(mutations.CreateModelMutation):
+    class Meta:
+        serializer_class = CertificateSubCategorieSerializer
+        edge_class = CertificateSubCategorieConnection.Edge
+
+
+class UpdateCertificateSubCategorie(mutations.UpdateModelMutation):
+    class Meta:
+        serializer_class = CertificateSubCategorieSerializer
+        edge_class = CertificateSubCategorieConnection.Edge
+
+
+class DeleteCertificateSubCategorie(mutations.DeleteModelMutation):
+    class Meta:
+        model = CertificateSubCategorie
+
+
+class CertificateCategorieType(DjangoObjectType):
+    class Meta:
+        model = CertificateCategorie
+        interfaces = (relay.Node,)
+        fields = "__all__"
+
+
+class CertificateCategorieConnection(graphene.Connection):
+    class Meta:
+        node = CertificateCategorieType
+
+
+class CreateCertificateCategorie(mutations.CreateModelMutation):
+    class Meta:
+        serializer_class = CertificateCategorieSerializer
+        edge_class = CertificateCategorieConnection.Edge
+
+
+class UpdateCertificateCategorie(mutations.UpdateModelMutation):
+    class Meta:
+        serializer_class = CertificateCategorieSerializer
+        edge_class = CertificateCategorieConnection.Edge
+
+
+class DeleteCertificateCategorie(mutations.DeleteModelMutation):
+    class Meta:
+        model = CertificateCategorie
 
 
 class DocumentType(DjangoObjectType):
@@ -76,61 +171,157 @@ class DeleteDocument(mutations.DeleteModelMutation):
         model = Document
 
 
-class DocumentMutation(graphene.ObjectType):
-    create_document = CreateDocument.Field()
-    update_document = UpdateDocument.Field()
-    delete_document = DeleteDocument.Field()
-
-
-class IssuedCertificateType(DjangoObjectType):
+class CertificateType(DjangoObjectType):
     class Meta:
-        model = IssuedCertificate
+        model = Certificate
         interfaces = (relay.Node,)
         fields = "__all__"
 
 
-class IssuedCertificateConnection(graphene.Connection):
+class CertificateConnection(graphene.Connection):
     class Meta:
-        node = IssuedCertificateType
+        node = CertificateType
 
 
-class CreateIssuedCertificate(mutations.CreateModelMutation):
+class CreateCertificate(mutations.CreateModelMutation):
     class Meta:
-        serializer_class = IssuedCertificateSerializer
-        edge_class = IssuedCertificateConnection.Edge
+        serializer_class = CertificateSerializer
+        edge_class = CertificateConnection.Edge
 
 
-class UpdateIssuedCertificate(mutations.UpdateModelMutation):
+class UpdateCertificate(mutations.UpdateModelMutation):
     class Meta:
-        serializer_class = IssuedCertificateSerializer
-        edge_class = IssuedCertificateConnection.Edge
+        serializer_class = CertificateSerializer
+        edge_class = CertificateConnection.Edge
 
 
-class DeleteIssuedCertificate(mutations.DeleteModelMutation):
+class DeleteCertificate(mutations.DeleteModelMutation):
     class Meta:
-        model = IssuedCertificate
+        model = Certificate
 
 
-class IssuedCertificateMutation(graphene.ObjectType):
-    create_issued_certificate = CreateIssuedCertificate.Field()
-    update_issued_certificate = UpdateIssuedCertificate.Field()
-    delete_issued_certificate = DeleteIssuedCertificate.Field()
+class RequestedCertificateType(DjangoObjectType):
+    class Meta:
+        model = RequestedCertificate
+        interfaces = (relay.Node,)
+        fields = "__all__"
+
+
+class RequestedCertificateConnection(graphene.Connection):
+    class Meta:
+        node = RequestedCertificateType
+
+
+class CreateRequestedCertificate(mutations.CreateModelMutation):
+    class Meta:
+        serializer_class = RequestedCertificateSerializer
+        edge_class = RequestedCertificateConnection.Edge
+
+
+class UpdateRequestedCertificate(mutations.UpdateModelMutation):
+    class Meta:
+        serializer_class = RequestedCertificateSerializer
+        edge_class = RequestedCertificateConnection.Edge
+
+
+class DeleteRequestedCertificate(mutations.DeleteModelMutation):
+    class Meta:
+        model = RequestedCertificate
+
+
+class RequestType(DjangoObjectType):
+    class Meta:
+        model = Request
+        interfaces = (relay.Node,)
+        fields = "__all__"
+
+
+class RequestConnection(graphene.Connection):
+    class Meta:
+        node = RequestType
+
+
+class CreateRequest(mutations.CreateModelMutation):
+    class Meta:
+        serializer_class = RequestSerializer
+        edge_class = RequestConnection.Edge
+
+
+class UpdateRequest(mutations.UpdateModelMutation):
+    class Meta:
+        serializer_class = RequestSerializer
+        edge_class = RequestConnection.Edge
+
+
+class DeleteRequest(mutations.DeleteModelMutation):
+    class Meta:
+        model = Request
+
+
+class Mutation(graphene.ObjectType):
+    create_state = CreateState.Field()
+    update_state = UpdateState.Field()
+    delete_state = DeleteState.Field()
+
+    create_court = CreateCourt.Field()
+    update_court = UpdateCourt.Field()
+    delete_court = DeleteCourt.Field()
+
+    create_certificate_subcategorie = CreateCertificateSubCategorie.Field()
+    update_certificate_subcategorie = UpdateCertificateSubCategorie.Field()
+    delete_certificate_subcategorie = DeleteCertificateSubCategorie.Field()
+
+    create_certificate_categorie = CreateCertificateCategorie.Field()
+    update_certificate_categorie = UpdateCertificateCategorie.Field()
+    delete_certificate_categorie = DeleteCertificateCategorie.Field()
+
+    create_document = CreateDocument.Field()
+    update_document = UpdateDocument.Field()
+    delete_document = DeleteDocument.Field()
+
+    create_certificate = CreateCertificate.Field()
+    update_certificate = UpdateCertificate.Field()
+    delete_certificate = DeleteCertificate.Field()
+
+    create_requested_certificate = CreateRequestedCertificate.Field()
+    update_requested_certificate = UpdateRequestedCertificate.Field()
+    delete_requested_certificate = DeleteRequestedCertificate.Field()
+
+    create_request = CreateRequest.Field()
+    update_request = UpdateRequest.Field()
+    delete_request = DeleteRequest.Field()
 
 
 class Query(graphene.ObjectType):
+    states = graphene.List(StateType)
+    courts = graphene.List(CourtType)
+    certificate_sub_categories = graphene.List(CertificateSubCategorieType)
+    certificate_categories = graphene.List(CertificateCategorieType)
+    documents = graphene.List(DocumentType)
+    certificates = graphene.List(CertificateType)
     requested_certificates = graphene.List(RequestedCertificateType)
-    issued_certificates = graphene.List(IssuedCertificateType)
+    requests = graphene.List(RequestType)
 
-    def resolve_requested_certificates(self, info):
+    def resolve_states(self):
+        return State.objects.all()
+
+    def resolve_courts(self):
+        return Court.objects.all()
+
+    def resolve_certificate_sub_categories(self):
+        return CertificateSubCategorie.objects.all()
+
+    def resolve_certificate_categories(self):
+        return CertificateCategorie.objects.all()
+
+    def resolve_documents(self):
+        return Document.objects.all()
+
+    def resolve_certificates(self):
+        return Certificate.objects.all()
+
+    def resolve_requests(self, info):
         if not info.context.user.is_authenticated:
             raise AuthenticationRequired("Not logged in.")
 
-        requested_certificates = RequestedCertificate.objects.filter(user=info.context.user)
-        return requested_certificates
-
-    def resolve_issued_certificates(self, info):
-        if not info.context.user.is_authenticated:
-            raise AuthenticationRequired("Not logged in.")
-
-        issued_certificates = IssuedCertificate.objects.filter(request__user=info.context.user)
-        return issued_certificates
+        return Request.objects.filter(user=info.context.user)

@@ -2,10 +2,6 @@ class AuthenticationRequired(Exception):
     pass
 
 
-class NoCertificatesFound(Exception):
-    pass
-
-
 state_options = [
     ("AC", "Acre"),
     ("AL", "Alagoas"),
