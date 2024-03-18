@@ -97,11 +97,13 @@ export const useStripePaymentIntent = (onError: (error: ApolloError, clientOptio
   const updateOrCreatePaymentIntent = async (
     product: TestProduct
   ): Promise<{ errors?: readonly GraphQLError[]; paymentIntent?: StripePaymentIntentType | null }> => {
+    const formattedProduct = product === '5 créditos - R$5' ? '5' : product === '10 créditos - R$10' ? '10' : '15';
+
     if (!paymentIntent) {
       const { data, errors } = await commitCreatePaymentIntentMutation({
         variables: {
           input: {
-            product,
+            product: formattedProduct,
           },
         },
       });
@@ -115,7 +117,7 @@ export const useStripePaymentIntent = (onError: (error: ApolloError, clientOptio
     const { data, errors } = await commitUpdatePaymentIntentMutation({
       variables: {
         input: {
-          product,
+          product: formattedProduct,
           id: paymentIntent.id,
         },
       },

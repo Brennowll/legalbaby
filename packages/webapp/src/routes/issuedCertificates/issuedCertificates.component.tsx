@@ -57,8 +57,8 @@ export const IssuedCertificates = () => {
         </TableHeader>
         <TableBody>
           {requestData
-            ? requestData.requestedCertificates.map((data) => (
-                <TableRow>
+            ? requestData.requestedCertificates.map((data, index) => (
+                <TableRow key={index}>
                   <TableCell>{data.fullName}</TableCell>
                   <TableCell>{data.state}</TableCell>
                   <TableCell>{data.isLegalEntity ? 'Sim' : 'Não'}</TableCell>
@@ -94,8 +94,8 @@ export const IssuedCertificates = () => {
         </TableHeader>
         <TableBody>
           {!loading && issuedData && issuedData.issuedCertificates.length !== 0
-            ? issuedData.issuedCertificates.map((data) => (
-                <TableRow>
+            ? issuedData.issuedCertificates.map((data, index) => (
+                <TableRow key={index}>
                   <TableCell>{data.request.fullName}</TableCell>
                   <TableCell>{data.request.state}</TableCell>
                   <TableCell>{data.request.isLegalEntity ? 'Sim' : 'Não'}</TableCell>

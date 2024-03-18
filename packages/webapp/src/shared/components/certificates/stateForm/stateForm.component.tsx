@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useCreateRequestCertificate } from '../requestCertificate.hooks';
 
-export const MilitaryForm = () => {
+export const StateForm = () => {
   const intl = useIntl();
 
   const {
@@ -15,7 +15,7 @@ export const MilitaryForm = () => {
     },
     form,
     handleSubmit,
-  } = useCreateRequestCertificate('Military');
+  } = useCreateRequestCertificate('State');
 
   return (
     <Form {...form}>
@@ -172,7 +172,7 @@ export const MilitaryForm = () => {
         </div>
         <Button type="submit" disabled={isSubmitting} className="max-w-xs">
           {isSubmitting && <RotateCw />}
-          <FormattedMessage defaultMessage="Pedir Certificado Militar" id="Request Certificate Form / Submit Button" />
+          <FormattedMessage defaultMessage="Pedir Certificado Estadual" id="Request Certificate Form / Submit Button" />
         </Button>
       </form>
     </Form>

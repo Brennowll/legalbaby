@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const createMilitaryCertificate = gql(`
+export const createRequestCertificate = gql(`
     mutation($input: CreateRequestedCertificateInput!) {
         createRequestedCertificate(input: $input) {
             requestedCertificate {

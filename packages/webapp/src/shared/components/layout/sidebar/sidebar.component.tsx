@@ -121,61 +121,6 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 </Link>
               </RoleAccess>
 
-              {/* <RoleAccess>
-                <Link
-                  className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.subscriptions.index)}
-                  onClick={closeSidebar}
-                  navLink
-                >
-                  <FormattedMessage defaultMessage="Subscriptions" id="Home / subscriptions link" />
-                </Link>
-              </RoleAccess> */}
-
-              {/* <RoleAccess>
-                <Link
-                  className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.saasIdeas)}
-                  onClick={closeSidebar}
-                  navLink
-                >
-                  <FormattedMessage defaultMessage="OpenAI Integration" id="Home / openai integration link" />
-                </Link>
-              </RoleAccess> */}
-
-              {/* <RoleAccess>
-                <Link
-                  className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.demoItems)}
-                  onClick={closeSidebar}
-                  navLink
-                >
-                  <FormattedMessage defaultMessage="Content items" id="Home / content items link" />
-                </Link>
-              </RoleAccess> */}
-
-              {/* <RoleAccess>
-                <Link
-                  className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.documents)}
-                  onClick={closeSidebar}
-                  navLink
-                >
-                  <FormattedMessage defaultMessage="Documents" id="Home / documents link" />
-                </Link>
-              </RoleAccess> */}
-
-              {/* <RoleAccess>
-                <Link
-                  className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.crudDemoItem.list)}
-                  onClick={closeSidebar}
-                  navLink
-                >
-                  <FormattedMessage defaultMessage="CRUD" id="Home / CRUD link" />
-                </Link>
-              </RoleAccess> */}
-
               <RoleAccess allowedRoles={Role.ADMIN}>
                 <Link
                   className={menuItemClassName}
@@ -187,7 +132,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 </Link>
               </RoleAccess>
 
-              <p className="my-2 ml-2 mt-4 text-sm text-muted-foreground">
+              {/* <p className="my-2 ml-2 mt-4 text-sm text-muted-foreground">
                 <FormattedMessage defaultMessage="Termos" id="Sidebar / static pages" />
               </p>
 
@@ -207,7 +152,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
                 navLink
               >
                 <FormattedMessage defaultMessage="Termos e condições" id="Home / t&c link" />
-              </Link>
+              </Link> */}
             </nav>
             {/* <Alert variant="info">
               <AlertTitle className="text-sm">

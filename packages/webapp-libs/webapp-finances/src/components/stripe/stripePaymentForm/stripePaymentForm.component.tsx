@@ -95,8 +95,8 @@ export const StripePaymentForm = ({ onSuccess }: StripePaymentFormProps) => {
 
         <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting || loading}>
           <FormattedMessage
-            values={{ amount: amountValue ? `${amountValue} USD` : '' }}
-            defaultMessage="Pay {amount}"
+            values={{ amount: amountValue ? `R$${amountValue.slice(0, 2)}` : '' }}
+            defaultMessage="Pagar {amount}"
             id="Stripe / payment form / pay CTA"
           />
         </Button>

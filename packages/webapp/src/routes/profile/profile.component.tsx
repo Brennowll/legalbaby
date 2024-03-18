@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { PageHeadline } from '@sb/webapp-core/components/pageHeadline';
 import { PageLayout } from '@sb/webapp-core/components/pageLayout';
 import { Paragraph } from '@sb/webapp-core/components/typography';
@@ -6,19 +7,21 @@ import { FormattedMessage } from 'react-intl';
 import { AvatarForm } from '../../shared/components/auth/avatarForm';
 import { ChangePasswordForm } from '../../shared/components/auth/changePasswordForm';
 import { EditProfileForm } from '../../shared/components/auth/editProfileForm';
-import { TwoFactorAuthForm } from '../../shared/components/auth/twoFactorAuthForm';
 import { useAuth } from '../../shared/hooks';
+import { UserProfileQuery } from './profile.graphql';
+import { UserProfile } from './profile.types';
 
 export const Profile = () => {
   const { currentUser } = useAuth();
+  const { data } = useQuery<UserProfile>(UserProfileQuery);
 
   return (
     <PageLayout>
       <PageHeadline
-        header={<FormattedMessage defaultMessage="User profile" id="Auth / Profile details / Header" />}
+        header={<FormattedMessage defaultMessage="Perfil do usuário" id="Auth / Profile details / Header" />}
         subheader={
           <FormattedMessage
-            defaultMessage="Here you can find more information about your account and edit it"
+            defaultMessage="Aqui você encontra mais informações sobre sua conta, além de poder editá-las"
             id="Auth / Profile details / Label"
           />
         }
@@ -30,7 +33,7 @@ export const Profile = () => {
         <div>
           <Paragraph>
             <FormattedMessage
-              defaultMessage="Name: {firstName} {lastName}"
+              defaultMessage="Nome: {firstName} {lastName}"
               id="Auth / Profile details / Name label"
               values={{ firstName: currentUser?.firstName, lastName: currentUser?.lastName }}
             />
@@ -46,9 +49,9 @@ export const Profile = () => {
 
           <Paragraph firstChildMargin={false}>
             <FormattedMessage
-              defaultMessage="Roles: {roles}"
-              id="Auth / Profile details / Roles label"
-              values={{ roles: currentUser?.roles?.join(',') }}
+              defaultMessage="Créditos: {credits}"
+              id="Auth / Profile details / Credits label"
+              values={{ credits: data?.currentUser.certificateCredits }}
             />
           </Paragraph>
         </div>
@@ -57,11 +60,14 @@ export const Profile = () => {
       <div className="flex w-full flex-col gap-y-6">
         <PageHeadline
           header={
-            <FormattedMessage defaultMessage="Personal data" id="Auth / Profile details / Personal data header" />
+            <FormattedMessage
+              defaultMessage="Informações pessoais"
+              id="Auth / Profile details / Personal data header"
+            />
           }
           subheader={
             <FormattedMessage
-              defaultMessage="Update your account details"
+              defaultMessage="Atualize os detalhes da sua conta"
               id="Auth / Profile details / Personal data label"
             />
           }
@@ -72,35 +78,13 @@ export const Profile = () => {
       <div className="flex w-full flex-col gap-y-6">
         <PageHeadline
           header={
-            <FormattedMessage defaultMessage="Change password" id="Auth / Profile details / Change password header" />
+            <FormattedMessage defaultMessage="Mude sua senha" id="Auth / Profile details / Change password header" />
           }
           subheader={
-            <FormattedMessage
-              defaultMessage="Update your password"
-              id="Auth / Profile details / Change password label"
-            />
+            <FormattedMessage defaultMessage="Atualize sua senha" id="Auth / Profile details / Change password label" />
           }
         />
         <ChangePasswordForm />
-      </div>
-
-      <div className="flex w-full flex-col gap-y-6">
-        <PageHeadline
-          header={
-            <FormattedMessage
-              defaultMessage="Two-factor Authentication"
-              id="Auth / Profile details / Two-factor Authentication header"
-            />
-          }
-          subheader={
-            <FormattedMessage
-              defaultMessage="Enable 2FA on your account"
-              id="Auth / Profile details / Two-factor Authentication label"
-            />
-          }
-        />
-
-        <TwoFactorAuthForm isEnabled={currentUser?.otpEnabled} />
       </div>
     </PageLayout>
   );

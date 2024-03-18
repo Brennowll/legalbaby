@@ -16,6 +16,15 @@ export const useEditProfileForm = () => {
     defaultValues: {
       firstName: currentUser?.firstName ?? '',
       lastName: currentUser?.lastName ?? '',
+      vat: currentUser?.vat ?? '',
+      phoneNumber: currentUser?.phoneNumber ?? '',
+      postalCode: currentUser?.postalCode ?? '',
+      street: currentUser?.street ?? '',
+      number: currentUser?.number ?? '',
+      complement: currentUser?.complement ?? '',
+      neighborhood: currentUser?.neighborhood ?? '',
+      city: currentUser?.city ?? '',
+      state: currentUser?.state ?? '',
     },
   });
 
