@@ -30,4 +30,5 @@ state_options = [
     ("SP", "São Paulo"),
     ("SE", "Sergipe"),
     ("TO", "Tocantins"),
+    ("NA", "Nacional"),
 ]
