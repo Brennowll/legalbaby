@@ -12,6 +12,7 @@ export const useEditProfileForm = () => {
   const intl = useIntl();
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  console.log(currentUser);
   const form = useApiForm<UpdateProfileFormFields>({
     defaultValues: {
       firstName: currentUser?.firstName ?? '',

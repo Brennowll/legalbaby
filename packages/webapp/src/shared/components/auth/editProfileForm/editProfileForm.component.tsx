@@ -5,7 +5,19 @@ import { Small } from '@sb/webapp-core/components/typography';
 import { cn } from '@sb/webapp-core/lib/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { FIRST_NAME_MAX_LENGTH, LAST_NAME_MAX_LENGTH, STATE_OPTIONS } from './editProfileForm.constants';
+import {
+  CITY_MAX_LENGTH,
+  COMPLEMENT_MAX_LENGTH,
+  FIRST_NAME_MAX_LENGTH,
+  LAST_NAME_MAX_LENGTH,
+  NEIGHBORHOOD_MAX_LENGTH,
+  NUMBER_MAX_LENGTH,
+  PHONE_NUMBER_MAX_LENGTH,
+  POSTAL_CODE_MAX_LENGTH,
+  STATE_OPTIONS,
+  STREET_MAX_LENGTH,
+  VAT_MAX_LENGTH,
+} from './editProfileForm.constants';
 import { useEditProfileForm } from './editProfileForm.hooks';
 
 export const EditProfileForm = () => {
@@ -67,14 +79,23 @@ export const EditProfileForm = () => {
               })}
               error={errors.lastName?.message}
             />
+
             <Input
               {...register('vat', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: VAT_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O CPF ou CNPJ é muito longo',
                     id: 'Auth / Update profile/ vat max length error',
                   }),
+                },
+                validate: {
+                  isValidFormat: (value) =>
+                    /^(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|\d{3}\.\d{3}\.\d{3}-\d{2})$/.test(value) ||
+                    intl.formatMessage({
+                      defaultMessage: 'O CPF ou CNPJ é inválido (XXXXX-XXX, ou XX.XXX.XXX/XXXX-XX)',
+                      id: 'Auth / Update profile/ vat invalid error',
+                    }),
                 },
               })}
               label={intl.formatMessage({
@@ -83,14 +104,23 @@ export const EditProfileForm = () => {
               })}
               error={errors.vat?.message}
             />
+
             <Input
               {...register('phoneNumber', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: PHONE_NUMBER_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O telefone é muito longo',
                     id: 'Auth / Update profile/ phoneNumber max length error',
                   }),
+                },
+                validate: {
+                  isValidFormat: (value) =>
+                    /^(\(\d{2}\)\s?)?(\d{4,5}-?\d{4})$/.test(value) ||
+                    intl.formatMessage({
+                      defaultMessage: 'O telefone é inválido (00912345678, ou (00) 91234-5678',
+                      id: 'Auth / Update profile/ phoneNumber invalid error',
+                    }),
                 },
               })}
               label={intl.formatMessage({
@@ -99,14 +129,24 @@ export const EditProfileForm = () => {
               })}
               error={errors.phoneNumber?.message}
             />
+
             <Input
+              className="max-h-36"
               {...register('postalCode', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: POSTAL_CODE_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O CEP é muito longo',
                     id: 'Auth / Update profile/ postalCode max length error',
                   }),
+                },
+                validate: {
+                  isValidFormat: (value) =>
+                    /^\d{5}-\d{3}$/.test(value) ||
+                    intl.formatMessage({
+                      defaultMessage: 'O CEP é inválido (XXXXX-XXX)',
+                      id: 'Auth / Update profile/ postalCode invalid error',
+                    }),
                 },
               })}
               label={intl.formatMessage({
@@ -115,10 +155,11 @@ export const EditProfileForm = () => {
               })}
               error={errors.postalCode?.message}
             />
+
             <Input
               {...register('street', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: STREET_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'A rua é muito longo',
                     id: 'Auth / Update profile/ street max length error',
@@ -131,10 +172,11 @@ export const EditProfileForm = () => {
               })}
               error={errors.street?.message}
             />
+
             <Input
               {...register('number', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: NUMBER_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O Número é muito longo',
                     id: 'Auth / Update profile/ number max length error',
@@ -147,10 +189,11 @@ export const EditProfileForm = () => {
               })}
               error={errors.number?.message}
             />
+
             <Input
               {...register('complement', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: COMPLEMENT_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O complemento é muito longo',
                     id: 'Auth / Update profile/ complement max length error',
@@ -163,10 +206,11 @@ export const EditProfileForm = () => {
               })}
               error={errors.complement?.message}
             />
+
             <Input
               {...register('neighborhood', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: NEIGHBORHOOD_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'O bairro é muito longo',
                     id: 'Auth / Update profile/ neighborhood max length error',
@@ -179,10 +223,11 @@ export const EditProfileForm = () => {
               })}
               error={errors.neighborhood?.message}
             />
+
             <Input
               {...register('city', {
                 maxLength: {
-                  value: LAST_NAME_MAX_LENGTH,
+                  value: CITY_MAX_LENGTH,
                   message: intl.formatMessage({
                     defaultMessage: 'A cidade é muito longa',
                     id: 'Auth / Update profile/ city max length error',
