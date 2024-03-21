@@ -17,7 +17,9 @@ from .models import (
 
 
 class StateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.State.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.State.id", read_only=True
+    )
 
     class Meta:
         model = State
@@ -25,7 +27,9 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class CourtSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.Court.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.Court.id", read_only=True
+    )
 
     class Meta:
         model = Court
@@ -33,7 +37,9 @@ class CourtSerializer(serializers.ModelSerializer):
 
 
 class CertificateSubCategorieSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.CertificateSubCategorie.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.CertificateSubCategorie.id", read_only=True
+    )
 
     class Meta:
         model = CertificateSubCategorie
@@ -41,7 +47,9 @@ class CertificateSubCategorieSerializer(serializers.ModelSerializer):
 
 
 class CertificateCategorieSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.CertificateCategorie.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.CertificateCategorie.id", read_only=True
+    )
 
     class Meta:
         model = CertificateCategorie
@@ -49,7 +57,9 @@ class CertificateCategorieSerializer(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.Document.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.Document.id", read_only=True
+    )
 
     class Meta:
         model = Document
@@ -60,7 +70,9 @@ class DocumentSerializer(serializers.ModelSerializer):
         cpf_regex = re.compile(r"^\d{3}\.\d{3}\.\d{3}-\d{2}$")
 
         if not cpf_regex.match(value) and not cnpj_regex.match(value):
-            return serializers.ValidationError("CPF ou CNPJ inválido (XXX.XXX.XXX-XX or XX.XXX.XXX/XXXX-XX).")
+            return serializers.ValidationError(
+                "CPF ou CNPJ inválido (XXX.XXX.XXX-XX or XX.XXX.XXX/XXXX-XX)."
+            )
 
         return value
 
@@ -104,7 +116,9 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 
 class CertificateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.Certificate.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.Certificate.id", read_only=True
+    )
 
     class Meta:
         model = Certificate
@@ -112,7 +126,9 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class RequestedCertificateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.RequestedCertificate.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.RequestedCertificate.id", read_only=True
+    )
 
     class Meta:
         model = RequestedCertificate
@@ -120,13 +136,81 @@ class RequestedCertificateSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(source_field="certificates.Request.id", read_only=True)
+    id = rest.HashidSerializerCharField(
+        source_field="certificates.Request.id", read_only=True
+    )
+    vat = serializers.CharField(write_only=True)
+    state = serializers.CharField(write_only=True)
+    rg = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    ssp_rg = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    mother_name = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    father_name = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    marital_state = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    city = serializers.CharField(
+        allow_blank=True, required=False, write_only=True
+    )
+    requested_certificates_ids = serializers.ListField(
+        child=serializers.CharField(), write_only=True
+    )
 
     class Meta:
         model = Request
         fields = "__all__"
-        read_only_fields = ('user',)
+        read_only_fields = [
+            "user",
+            "document",
+            "requested_certificates",
+            "status",
+        ]
 
     def create(self, validated_data):
-        user = self.context['request'].user
-        return RequestedCertificate.objects.create(user=user, **validated_data)
+        user = self.context["request"].user
+        doc_id = validated_data.get("vat")
+        doc_id_state = validated_data.get("state")
+        rg = validated_data.get("rg")
+        ssp_rg = validated_data.get("ssp_rg")
+        mother_name = validated_data.get("mother_name")
+        father_name = validated_data.get("father_name")
+        marital_state = validated_data.get("marital_state")
+        city = validated_data.get("city")
+        requested_certificates_ids = validated_data.get(
+            "requested_certificates_ids"
+        )
+
+        document = Document.objects.create(
+            doc_id=doc_id,
+            doc_id_state=doc_id_state,
+            rg=rg,
+            rg_ssp=ssp_rg,
+            mother=mother_name,
+            father=father_name,
+            marital_status=marital_state,
+            city_residence=city,
+        )
+        requested_certificates = [
+            RequestedCertificate.objects.create(
+                certificate=Certificate.objects.get(id=certificate_id)
+            )
+            for certificate_id in requested_certificates_ids
+        ]
+        status = "AN"
+
+        request_object = Request.objects.create(
+            user=user,
+            document=document,
+            status=status,
+        )
+
+        request_object.requested_certificates.set(requested_certificates)
+
+        return request_object

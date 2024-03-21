@@ -30,6 +30,7 @@ class DocumentAdmin(admin.ModelAdmin):
 @admin.register(models.Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'name',
         'court',
         'available_person_type',

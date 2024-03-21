@@ -99,7 +99,7 @@ export const EditProfileForm = () => {
                 },
               })}
               label={intl.formatMessage({
-                defaultMessage: 'CPF ou RG',
+                defaultMessage: 'CPF ou CNPJ',
                 id: 'Auth / Update profile / vat label',
               })}
               error={errors.vat?.message}
@@ -131,7 +131,6 @@ export const EditProfileForm = () => {
             />
 
             <Input
-              className="max-h-36"
               {...register('postalCode', {
                 maxLength: {
                   value: POSTAL_CODE_MAX_LENGTH,
@@ -260,7 +259,7 @@ export const EditProfileForm = () => {
                   <FormDescription className="pt-1 text-xs">Selecione "NA" para nacional</FormDescription>
                 </FormItem>
               )}
-            ></FormField>
+            />
           </div>
 
           {hasGenericErrorOnly ? <Small className="text-red-500">{genericError}</Small> : null}

@@ -102,7 +102,7 @@ export const Sidebar = (props: HTMLAttributes<HTMLDivElement>) => {
               <RoleAccess>
                 <Link
                   className={menuItemClassName}
-                  to={generateLocalePath(RoutesConfig.requestCertificate.index)}
+                  to={generateLocalePath(RoutesConfig.requestCertificate)}
                   onClick={closeSidebar}
                   navLink
                 >

@@ -43,18 +43,18 @@ class CertificateCategorie(models.Model):
 
 class Document(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    doc_id = models.CharField(max_length=50, default='default_doc_id')  # input
-    doc_id_state = models.CharField(max_length=50, default='default_doc_id_state')
-    rg = models.CharField(max_length=50, default='default_rg')  # input
-    rg_ssp = models.CharField(max_length=50, default='default_rg_ssp')  # input
-    name = models.CharField(max_length=50, default='default_name')
-    mother = models.CharField(max_length=50, default='default_mother')
-    father = models.CharField(max_length=50, default='default_father')
-    gender = models.CharField(max_length=50, default='default_gender')
+    doc_id = models.CharField(max_length=50, blank=True)
+    doc_id_state = models.CharField(max_length=50, blank=True)
+    rg = models.CharField(max_length=50, blank=True)
+    rg_ssp = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=50, blank=True)
+    mother = models.CharField(max_length=50, blank=True)
+    father = models.CharField(max_length=50, blank=True)
+    gender = models.CharField(max_length=50, blank=True)
     birth_date = models.DateTimeField(default=timezone.now)
-    marital_status = models.CharField(max_length=50, default='default_marital_status')
-    city_residence = models.CharField(max_length=50, default='default_city_residence')
-    social_security_number = models.CharField(max_length=50, default='default_social_security_number')
+    marital_status = models.CharField(max_length=50, blank=True)
+    city_residence = models.CharField(max_length=50, blank=True)
+    social_security_number = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.doc_id}"
@@ -63,7 +63,9 @@ class Document(models.Model):
 class Certificate(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
     name = models.CharField(max_length=50)
-    court = models.ForeignKey(Court, blank=True, null=True, on_delete=models.PROTECT)
+    court = models.ForeignKey(
+        Court, blank=True, null=True, on_delete=models.PROTECT
+    )
     available_person_type = models.CharField(
         max_length=50,
         choices=[
@@ -72,7 +74,10 @@ class Certificate(models.Model):
             ("PF_PJ", "Pessoa Física e Pessoa Jurídica"),
         ],
     )
-    category = models.ForeignKey(CertificateSubCategorie, on_delete=models.PROTECT)
+    category = models.ForeignKey(CertificateCategorie, on_delete=models.PROTECT)
+    sub_category = models.ForeignKey(
+        CertificateSubCategorie, blank=True, null=True, on_delete=models.PROTECT
+    )
     credits_needed = models.IntegerField()
     deadline_days = models.IntegerField()
 
@@ -82,7 +87,9 @@ class Certificate(models.Model):
 
 class RequestedCertificate(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
-    certificate = models.ForeignKey(Certificate, on_delete=models.PROTECT, default='0')
+    certificate = models.ForeignKey(
+        Certificate, on_delete=models.PROTECT, default='0'
+    )
     url = models.CharField(max_length=200, blank=True)
     issued = models.BooleanField(default=False)
 
@@ -95,7 +102,9 @@ class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     document = models.ForeignKey(Document, on_delete=models.PROTECT)
     requested_certificates = models.ManyToManyField(RequestedCertificate)
-    status = models.CharField(max_length=50, choices=[("AN", "Em andamento"), ("FN", "Finalizado")])
+    status = models.CharField(
+        max_length=50, choices=[("AN", "Em andamento"), ("FN", "Finalizado")]
+    )
 
     def __str__(self):
         return f"{self.user} - {self.document.doc_id}"

@@ -11,18 +11,14 @@ import ValidateOtp from '../routes/auth/validateOtp';
 import { AnonymousRoute, AuthRoute } from '../shared/components/routes';
 import {
   ConfirmEmail,
-  FederalFormContent,
   Home,
   IssuedCertificates,
-  LaborFormContent,
   Login,
   Logout,
-  MilitaryFormContent,
   NotFound,
   Profile,
   RequestCertificate,
   Signup,
-  StateFormContent,
 } from './asyncComponents';
 import { LANG_PREFIX, RoutesConfig } from './config/routes';
 import { ValidRoutesProviders } from './providers';
@@ -48,14 +44,7 @@ export const App = () => {
           <Route path={RoutesConfig.finances.paymentConfirm} element={<PaymentConfirm />} />
           <Route path={RoutesConfig.subscriptions.transactionHistory.history} element={<TransactionHistory />} />
           <Route path="*" element={<NotFound />} />
-
-          <Route element={<RequestCertificate />}>
-            <Route path={RoutesConfig.requestCertificate.index} element={<MilitaryFormContent />} />
-            <Route path={RoutesConfig.requestCertificate.state} element={<StateFormContent />} />
-            <Route path={RoutesConfig.requestCertificate.labor} element={<LaborFormContent />} />
-            <Route path={RoutesConfig.requestCertificate.federal} element={<FederalFormContent />} />
-          </Route>
-
+          <Route path={RoutesConfig.requestCertificate} element={<RequestCertificate />} />
           <Route path={RoutesConfig.issuedCertificates} element={<IssuedCertificates />} />
         </Route>
         <Route path={LANG_PREFIX} element={<AuthRoute allowedRoles={Role.ADMIN} />}>

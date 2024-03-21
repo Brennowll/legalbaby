@@ -302,22 +302,22 @@ class Query(graphene.ObjectType):
     requested_certificates = graphene.List(RequestedCertificateType)
     requests = graphene.List(RequestType)
 
-    def resolve_states(self):
+    def resolve_states(self, info):
         return State.objects.all()
 
-    def resolve_courts(self):
+    def resolve_courts(self, info):
         return Court.objects.all()
 
-    def resolve_certificate_sub_categories(self):
+    def resolve_certificate_sub_categories(self, info):
         return CertificateSubCategorie.objects.all()
 
-    def resolve_certificate_categories(self):
+    def resolve_certificate_categories(self, info):
         return CertificateCategorie.objects.all()
 
-    def resolve_documents(self):
+    def resolve_documents(self, info):
         return Document.objects.all()
 
-    def resolve_certificates(self):
+    def resolve_certificates(self, info):
         return Certificate.objects.all()
 
     def resolve_requests(self, info):
