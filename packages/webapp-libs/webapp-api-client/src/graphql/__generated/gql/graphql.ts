@@ -61,15 +61,31 @@ export type ApiMutation = {
   changeActiveSubscription?: Maybe<ChangeActiveSubscriptionMutationPayload>;
   changePassword?: Maybe<ChangePasswordMutationPayload>;
   confirm?: Maybe<ConfirmEmailMutationPayload>;
+  createCertificate?: Maybe<CreateCertificatePayload>;
+  createCertificateCategorie?: Maybe<CreateCertificateCategoriePayload>;
+  createCertificateSubcategorie?: Maybe<CreateCertificateSubCategoriePayload>;
+  createCourt?: Maybe<CreateCourtPayload>;
   createCrudDemoItem?: Maybe<CreateCrudDemoItemMutationPayload>;
+  createDocument?: Maybe<CreateDocumentPayload>;
   createDocumentDemoItem?: Maybe<CreateDocumentDemoItemMutationPayload>;
   createFavoriteContentfulDemoItem?: Maybe<CreateFavoriteContentfulDemoItemMutationPayload>;
   createPaymentIntent?: Maybe<CreatePaymentIntentMutationPayload>;
+  createRequest?: Maybe<CreateRequestPayload>;
+  createRequestedCertificate?: Maybe<CreateRequestedCertificatePayload>;
   createSetupIntent?: Maybe<CreateSetupIntentMutationPayload>;
+  createState?: Maybe<CreateStatePayload>;
+  deleteCertificate?: Maybe<DeleteCertificatePayload>;
+  deleteCertificateCategorie?: Maybe<DeleteCertificateCategoriePayload>;
+  deleteCertificateSubcategorie?: Maybe<DeleteCertificateSubCategoriePayload>;
+  deleteCourt?: Maybe<DeleteCourtPayload>;
   deleteCrudDemoItem?: Maybe<DeleteCrudDemoItemMutationPayload>;
+  deleteDocument?: Maybe<DeleteDocumentPayload>;
   deleteDocumentDemoItem?: Maybe<DeleteDocumentDemoItemMutationPayload>;
   deleteFavoriteContentfulDemoItem?: Maybe<DeleteFavoriteContentfulDemoItemMutationPayload>;
   deletePaymentMethod?: Maybe<DeletePaymentMethodMutationPayload>;
+  deleteRequest?: Maybe<DeleteRequestPayload>;
+  deleteRequestedCertificate?: Maybe<DeleteRequestedCertificatePayload>;
+  deleteState?: Maybe<DeleteStatePayload>;
   disableOtp?: Maybe<DisableOtpMutationPayload>;
   generateOtp?: Maybe<GenerateOtpMutationPayload>;
   generateSaasIdeas?: Maybe<GenerateSaasIdeasMutationPayload>;
@@ -78,11 +94,19 @@ export type ApiMutation = {
   passwordResetConfirm?: Maybe<PasswordResetConfirmationMutationPayload>;
   signUp?: Maybe<SingUpMutationPayload>;
   tokenAuth?: Maybe<ObtainTokenMutationPayload>;
+  updateCertificate?: Maybe<UpdateCertificatePayload>;
+  updateCertificateCategorie?: Maybe<UpdateCertificateCategoriePayload>;
+  updateCertificateSubcategorie?: Maybe<UpdateCertificateSubCategoriePayload>;
+  updateCourt?: Maybe<UpdateCourtPayload>;
   updateCrudDemoItem?: Maybe<UpdateCrudDemoItemMutationPayload>;
   updateCurrentUser?: Maybe<UpdateCurrentUserMutationPayload>;
   updateDefaultPaymentMethod?: Maybe<UpdateDefaultPaymentMethodMutationPayload>;
+  updateDocument?: Maybe<UpdateDocumentPayload>;
   updateNotification?: Maybe<UpdateNotificationMutationPayload>;
   updatePaymentIntent?: Maybe<UpdatePaymentIntentMutationPayload>;
+  updateRequest?: Maybe<UpdateRequestPayload>;
+  updateRequestedCertificate?: Maybe<UpdateRequestedCertificatePayload>;
+  updateState?: Maybe<UpdateStatePayload>;
   validateOtp?: Maybe<ValidateOtpMutationPayload>;
   verifyOtp?: Maybe<VerifyOtpMutationPayload>;
 };
@@ -108,8 +132,33 @@ export type ApiMutationConfirmArgs = {
 };
 
 
+export type ApiMutationCreateCertificateArgs = {
+  input: CreateCertificateInput;
+};
+
+
+export type ApiMutationCreateCertificateCategorieArgs = {
+  input: CreateCertificateCategorieInput;
+};
+
+
+export type ApiMutationCreateCertificateSubcategorieArgs = {
+  input: CreateCertificateSubCategorieInput;
+};
+
+
+export type ApiMutationCreateCourtArgs = {
+  input: CreateCourtInput;
+};
+
+
 export type ApiMutationCreateCrudDemoItemArgs = {
   input: CreateCrudDemoItemMutationInput;
+};
+
+
+export type ApiMutationCreateDocumentArgs = {
+  input: CreateDocumentInput;
 };
 
 
@@ -128,13 +177,53 @@ export type ApiMutationCreatePaymentIntentArgs = {
 };
 
 
+export type ApiMutationCreateRequestArgs = {
+  input: CreateRequestInput;
+};
+
+
+export type ApiMutationCreateRequestedCertificateArgs = {
+  input: CreateRequestedCertificateInput;
+};
+
+
 export type ApiMutationCreateSetupIntentArgs = {
   input: CreateSetupIntentMutationInput;
 };
 
 
+export type ApiMutationCreateStateArgs = {
+  input: CreateStateInput;
+};
+
+
+export type ApiMutationDeleteCertificateArgs = {
+  input: DeleteCertificateInput;
+};
+
+
+export type ApiMutationDeleteCertificateCategorieArgs = {
+  input: DeleteCertificateCategorieInput;
+};
+
+
+export type ApiMutationDeleteCertificateSubcategorieArgs = {
+  input: DeleteCertificateSubCategorieInput;
+};
+
+
+export type ApiMutationDeleteCourtArgs = {
+  input: DeleteCourtInput;
+};
+
+
 export type ApiMutationDeleteCrudDemoItemArgs = {
   input: DeleteCrudDemoItemMutationInput;
+};
+
+
+export type ApiMutationDeleteDocumentArgs = {
+  input: DeleteDocumentInput;
 };
 
 
@@ -150,6 +239,21 @@ export type ApiMutationDeleteFavoriteContentfulDemoItemArgs = {
 
 export type ApiMutationDeletePaymentMethodArgs = {
   input: DeletePaymentMethodMutationInput;
+};
+
+
+export type ApiMutationDeleteRequestArgs = {
+  input: DeleteRequestInput;
+};
+
+
+export type ApiMutationDeleteRequestedCertificateArgs = {
+  input: DeleteRequestedCertificateInput;
+};
+
+
+export type ApiMutationDeleteStateArgs = {
+  input: DeleteStateInput;
 };
 
 
@@ -193,6 +297,26 @@ export type ApiMutationTokenAuthArgs = {
 };
 
 
+export type ApiMutationUpdateCertificateArgs = {
+  input: UpdateCertificateInput;
+};
+
+
+export type ApiMutationUpdateCertificateCategorieArgs = {
+  input: UpdateCertificateCategorieInput;
+};
+
+
+export type ApiMutationUpdateCertificateSubcategorieArgs = {
+  input: UpdateCertificateSubCategorieInput;
+};
+
+
+export type ApiMutationUpdateCourtArgs = {
+  input: UpdateCourtInput;
+};
+
+
 export type ApiMutationUpdateCrudDemoItemArgs = {
   input: UpdateCrudDemoItemMutationInput;
 };
@@ -208,6 +332,11 @@ export type ApiMutationUpdateDefaultPaymentMethodArgs = {
 };
 
 
+export type ApiMutationUpdateDocumentArgs = {
+  input: UpdateDocumentInput;
+};
+
+
 export type ApiMutationUpdateNotificationArgs = {
   input: UpdateNotificationMutationInput;
 };
@@ -215,6 +344,21 @@ export type ApiMutationUpdateNotificationArgs = {
 
 export type ApiMutationUpdatePaymentIntentArgs = {
   input: UpdatePaymentIntentMutationInput;
+};
+
+
+export type ApiMutationUpdateRequestArgs = {
+  input: UpdateRequestInput;
+};
+
+
+export type ApiMutationUpdateRequestedCertificateArgs = {
+  input: UpdateRequestedCertificateInput;
+};
+
+
+export type ApiMutationUpdateStateArgs = {
+  input: UpdateStateInput;
 };
 
 
@@ -555,6 +699,225 @@ export type CancelActiveSubscriptionMutationPayload = {
   subscriptionScheduleEdge?: Maybe<SubscriptionScheduleEdge>;
 };
 
+/** A Relay edge containing a `CertificateCategorie` and its cursor. */
+export type CertificateCategorieEdge = {
+  __typename?: 'CertificateCategorieEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateCategorieType>;
+};
+
+export type CertificateCategorieType = Node & {
+  __typename?: 'CertificateCategorieType';
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  subCategories: CertificateSubCategorieTypeConnection;
+};
+
+
+export type CertificateCategorieTypeSubCategoriesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type CertificateCategorieTypeConnection = {
+  __typename?: 'CertificateCategorieTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<CertificateCategorieTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `CertificateCategorieType` and its cursor. */
+export type CertificateCategorieTypeEdge = {
+  __typename?: 'CertificateCategorieTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateCategorieType>;
+};
+
+/** A Relay edge containing a `Certificate` and its cursor. */
+export type CertificateEdge = {
+  __typename?: 'CertificateEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateType>;
+};
+
+/** A Relay edge containing a `CertificateSubCategorie` and its cursor. */
+export type CertificateSubCategorieEdge = {
+  __typename?: 'CertificateSubCategorieEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateSubCategorieType>;
+};
+
+export type CertificateSubCategorieType = Node & {
+  __typename?: 'CertificateSubCategorieType';
+  certificateSet: CertificateTypeConnection;
+  certificatecategorieSet: CertificateCategorieTypeConnection;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+
+export type CertificateSubCategorieTypeCertificateSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type CertificateSubCategorieTypeCertificatecategorieSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type CertificateSubCategorieTypeConnection = {
+  __typename?: 'CertificateSubCategorieTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<CertificateSubCategorieTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `CertificateSubCategorieType` and its cursor. */
+export type CertificateSubCategorieTypeEdge = {
+  __typename?: 'CertificateSubCategorieTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateSubCategorieType>;
+};
+
+export type CertificateType = Node & {
+  __typename?: 'CertificateType';
+  availablePersonType: CertificatesCertificateAvailablePersonTypeChoices;
+  category: CertificateSubCategorieType;
+  court?: Maybe<CourtType>;
+  creditsNeeded: Scalars['Int']['output'];
+  deadlineDays: Scalars['Int']['output'];
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  requestedcertificateSet: RequestedCertificateTypeConnection;
+};
+
+
+export type CertificateTypeRequestedcertificateSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type CertificateTypeConnection = {
+  __typename?: 'CertificateTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<CertificateTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `CertificateType` and its cursor. */
+export type CertificateTypeEdge = {
+  __typename?: 'CertificateTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CertificateType>;
+};
+
+export enum CertificatesCertificateAvailablePersonTypeChoices {
+  /** Pessoa Física */
+  PF = 'PF',
+  /** Pessoa Física e Pessoa Jurídica */
+  PF_PJ = 'PF_PJ',
+  /** Pessoa Jurídica */
+  PJ = 'PJ'
+}
+
+export enum CertificatesRequestStatusChoices {
+  /** Em andamento */
+  AN = 'AN',
+  /** Finalizado */
+  FN = 'FN'
+}
+
+export enum CertificatesStateUfChoices {
+  /** Acre */
+  AC = 'AC',
+  /** Alagoas */
+  AL = 'AL',
+  /** Amazonas */
+  AM = 'AM',
+  /** Amapá */
+  AP = 'AP',
+  /** Bahia */
+  BA = 'BA',
+  /** Ceará */
+  CE = 'CE',
+  /** Distrito Federal */
+  DF = 'DF',
+  /** Espírito Santo */
+  ES = 'ES',
+  /** Goiás */
+  GO = 'GO',
+  /** Maranhão */
+  MA = 'MA',
+  /** Minas Gerais */
+  MG = 'MG',
+  /** Mato Grosso do Sul */
+  MS = 'MS',
+  /** Mato Grosso */
+  MT = 'MT',
+  /** Nacional */
+  NA = 'NA',
+  /** Pará */
+  PA = 'PA',
+  /** Paraíba */
+  PB = 'PB',
+  /** Pernambuco */
+  PE = 'PE',
+  /** Piauí */
+  PI = 'PI',
+  /** Paraná */
+  PR = 'PR',
+  /** Rio de Janeiro */
+  RJ = 'RJ',
+  /** Rio Grande do Norte */
+  RN = 'RN',
+  /** Rondônia */
+  RO = 'RO',
+  /** Roraima */
+  RR = 'RR',
+  /** Rio Grande do Sul */
+  RS = 'RS',
+  /** Santa Catarina */
+  SC = 'SC',
+  /** Sergipe */
+  SE = 'SE',
+  /** São Paulo */
+  SP = 'SP',
+  /** Tocantins */
+  TO = 'TO'
+}
+
 export type ChangeActiveSubscriptionMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   price: Scalars['String']['input'];
@@ -700,6 +1063,114 @@ export type ContentfulTag = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+/** A Relay edge containing a `Court` and its cursor. */
+export type CourtEdge = {
+  __typename?: 'CourtEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CourtType>;
+};
+
+export type CourtType = Node & {
+  __typename?: 'CourtType';
+  certificateSet: CertificateTypeConnection;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  states: StateTypeConnection;
+};
+
+
+export type CourtTypeCertificateSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type CourtTypeStatesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type CourtTypeConnection = {
+  __typename?: 'CourtTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<CourtTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `CourtType` and its cursor. */
+export type CourtTypeEdge = {
+  __typename?: 'CourtTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<CourtType>;
+};
+
+export type CreateCertificateCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  subCategories: Scalars['String']['input'];
+};
+
+export type CreateCertificateCategoriePayload = {
+  __typename?: 'CreateCertificateCategoriePayload';
+  certificateCategorie?: Maybe<CertificateCategorieType>;
+  certificateCategorieEdge?: Maybe<CertificateCategorieEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type CreateCertificateInput = {
+  availablePersonType: Scalars['String']['input'];
+  category: Scalars['String']['input'];
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  court?: InputMaybe<Scalars['String']['input']>;
+  creditsNeeded: Scalars['Int']['input'];
+  deadlineDays: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type CreateCertificatePayload = {
+  __typename?: 'CreateCertificatePayload';
+  certificate?: Maybe<CertificateType>;
+  certificateEdge?: Maybe<CertificateEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type CreateCertificateSubCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateCertificateSubCategoriePayload = {
+  __typename?: 'CreateCertificateSubCategoriePayload';
+  certificateSubCategorie?: Maybe<CertificateSubCategorieType>;
+  certificateSubCategorieEdge?: Maybe<CertificateSubCategorieEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type CreateCourtInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  states: Scalars['String']['input'];
+};
+
+export type CreateCourtPayload = {
+  __typename?: 'CreateCourtPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  court?: Maybe<CourtType>;
+  courtEdge?: Maybe<CourtEdge>;
+};
+
 export type CreateCrudDemoItemMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
@@ -726,6 +1197,29 @@ export type CreateDocumentDemoItemMutationPayload = {
   documentDemoItemEdge?: Maybe<DocumentDemoItemEdge>;
 };
 
+export type CreateDocumentInput = {
+  birthDate?: InputMaybe<Scalars['DateTime']['input']>;
+  cityResidence?: InputMaybe<Scalars['String']['input']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  docId?: InputMaybe<Scalars['String']['input']>;
+  docIdState?: InputMaybe<Scalars['String']['input']>;
+  father?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  maritalStatus?: InputMaybe<Scalars['String']['input']>;
+  mother?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  rg?: InputMaybe<Scalars['String']['input']>;
+  rgSsp?: InputMaybe<Scalars['String']['input']>;
+  socialSecurityNumber?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateDocumentPayload = {
+  __typename?: 'CreateDocumentPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  document?: Maybe<DocumentType>;
+  documentEdge?: Maybe<DocumentEdge>;
+};
+
 export type CreateFavoriteContentfulDemoItemMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   item: Scalars['String']['input'];
@@ -750,6 +1244,34 @@ export type CreatePaymentIntentMutationPayload = {
   paymentIntent?: Maybe<StripePaymentIntentType>;
 };
 
+export type CreateRequestInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  document: Scalars['String']['input'];
+  requestedCertificates: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+};
+
+export type CreateRequestPayload = {
+  __typename?: 'CreateRequestPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  request?: Maybe<RequestType>;
+  requestEdge?: Maybe<RequestEdge>;
+};
+
+export type CreateRequestedCertificateInput = {
+  certificate?: InputMaybe<Scalars['String']['input']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  issued?: InputMaybe<Scalars['Boolean']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateRequestedCertificatePayload = {
+  __typename?: 'CreateRequestedCertificatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  requestedCertificate?: Maybe<RequestedCertificateType>;
+  requestedCertificateEdge?: Maybe<RequestedCertificateEdge>;
+};
+
 export type CreateSetupIntentMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -758,6 +1280,19 @@ export type CreateSetupIntentMutationPayload = {
   __typename?: 'CreateSetupIntentMutationPayload';
   clientMutationId?: Maybe<Scalars['String']['output']>;
   setupIntent?: Maybe<StripeSetupIntentType>;
+};
+
+export type CreateStateInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  uf: Scalars['String']['input'];
+};
+
+export type CreateStatePayload = {
+  __typename?: 'CreateStatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<StateType>;
+  stateEdge?: Maybe<StateEdge>;
 };
 
 export type CrudDemoItemConnection = {
@@ -797,13 +1332,67 @@ export type CurrentUserEdge = {
 export type CurrentUserType = {
   __typename?: 'CurrentUserType';
   avatar?: Maybe<Scalars['String']['output']>;
+  certificateCredits?: Maybe<Scalars['Int']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
+  complement?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
+  neighborhood?: Maybe<Scalars['String']['output']>;
+  number?: Maybe<Scalars['String']['output']>;
   otpEnabled: Scalars['Boolean']['output'];
   otpVerified: Scalars['Boolean']['output'];
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  postalCode?: Maybe<Scalars['String']['output']>;
   roles?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  state?: Maybe<Scalars['String']['output']>;
+  street?: Maybe<Scalars['String']['output']>;
+  vat?: Maybe<Scalars['String']['output']>;
+};
+
+export type DeleteCertificateCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteCertificateCategoriePayload = {
+  __typename?: 'DeleteCertificateCategoriePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteCertificateInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteCertificatePayload = {
+  __typename?: 'DeleteCertificatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteCertificateSubCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteCertificateSubCategoriePayload = {
+  __typename?: 'DeleteCertificateSubCategoriePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteCourtInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteCourtPayload = {
+  __typename?: 'DeleteCourtPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
 };
 
 export type DeleteCrudDemoItemMutationInput = {
@@ -828,6 +1417,17 @@ export type DeleteDocumentDemoItemMutationPayload = {
   deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
 };
 
+export type DeleteDocumentInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteDocumentPayload = {
+  __typename?: 'DeleteDocumentPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
 export type DeleteFavoriteContentfulDemoItemMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   item?: InputMaybe<Scalars['String']['input']>;
@@ -847,6 +1447,39 @@ export type DeletePaymentMethodMutationInput = {
 export type DeletePaymentMethodMutationPayload = {
   __typename?: 'DeletePaymentMethodMutationPayload';
   activeSubscription?: Maybe<SubscriptionScheduleType>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteRequestInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteRequestPayload = {
+  __typename?: 'DeleteRequestPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteRequestedCertificateInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteRequestedCertificatePayload = {
+  __typename?: 'DeleteRequestedCertificatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+};
+
+export type DeleteStateInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DeleteStatePayload = {
+  __typename?: 'DeleteStatePayload';
   clientMutationId?: Maybe<Scalars['String']['output']>;
   deletedIds?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
 };
@@ -1415,6 +2048,43 @@ export type DocumentDemoItemType = Node & {
   id: Scalars['ID']['output'];
 };
 
+/** A Relay edge containing a `Document` and its cursor. */
+export type DocumentEdge = {
+  __typename?: 'DocumentEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<DocumentType>;
+};
+
+export type DocumentType = Node & {
+  __typename?: 'DocumentType';
+  birthDate: Scalars['DateTime']['output'];
+  cityResidence: Scalars['String']['output'];
+  docId: Scalars['String']['output'];
+  docIdState: Scalars['String']['output'];
+  father: Scalars['String']['output'];
+  gender: Scalars['String']['output'];
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  maritalStatus: Scalars['String']['output'];
+  mother: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  requestSet: RequestTypeConnection;
+  rg: Scalars['String']['output'];
+  rgSsp: Scalars['String']['output'];
+  socialSecurityNumber: Scalars['String']['output'];
+};
+
+
+export type DocumentTypeRequestSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type Entry = {
   contentfulMetadata: ContentfulMetadata;
   sys: Sys;
@@ -1699,15 +2369,23 @@ export type Query = {
   appConfigCollection?: Maybe<AppConfigCollection>;
   asset?: Maybe<Asset>;
   assetCollection?: Maybe<AssetCollection>;
+  certificateCategories?: Maybe<Array<Maybe<CertificateCategorieType>>>;
+  certificateSubCategories?: Maybe<Array<Maybe<CertificateSubCategorieType>>>;
+  certificates?: Maybe<Array<Maybe<CertificateType>>>;
   charge?: Maybe<StripeChargeType>;
+  courts?: Maybe<Array<Maybe<CourtType>>>;
   crudDemoItem?: Maybe<CrudDemoItemType>;
   currentUser?: Maybe<CurrentUserType>;
   demoItem?: Maybe<DemoItem>;
   demoItemCollection?: Maybe<DemoItemCollection>;
+  documents?: Maybe<Array<Maybe<DocumentType>>>;
   entryCollection?: Maybe<EntryCollection>;
   hasUnreadNotifications?: Maybe<Scalars['Boolean']['output']>;
   node?: Maybe<Node>;
   paymentIntent?: Maybe<StripePaymentIntentType>;
+  requestedCertificates?: Maybe<Array<Maybe<RequestedCertificateType>>>;
+  requests?: Maybe<Array<Maybe<RequestType>>>;
+  states?: Maybe<Array<Maybe<StateType>>>;
 };
 
 
@@ -1847,6 +2525,96 @@ export type QueryPaymentIntentArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+/** A Relay edge containing a `Request` and its cursor. */
+export type RequestEdge = {
+  __typename?: 'RequestEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<RequestType>;
+};
+
+export type RequestType = Node & {
+  __typename?: 'RequestType';
+  document: DocumentType;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  requestedCertificates: RequestedCertificateTypeConnection;
+  status: CertificatesRequestStatusChoices;
+  user: CurrentUserType;
+};
+
+
+export type RequestTypeRequestedCertificatesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type RequestTypeConnection = {
+  __typename?: 'RequestTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<RequestTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `RequestType` and its cursor. */
+export type RequestTypeEdge = {
+  __typename?: 'RequestTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<RequestType>;
+};
+
+/** A Relay edge containing a `RequestedCertificate` and its cursor. */
+export type RequestedCertificateEdge = {
+  __typename?: 'RequestedCertificateEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<RequestedCertificateType>;
+};
+
+export type RequestedCertificateType = Node & {
+  __typename?: 'RequestedCertificateType';
+  certificate: CertificateType;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  issued: Scalars['Boolean']['output'];
+  requestSet: RequestTypeConnection;
+  url: Scalars['String']['output'];
+};
+
+
+export type RequestedCertificateTypeRequestSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type RequestedCertificateTypeConnection = {
+  __typename?: 'RequestedCertificateTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<RequestedCertificateTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `RequestedCertificateType` and its cursor. */
+export type RequestedCertificateTypeEdge = {
+  __typename?: 'RequestedCertificateTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<RequestedCertificateType>;
+};
+
 export type SingUpMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
@@ -1861,6 +2629,50 @@ export type SingUpMutationPayload = {
   email?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   refresh?: Maybe<Scalars['String']['output']>;
+};
+
+/** A Relay edge containing a `State` and its cursor. */
+export type StateEdge = {
+  __typename?: 'StateEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<StateType>;
+};
+
+export type StateType = Node & {
+  __typename?: 'StateType';
+  courtSet: CourtTypeConnection;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  uf: CertificatesStateUfChoices;
+};
+
+
+export type StateTypeCourtSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type StateTypeConnection = {
+  __typename?: 'StateTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<StateTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `StateType` and its cursor. */
+export type StateTypeEdge = {
+  __typename?: 'StateTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<StateType>;
 };
 
 export type StripeChargeType = Node & {
@@ -2541,6 +3353,65 @@ export type SysFilter = {
   publishedVersion_not_in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
+export type UpdateCertificateCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  subCategories: Scalars['String']['input'];
+};
+
+export type UpdateCertificateCategoriePayload = {
+  __typename?: 'UpdateCertificateCategoriePayload';
+  certificateCategorie?: Maybe<CertificateCategorieType>;
+  certificateCategorieEdge?: Maybe<CertificateCategorieEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateCertificateInput = {
+  availablePersonType: Scalars['String']['input'];
+  category: Scalars['String']['input'];
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  court?: InputMaybe<Scalars['String']['input']>;
+  creditsNeeded: Scalars['Int']['input'];
+  deadlineDays: Scalars['Int']['input'];
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type UpdateCertificatePayload = {
+  __typename?: 'UpdateCertificatePayload';
+  certificate?: Maybe<CertificateType>;
+  certificateEdge?: Maybe<CertificateEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateCertificateSubCategorieInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type UpdateCertificateSubCategoriePayload = {
+  __typename?: 'UpdateCertificateSubCategoriePayload';
+  certificateSubCategorie?: Maybe<CertificateSubCategorieType>;
+  certificateSubCategorieEdge?: Maybe<CertificateSubCategorieEdge>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateCourtInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  states: Scalars['String']['input'];
+};
+
+export type UpdateCourtPayload = {
+  __typename?: 'UpdateCourtPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  court?: Maybe<CourtType>;
+  courtEdge?: Maybe<CourtEdge>;
+};
+
 export type UpdateCrudDemoItemMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
@@ -2557,9 +3428,19 @@ export type UpdateCrudDemoItemMutationPayload = {
 
 export type UpdateCurrentUserMutationInput = {
   avatar?: InputMaybe<Scalars['Upload']['input']>;
+  certificateCredits?: InputMaybe<Scalars['Int']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  complement?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
+  neighborhood?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  postalCode?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+  vat?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateCurrentUserMutationPayload = {
@@ -2579,6 +3460,30 @@ export type UpdateDefaultPaymentMethodMutationPayload = {
   activeSubscription?: Maybe<SubscriptionScheduleType>;
   clientMutationId?: Maybe<Scalars['String']['output']>;
   paymentMethodEdge?: Maybe<PaymentMethodEdge>;
+};
+
+export type UpdateDocumentInput = {
+  birthDate?: InputMaybe<Scalars['DateTime']['input']>;
+  cityResidence?: InputMaybe<Scalars['String']['input']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  docId?: InputMaybe<Scalars['String']['input']>;
+  docIdState?: InputMaybe<Scalars['String']['input']>;
+  father?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  maritalStatus?: InputMaybe<Scalars['String']['input']>;
+  mother?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  rg?: InputMaybe<Scalars['String']['input']>;
+  rgSsp?: InputMaybe<Scalars['String']['input']>;
+  socialSecurityNumber?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateDocumentPayload = {
+  __typename?: 'UpdateDocumentPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  document?: Maybe<DocumentType>;
+  documentEdge?: Maybe<DocumentEdge>;
 };
 
 export type UpdateNotificationMutationInput = {
@@ -2607,13 +3512,67 @@ export type UpdatePaymentIntentMutationPayload = {
   paymentIntent?: Maybe<StripePaymentIntentType>;
 };
 
+export type UpdateRequestInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  document: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  requestedCertificates: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+};
+
+export type UpdateRequestPayload = {
+  __typename?: 'UpdateRequestPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  request?: Maybe<RequestType>;
+  requestEdge?: Maybe<RequestEdge>;
+};
+
+export type UpdateRequestedCertificateInput = {
+  certificate?: InputMaybe<Scalars['String']['input']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  issued?: InputMaybe<Scalars['Boolean']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateRequestedCertificatePayload = {
+  __typename?: 'UpdateRequestedCertificatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  requestedCertificate?: Maybe<RequestedCertificateType>;
+  requestedCertificateEdge?: Maybe<RequestedCertificateEdge>;
+};
+
+export type UpdateStateInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  uf: Scalars['String']['input'];
+};
+
+export type UpdateStatePayload = {
+  __typename?: 'UpdateStatePayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<StateType>;
+  stateEdge?: Maybe<StateEdge>;
+};
+
 export type UserProfileType = Node & {
   __typename?: 'UserProfileType';
+  certificateCredits: Scalars['Int']['output'];
+  city: Scalars['String']['output'];
+  complement: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   /** The ID of the object */
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
+  neighborhood: Scalars['String']['output'];
+  number: Scalars['String']['output'];
+  phoneNumber: Scalars['String']['output'];
+  postalCode: Scalars['String']['output'];
+  state?: Maybe<UsersUserProfileStateChoices>;
+  street: Scalars['String']['output'];
   user: CurrentUserType;
+  vat: Scalars['String']['output'];
 };
 
 export type UserType = {
@@ -2624,6 +3583,65 @@ export type UserType = {
   id: Scalars['ID']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
 };
+
+export enum UsersUserProfileStateChoices {
+  /** Acre */
+  AC = 'AC',
+  /** Alagoas */
+  AL = 'AL',
+  /** Amazonas */
+  AM = 'AM',
+  /** Amapá */
+  AP = 'AP',
+  /** Bahia */
+  BA = 'BA',
+  /** Ceará */
+  CE = 'CE',
+  /** Distrito Federal */
+  DF = 'DF',
+  /** Espírito Santo */
+  ES = 'ES',
+  /** Goiás */
+  GO = 'GO',
+  /** Maranhão */
+  MA = 'MA',
+  /** Minas Gerais */
+  MG = 'MG',
+  /** Mato Grosso do Sul */
+  MS = 'MS',
+  /** Mato Grosso */
+  MT = 'MT',
+  /** Nacional */
+  NA = 'NA',
+  /** Pará */
+  PA = 'PA',
+  /** Paraíba */
+  PB = 'PB',
+  /** Pernambuco */
+  PE = 'PE',
+  /** Piauí */
+  PI = 'PI',
+  /** Paraná */
+  PR = 'PR',
+  /** Rio de Janeiro */
+  RJ = 'RJ',
+  /** Rio Grande do Norte */
+  RN = 'RN',
+  /** Rondônia */
+  RO = 'RO',
+  /** Roraima */
+  RR = 'RR',
+  /** Rio Grande do Sul */
+  RS = 'RS',
+  /** Santa Catarina */
+  SC = 'SC',
+  /** Sergipe */
+  SE = 'SE',
+  /** São Paulo */
+  SP = 'SP',
+  /** Tocantins */
+  TO = 'TO'
+}
 
 export type ValidateOtpMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
@@ -2659,7 +3677,7 @@ export type PaginationListTestQueryQueryVariables = Exact<{
 
 export type PaginationListTestQueryQuery = { __typename?: 'Query', allNotifications?: { __typename?: 'NotificationConnection', edges: Array<{ __typename?: 'NotificationEdge', node?: { __typename?: 'NotificationType', id: string } | null } | null>, pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, endCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean } } | null };
 
-export type CommonQueryCurrentUserFragmentFragment = { __typename?: 'CurrentUserType', id: string, email: string, firstName?: string | null, lastName?: string | null, roles?: Array<string | null> | null, avatar?: string | null, otpVerified: boolean, otpEnabled: boolean } & { ' $fragmentName'?: 'CommonQueryCurrentUserFragmentFragment' };
+export type CommonQueryCurrentUserFragmentFragment = { __typename?: 'CurrentUserType', id: string, email: string, firstName?: string | null, lastName?: string | null, roles?: Array<string | null> | null, avatar?: string | null, otpVerified: boolean, otpEnabled: boolean, vat?: string | null, phoneNumber?: string | null, postalCode?: string | null, street?: string | null, number?: string | null, complement?: string | null, neighborhood?: string | null, city?: string | null, state?: string | null } & { ' $fragmentName'?: 'CommonQueryCurrentUserFragmentFragment' };
 
 export type CommonQueryCurrentUserQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3070,7 +4088,7 @@ export type DisableOtpMutationVariables = Exact<{
 
 export type DisableOtpMutation = { __typename?: 'ApiMutation', disableOtp?: { __typename?: 'DisableOTPMutationPayload', ok?: boolean | null } | null };
 
-export const CommonQueryCurrentUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}}]}}]} as unknown as DocumentNode<CommonQueryCurrentUserFragmentFragment, unknown>;
+export const CommonQueryCurrentUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"vat"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"complement"}},{"kind":"Field","name":{"kind":"Name","value":"neighborhood"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"state"}}]}}]} as unknown as DocumentNode<CommonQueryCurrentUserFragmentFragment, unknown>;
 export const UseFavoriteDemoItem_ItemFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"useFavoriteDemoItem_item"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContentfulDemoItemFavoriteType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}}]}}]}}]} as unknown as DocumentNode<UseFavoriteDemoItem_ItemFragment, unknown>;
 export const DemoItemListItemFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"demoItemListItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DemoItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<DemoItemListItemFragmentFragment, unknown>;
 export const CrudDemoItemListItemFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"crudDemoItemListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CrudDemoItemType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]} as unknown as DocumentNode<CrudDemoItemListItemFragment, unknown>;
@@ -3087,7 +4105,7 @@ export const StripeChargeFragmentFragmentDoc = {"kind":"Document","definitions":
 export const NotificationsButtonContentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"notificationsButtonContent"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Query"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasUnreadNotifications"}}]}}]} as unknown as DocumentNode<NotificationsButtonContentFragment, unknown>;
 export const NotificationsListContentFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"notificationsListContentFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Query"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"allNotifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"count"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"readAt"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"issuer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]} as unknown as DocumentNode<NotificationsListContentFragmentFragment, unknown>;
 export const PaginationListTestQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"paginationListTestQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allNotifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]} as unknown as DocumentNode<PaginationListTestQueryQuery, PaginationListTestQueryQueryVariables>;
-export const CommonQueryCurrentUserQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"commonQueryCurrentUserQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}}]}}]} as unknown as DocumentNode<CommonQueryCurrentUserQueryQuery, CommonQueryCurrentUserQueryQueryVariables>;
+export const CommonQueryCurrentUserQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"commonQueryCurrentUserQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"vat"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"complement"}},{"kind":"Field","name":{"kind":"Name","value":"neighborhood"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"state"}}]}}]} as unknown as DocumentNode<CommonQueryCurrentUserQueryQuery, CommonQueryCurrentUserQueryQueryVariables>;
 export const ConfigContentfulAppConfigQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"configContentfulAppConfigQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"appConfigCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"privacyPolicy"}},{"kind":"Field","name":{"kind":"Name","value":"termsAndConditions"}}]}}]}}]}}]} as unknown as DocumentNode<ConfigContentfulAppConfigQueryQuery, ConfigContentfulAppConfigQueryQueryVariables>;
 export const UseFavoriteDemoItemListCreateMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"useFavoriteDemoItemListCreateMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateFavoriteContentfulDemoItemMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createFavoriteContentfulDemoItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contentfulDemoItemFavoriteEdge"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UseFavoriteDemoItemListCreateMutationMutation, UseFavoriteDemoItemListCreateMutationMutationVariables>;
 export const UseFavoriteDemoItemListDeleteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"useFavoriteDemoItemListDeleteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteFavoriteContentfulDemoItemMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteFavoriteContentfulDemoItem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletedIds"}}]}}]}}]} as unknown as DocumentNode<UseFavoriteDemoItemListDeleteMutationMutation, UseFavoriteDemoItemListDeleteMutationMutationVariables>;
@@ -3123,7 +4141,7 @@ export const NotificationsListSubscriptionDocument = {"kind":"Document","definit
 export const NotificationsListMarkAsReadMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"notificationsListMarkAsReadMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MarkReadAllNotificationsMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markReadAllNotifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}}]}}]}}]} as unknown as DocumentNode<NotificationsListMarkAsReadMutationMutation, NotificationsListMarkAsReadMutationMutationVariables>;
 export const AuthConfirmUserEmailMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authConfirmUserEmailMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConfirmEmailMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"confirm"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}}]}}]}}]} as unknown as DocumentNode<AuthConfirmUserEmailMutationMutation, AuthConfirmUserEmailMutationMutationVariables>;
 export const AuthChangePasswordMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authChangePasswordMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChangePasswordMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access"}},{"kind":"Field","name":{"kind":"Name","value":"refresh"}}]}}]}}]} as unknown as DocumentNode<AuthChangePasswordMutationMutation, AuthChangePasswordMutationMutationVariables>;
-export const AuthUpdateUserProfileMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authUpdateUserProfileMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentUserMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}}]}}]} as unknown as DocumentNode<AuthUpdateUserProfileMutationMutation, AuthUpdateUserProfileMutationMutationVariables>;
+export const AuthUpdateUserProfileMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authUpdateUserProfileMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentUserMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"commonQueryCurrentUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CurrentUserType"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"otpVerified"}},{"kind":"Field","name":{"kind":"Name","value":"otpEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"vat"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"complement"}},{"kind":"Field","name":{"kind":"Name","value":"neighborhood"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"state"}}]}}]} as unknown as DocumentNode<AuthUpdateUserProfileMutationMutation, AuthUpdateUserProfileMutationMutationVariables>;
 export const LoginFormMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"loginFormMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ObtainTokenMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokenAuth"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access"}},{"kind":"Field","name":{"kind":"Name","value":"refresh"}},{"kind":"Field","name":{"kind":"Name","value":"otpAuthToken"}}]}}]}}]} as unknown as DocumentNode<LoginFormMutationMutation, LoginFormMutationMutationVariables>;
 export const AuthRequestPasswordResetConfirmMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authRequestPasswordResetConfirmMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PasswordResetConfirmationMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"passwordResetConfirm"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}}]}}]}}]} as unknown as DocumentNode<AuthRequestPasswordResetConfirmMutationMutation, AuthRequestPasswordResetConfirmMutationMutationVariables>;
 export const AuthRequestPasswordResetMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"authRequestPasswordResetMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PasswordResetMutationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"passwordReset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}}]}}]}}]} as unknown as DocumentNode<AuthRequestPasswordResetMutationMutation, AuthRequestPasswordResetMutationMutationVariables>;

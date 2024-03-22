@@ -3,7 +3,7 @@ import { Button, ButtonVariant } from '@sb/webapp-core/components/buttons';
 import { HTMLAttributes } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { FacebookIcon, GoogleIcon } from '../../../../images/icons';
+import { GoogleIcon } from '../../../../images/icons';
 import { OAuthProvider } from '../../../../modules/auth/auth.types';
 
 export enum SignupButtonsVariant {
@@ -18,23 +18,9 @@ export type SocialLoginButtonsProps = HTMLAttributes<HTMLDivElement> & {
 export const SocialLoginButtons = ({ variant, ...props }: SocialLoginButtonsProps) => {
   const oAuthLogin = useOAuthLogin();
   const handleGoogleLogin = () => oAuthLogin(OAuthProvider.Google);
-  const handleFacebookLogin = () => oAuthLogin(OAuthProvider.Facebook);
 
   return (
     <div className="flex w-full flex-col gap-4" {...props}>
-      <Button
-        className="flex gap-1"
-        icon={<FacebookIcon />}
-        variant={ButtonVariant.SECONDARY}
-        onClick={handleFacebookLogin}
-      >
-        {variant === SignupButtonsVariant.LOGIN ? (
-          <FormattedMessage defaultMessage="Log in with Facebook" id="Auth / Login / Facebook login button" />
-        ) : (
-          <FormattedMessage defaultMessage="Sign up with Facebook" id="Auth / Signup / Facebook signup button" />
-        )}
-      </Button>
-
       <Button
         className="flex gap-1"
         icon={<GoogleIcon />}

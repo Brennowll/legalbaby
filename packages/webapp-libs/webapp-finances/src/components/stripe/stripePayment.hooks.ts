@@ -1,4 +1,4 @@
-import { BaseMutationOptions, useMutation } from '@apollo/client';
+import { BaseMutationOptions, useMutation, useQuery } from '@apollo/client';
 import { ApolloError } from '@apollo/client/errors';
 import { StripePaymentIntentType } from '@sb/webapp-api-client/graphql';
 import { useApiForm } from '@sb/webapp-api-client/hooks';
@@ -7,7 +7,9 @@ import { GraphQLError } from 'graphql';
 import { useState } from 'react';
 
 import { TestProduct } from '../../types';
+import { userCreditsMutation, userCreditsQuery } from './stripePayment.graphql';
 import { useStripePayment } from './stripePayment.stripe.hook';
+import { UserCreditsQueryT } from './stripePayment.types';
 import {
   stripeCreatePaymentIntentMutation,
   stripeUpdatePaymentIntentMutation,
@@ -95,11 +97,13 @@ export const useStripePaymentIntent = (onError: (error: ApolloError, clientOptio
   const updateOrCreatePaymentIntent = async (
     product: TestProduct
   ): Promise<{ errors?: readonly GraphQLError[]; paymentIntent?: StripePaymentIntentType | null }> => {
+    const formattedProduct = product === '5 créditos - R$5' ? '5' : product === '10 créditos - R$10' ? '10' : '15';
+
     if (!paymentIntent) {
       const { data, errors } = await commitCreatePaymentIntentMutation({
         variables: {
           input: {
-            product,
+            product: formattedProduct,
           },
         },
       });
@@ -113,7 +117,7 @@ export const useStripePaymentIntent = (onError: (error: ApolloError, clientOptio
     const { data, errors } = await commitUpdatePaymentIntentMutation({
       variables: {
         input: {
-          product,
+          product: formattedProduct,
           id: paymentIntent.id,
         },
       },
@@ -139,6 +143,8 @@ export const useStripePaymentIntent = (onError: (error: ApolloError, clientOptio
  */
 export const useStripePaymentForm = (onSuccess: (paymentIntent: StripePaymentIntentType) => void) => {
   const { confirmPayment } = useStripePayment();
+  const { data: userData } = useQuery<UserCreditsQueryT>(userCreditsQuery);
+  const [commitMutation] = useMutation(userCreditsMutation);
 
   const { updateOrCreatePaymentIntent, loading } = useStripePaymentIntent((error) => {
     setApolloGraphQLResponseErrors(error.graphQLErrors);
@@ -162,7 +168,12 @@ export const useStripePaymentForm = (onSuccess: (paymentIntent: StripePaymentInt
 
     trackEvent('payment', 'make-payment', confirmResult.paymentIntent.status);
 
-    if (confirmResult.paymentIntent?.status === 'succeeded') onSuccess(paymentIntent);
+    if (confirmResult.paymentIntent?.status === 'succeeded') {
+      const certificateCredits = userData?.currentUser.certificateCredits ? userData.currentUser.certificateCredits : 0;
+      const creditsToAdd = data.product === TestProduct.A ? 5 : data.product === TestProduct.B ? 10 : 15;
+      await commitMutation({ variables: { input: { certificateCredits: certificateCredits + creditsToAdd } } });
+      onSuccess(paymentIntent);
+    }
   });
 
   return { apiFormControls, onSubmit, loading };

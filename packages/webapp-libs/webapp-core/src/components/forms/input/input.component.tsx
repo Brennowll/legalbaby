@@ -36,7 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             </p>
           )}
         </label>
-        <p className="absolute top-[calc(100%+4px)] m-0 text-xs leading-3 text-red-500">{error}</p>
+        <p className="top-[calc(100%+4px)] mx-0 my-1 text-xs leading-3 text-red-500">{error}</p>
       </div>
     );
   }

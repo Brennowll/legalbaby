@@ -34,14 +34,14 @@ export const ChangePasswordForm = () => {
               required: {
                 value: true,
                 message: intl.formatMessage({
-                  defaultMessage: 'Old password is required',
+                  defaultMessage: 'Senha anterior é necessária',
                   id: 'Auth / Change password / Old password required',
                 }),
               },
             })}
             type="password"
             label={intl.formatMessage({
-              defaultMessage: 'Old password',
+              defaultMessage: 'Senha anterior',
               id: 'Auth / Change password / Old password placeholder',
             })}
             error={errors.oldPassword?.message}
@@ -59,25 +59,25 @@ export const ChangePasswordForm = () => {
               required: {
                 value: true,
                 message: intl.formatMessage({
-                  defaultMessage: 'New password is required',
+                  defaultMessage: 'Nova senha é necessária',
                   id: 'Auth / Change password / Password required',
                 }),
               },
               minLength: {
                 value: 8,
                 message: intl.formatMessage({
-                  defaultMessage: 'Password is too short. It must contain at least 8 characters.',
+                  defaultMessage: 'A senha é muito pequena. Ela precisa ter no mínimo 8 caracteres.',
                   id: 'Auth / Change password / Password too short',
                 }),
               },
             })}
             type="password"
             label={intl.formatMessage({
-              defaultMessage: 'New password',
+              defaultMessage: 'Nova senha',
               id: 'Auth / Change password / New password label',
             })}
             placeholder={intl.formatMessage({
-              defaultMessage: 'Minimum 8 characters',
+              defaultMessage: 'Mínimo de 8 caracteres',
               id: 'Auth / Change password / New password placeholder',
             })}
             error={errors.newPassword?.message}
@@ -89,24 +89,24 @@ export const ChangePasswordForm = () => {
                 required: (value) =>
                   value?.length > 0 ||
                   intl.formatMessage({
-                    defaultMessage: 'Confirm password is required',
+                    defaultMessage: 'A confirmação da senha é necessária',
                     id: 'Auth / Change password / Confirm password required',
                   }),
                 mustMatch: (value) =>
                   getValues().newPassword === value ||
                   intl.formatMessage({
-                    defaultMessage: 'Passwords must match',
+                    defaultMessage: 'As senhas precisam ser iguais',
                     id: 'Auth / Change password / Password must match',
                   }),
               },
             })}
             type="password"
             label={intl.formatMessage({
-              defaultMessage: 'Confirm new password',
+              defaultMessage: 'Confirme sua senha',
               id: 'Auth / Change password / Confirm new password label',
             })}
             placeholder={intl.formatMessage({
-              defaultMessage: 'Minimum 8 characters',
+              defaultMessage: 'Mínimo de 8 caracteres',
               id: 'Auth / Change password / Confirm new password placeholder',
             })}
             error={errors.confirmNewPassword?.message}
@@ -116,7 +116,7 @@ export const ChangePasswordForm = () => {
         {hasGenericErrorOnly ? <Small className="text-red-500">{genericError}</Small> : null}
 
         <Button disabled={loading} type="submit" className={cn({ 'mt-4': !!errors.newPassword }, 'w-full md:w-fit')}>
-          <FormattedMessage defaultMessage="Change password" id="Auth / Change password / Submit button" />
+          <FormattedMessage defaultMessage="Atualize sua senha" id="Auth / Change password / Submit button" />
         </Button>
       </form>
     </div>

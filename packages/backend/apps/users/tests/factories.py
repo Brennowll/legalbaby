@@ -1,13 +1,12 @@
-from typing import Optional, List, TypedDict
+import mimetypes
+from typing import List, Optional, TypedDict
 
 import factory
-import mimetypes
+from common.acl.helpers import CommonGroups
 from django.contrib.auth import hashers
 from django.contrib.auth.models import Group
 from django.core.files.uploadedfile import SimpleUploadedFile, UploadedFile
 from djstripe.models import Customer
-
-from common.acl.helpers import CommonGroups
 
 
 class GroupFactory(factory.django.DjangoModelFactory):
@@ -74,8 +73,8 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
         model = "users.UserProfile"
 
     user = factory.SubFactory(UserFactory, profile=None)
-    first_name = factory.Faker("first_name", locale="pl")
-    last_name = factory.Faker("last_name", locale="pl")
+    first_name = factory.Faker("first_name", locale="pt_BR")
+    last_name = factory.Faker("last_name", locale="pt_BR")
 
 
 class ImageFactoryParams(TypedDict):

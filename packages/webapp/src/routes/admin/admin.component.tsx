@@ -1,12 +1,12 @@
-import { Card } from '@sb/webapp-core/components/cards';
-import { H2, H4, Small } from '@sb/webapp-core/components/typography';
-import { ShieldCheckIcon } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+// import { Card } from '@sb/webapp-core/components/cards';
+// import { H2, H4, Small } from '@sb/webapp-core/components/typography';
+// import { ShieldCheckIcon } from 'lucide-react';
+// import { FormattedMessage } from 'react-intl';
 
 export const Admin = () => {
   return (
     <div className="px-4">
-      <div className="w-full text-center">
+      {/* <div className="w-full text-center">
         <H2>
           <FormattedMessage defaultMessage="This page is only visible for admins" id="Admin / Heading" />
         </H2>
@@ -23,7 +23,7 @@ export const Admin = () => {
             <FormattedMessage defaultMessage="Regular users do not have access here" id="Admin / Card / Subtitle" />
           </Small>
         </Card>
-      </div>
+      </div> */}
     </div>
   );
 };

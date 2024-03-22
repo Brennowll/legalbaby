@@ -13,6 +13,15 @@ export const commonQueryCurrentUserFragment = gql(/* GraphQL */ `
     avatar
     otpVerified
     otpEnabled
+    vat
+    phoneNumber
+    postalCode
+    street
+    number
+    complement
+    neighborhood
+    city
+    state
   }
 `);
 

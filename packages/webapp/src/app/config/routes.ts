@@ -14,6 +14,8 @@ export const RoutesConfig = {
   ...ContentfulRoutesConfig,
   ...CrudDemoRoutesConfig,
   ...FinancesRoutesConfig,
+  requestCertificate: 'pedir-certificado',
+  issuedCertificates: 'issued-certificates',
   //<-- INJECT ROUTE DEFINITION -->
 };
 

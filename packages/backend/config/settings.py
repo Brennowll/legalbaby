@@ -61,6 +61,7 @@ LOCAL_APPS = [
     "apps.notifications",
     "apps.websockets",
     "apps.integrations",
+    "apps.certificates",
 ]
 
 INSTALLED_APPS = DJANGO_CORE_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -75,7 +76,7 @@ MIDDLEWARE = [
     "common.middleware.SetAuthTokenCookieMiddleware",
     "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -88,7 +89,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls_api"
 ROOT_HOSTCONF = "config.hosts"
 DEFAULT_HOST = "api"
-PARENT_HOST = env('PARENT_HOST', default="")
+PARENT_HOST = env("PARENT_HOST", default="")
 
 TEMPLATES = [
     {
@@ -109,32 +110,32 @@ TEMPLATES = [
 PASSWORD_HASHERS = env.list(
     "DJANGO_PASSWORD_HASHERS",
     default=[
-        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-        'django.contrib.auth.hashers.Argon2PasswordHasher',
-        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+        "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+        "django.contrib.auth.hashers.Argon2PasswordHasher",
+        "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     ],
 )
 
 WSGI_APPLICATION = "config.wsgi.application"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': env('DJANGO_LOG_LEVEL', default='INFO'),
+    "root": {
+        "handlers": ["console"],
+        "level": env("DJANGO_LOG_LEVEL", default="INFO"),
     },
-    'loggers': {
-        '*': {
-            'handlers': ['console'],
-            'level': env('DJANGO_LOG_LEVEL', default='INFO'),
-            'propagate': False,
+    "loggers": {
+        "*": {
+            "handlers": ["console"],
+            "level": env("DJANGO_LOG_LEVEL", default="INFO"),
+            "propagate": False,
         },
     },
 }
@@ -191,15 +192,15 @@ STORAGES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
 )
 
 LOCALE_PATHS = []
@@ -210,53 +211,53 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "apps.users.authentication.JSONWebTokenCookieAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        'rest_framework.authentication.SessionAuthentication',
+        "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_THROTTLE_RATES": {"anon": "100/day"},
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=env.int('ACCESS_TOKEN_LIFETIME_MINUTES', default=5)),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=env.int('REFRESH_TOKEN_LIFETIME_DAYS', default=7)),
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=env.int("ACCESS_TOKEN_LIFETIME_MINUTES", default=5)),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=env.int("REFRESH_TOKEN_LIFETIME_DAYS", default=7)),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
-ACCESS_TOKEN_COOKIE = 'token'
-REFRESH_TOKEN_COOKIE = 'refresh_token'
-REFRESH_TOKEN_LOGOUT_COOKIE = 'refresh_token_logout'
+ACCESS_TOKEN_COOKIE = "token"
+REFRESH_TOKEN_COOKIE = "refresh_token"
+REFRESH_TOKEN_LOGOUT_COOKIE = "refresh_token_logout"
 COOKIE_MAX_AGE = 3600 * 24 * 14  # 14 days
 
 SOCIAL_AUTH_USER_MODEL = "users.User"
-SOCIAL_AUTH_USER_FIELDS = ['email', 'username']
+SOCIAL_AUTH_USER_FIELDS = ["email", "username"]
 SOCIAL_AUTH_STRATEGY = "apps.users.strategy.DjangoJWTStrategy"
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = env.bool('SOCIAL_AUTH_REDIRECT_IS_HTTPS', default=True)
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = env.bool("SOCIAL_AUTH_REDIRECT_IS_HTTPS", default=True)
 SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.user.create_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
+    "social_core.pipeline.social_auth.social_details",
+    "social_core.pipeline.social_auth.social_uid",
+    "social_core.pipeline.social_auth.social_user",
+    "social_core.pipeline.user.get_username",
+    "social_core.pipeline.social_auth.associate_by_email",
+    "social_core.pipeline.user.create_user",
+    "social_core.pipeline.social_auth.associate_user",
+    "social_core.pipeline.social_auth.load_extra_data",
+    "social_core.pipeline.user.user_details",
 )
-SOCIAL_AUTH_ALLOWED_REDIRECT_HOSTS = env.list('SOCIAL_AUTH_ALLOWED_REDIRECT_HOSTS', default=[])
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY', default='')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET', default='')
-SOCIAL_AUTH_FACEBOOK_KEY = env('SOCIAL_AUTH_FACEBOOK_KEY', default='')
-SOCIAL_AUTH_FACEBOOK_SECRET = env('SOCIAL_AUTH_FACEBOOK_SECRET', default='')
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile']
+SOCIAL_AUTH_ALLOWED_REDIRECT_HOSTS = env.list("SOCIAL_AUTH_ALLOWED_REDIRECT_HOSTS", default=[])
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", default="")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", default="")
+SOCIAL_AUTH_FACEBOOK_KEY = env("SOCIAL_AUTH_FACEBOOK_KEY", default="")
+SOCIAL_AUTH_FACEBOOK_SECRET = env("SOCIAL_AUTH_FACEBOOK_SECRET", default="")
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["email", "public_profile"]
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email',
+    "fields": "id, name, email",
 }
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/"
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ["locale"]
 
 SWAGGER_SETTINGS = {
-    'DEFAULT_INFO': 'config.urls_api.api_info',
+    "DEFAULT_INFO": "config.urls_api.api_info",
     "SECURITY_DEFINITIONS": {"api_key": {"type": "apiKey", "in": "header", "name": "Authorization"}},
 }
 
@@ -282,7 +283,7 @@ STRIPE_CHECKS_ENABLED = env.bool("STRIPE_CHECKS_ENABLED", default=True)
 if not STRIPE_CHECKS_ENABLED:
     SILENCED_SYSTEM_CHECKS.append("djstripe.C001")
 
-STRIPE_ENABLED = '<CHANGE_ME>' not in STRIPE_LIVE_SECRET_KEY or '<CHANGE_ME>' not in STRIPE_TEST_SECRET_KEY
+STRIPE_ENABLED = "<CHANGE_ME>" not in STRIPE_LIVE_SECRET_KEY or "<CHANGE_ME>" not in STRIPE_TEST_SECRET_KEY
 
 SUBSCRIPTION_TRIAL_PERIOD_DAYS = env("SUBSCRIPTION_TRIAL_PERIOD_DAYS", default=7)
 
@@ -302,24 +303,24 @@ AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default=None)
 AWS_S3_ENDPOINT_URL = AWS_ENDPOINT_URL
 AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default=None)
 AWS_QUERYSTRING_EXPIRE = env("AWS_QUERYSTRING_EXPIRE", default=60 * 60 * 24)
-AWS_CLOUDFRONT_KEY = os.environ.get('AWS_CLOUDFRONT_KEY', '').encode('ascii')
-AWS_CLOUDFRONT_KEY_ID = os.environ.get('AWS_CLOUDFRONT_KEY_ID', None)
+AWS_CLOUDFRONT_KEY = os.environ.get("AWS_CLOUDFRONT_KEY", "").encode("ascii")
+AWS_CLOUDFRONT_KEY_ID = os.environ.get("AWS_CLOUDFRONT_KEY_ID", None)
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 XRAY_RECORDER = {
-    'AWS_XRAY_TRACING_NAME': f'{env("PROJECT_NAME", default="")}-{ENVIRONMENT_NAME}-backend',
-    'AUTO_INSTRUMENT': not DEBUG,
-    'AWS_XRAY_CONTEXT_MISSING': 'IGNORE_ERROR',
-    'PLUGINS': ('ECSPlugin',),
+    "AWS_XRAY_TRACING_NAME": f'{env("PROJECT_NAME", default="")}-{ENVIRONMENT_NAME}-backend',
+    "AUTO_INSTRUMENT": not DEBUG,
+    "AWS_XRAY_CONTEXT_MISSING": "IGNORE_ERROR",
+    "PLUGINS": ("ECSPlugin",),
 }
 
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", default=[])
 RATELIMIT_IP_META_KEY = "common.utils.get_client_ip"
 
 OTP_AUTH_ISSUER_NAME = env("OTP_AUTH_ISSUER_NAME", default="")
-OTP_AUTH_TOKEN_COOKIE = 'otp_auth_token'
-OTP_AUTH_TOKEN_LIFETIME_MINUTES = datetime.timedelta(minutes=env.int('OTP_AUTH_TOKEN_LIFETIME_MINUTES', default=5))
+OTP_AUTH_TOKEN_COOKIE = "otp_auth_token"
+OTP_AUTH_TOKEN_LIFETIME_MINUTES = datetime.timedelta(minutes=env.int("OTP_AUTH_TOKEN_LIFETIME_MINUTES", default=5))
 OTP_VALIDATE_PATH = "/auth/validate-otp"
 
 

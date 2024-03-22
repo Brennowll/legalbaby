@@ -24,11 +24,17 @@ export const PaymentConfirm = () => {
   return (
     <PageLayout>
       <PageHeadline
-        header={<FormattedMessage defaultMessage="Payments" id="Finances / Stripe / Payment confirm / heading" />}
+        header={
+          <FormattedMessage
+            defaultMessage="Compra de Créditos para Solicitação de Certificados"
+            id="Finances / Stripe / Payment confirm / Buy credits / header"
+          />
+        }
         subheader={
           <FormattedMessage
-            defaultMessage="Example of a single payment form powered by Stripe. You can make donations by selecting an amount and providing credit card details"
-            id="Finances / Stripe / Payment confirm / subheading"
+            defaultMessage="Adquira créditos para requisitar certificados em nosso site.
+            Cada crédito utilizado permite que você solicite um certificado."
+            id="Finances / Stripe / Payment confirm / Buy credits / subheading"
           />
         }
       />

@@ -46,18 +46,18 @@ describe('Sidebar: Component', () => {
     it('should not show link to dashboard', async () => {
       const { waitForApolloMocks } = render(<Component />);
       await waitForApolloMocks();
-      expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/painel de controle/i)).not.toBeInTheDocument();
     });
 
     it('should show link to privacy policy', async () => {
       render(<Component />);
-      expect(await screen.findByText(/privacy policy/i)).toBeInTheDocument();
+      expect(await screen.findByText(/políticas de privacidade/i)).toBeInTheDocument();
     });
 
     it('should not show link to admin page', async () => {
       const { waitForApolloMocks } = render(<Component />);
       await waitForApolloMocks();
-      expect(screen.queryByText(/admin/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/administrador/i)).not.toBeInTheDocument();
     });
   });
 
@@ -75,20 +75,20 @@ describe('Sidebar: Component', () => {
       it('should show link to dashboard', async () => {
         const apolloMocks = getApolloMocks();
         render(<Component />, { apolloMocks });
-        expect(await screen.findByText(/dashboard/i)).toBeInTheDocument();
+        expect(await screen.findByText(/painel de controle/i)).toBeInTheDocument();
       });
 
       it('should show link to privacy policy', async () => {
         const apolloMocks = getApolloMocks();
         render(<Component />, { apolloMocks });
-        expect(await screen.findByText(/privacy policy/i)).toBeInTheDocument();
+        expect(await screen.findByText(/políticas de privacidade/i)).toBeInTheDocument();
       });
 
       it('should not show link to admin page', async () => {
         const apolloMocks = getApolloMocks();
         const { waitForApolloMocks } = render(<Component />, { apolloMocks });
         await waitForApolloMocks();
-        expect(screen.queryByText(/admin/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/administrador/i)).not.toBeInTheDocument();
       });
 
       describe('on desktop', () => {
@@ -121,19 +121,19 @@ describe('Sidebar: Component', () => {
       it('should show link to dashboard', async () => {
         const apolloMocks = getApolloMocks(Role.ADMIN);
         render(<Component />, { apolloMocks });
-        expect(await screen.findByText(/dashboard/i)).toBeInTheDocument();
+        expect(await screen.findByText(/administrador/i)).toBeInTheDocument();
       });
 
       it('should show link to privacy policy', async () => {
         const apolloMocks = getApolloMocks(Role.ADMIN);
         render(<Component />, { apolloMocks });
-        expect(await screen.findByText(/privacy policy/i)).toBeInTheDocument();
+        expect(await screen.findByText(/políticas de privacidade/i)).toBeInTheDocument();
       });
 
       it('should show link to admin page', async () => {
         const apolloMocks = getApolloMocks(Role.ADMIN);
         render(<Component />, { apolloMocks });
-        expect(await screen.findByText(/admin/i)).toBeInTheDocument();
+        expect(await screen.findByText(/administrador/i)).toBeInTheDocument();
       });
     });
   });

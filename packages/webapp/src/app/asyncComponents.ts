@@ -7,4 +7,8 @@ export const Login = asyncComponent(() => import('../routes/auth/login'));
 export const Logout = asyncComponent(() => import('../routes/auth/logout'));
 export const Profile = asyncComponent(() => import('../routes/profile'));
 export const ConfirmEmail = asyncComponent(() => import('../routes/auth/confirmEmail'));
+
+export const RequestCertificate = asyncComponent(() => import('../routes/requestCertificate'));
+export const IssuedCertificates = asyncComponent(() => import('../routes/issuedCertificates'));
+
 //<-- IMPORT ROUTE -->

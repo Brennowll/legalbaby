@@ -146,7 +146,7 @@ export const StripePaymentMethodSelectorInner = <T extends PaymentFormFields>({
       {!isEmpty(paymentMethods) ? (
         <Button size="sm" onClick={handleBackToCardSelection} variant="outline" icon={<ChevronLeft size={16} />}>
           <FormattedMessage
-            defaultMessage="Back to card list"
+            defaultMessage="Voltar para a lista de cartões"
             id="Stripe / payment method selector / back to card list"
           />
         </Button>
@@ -195,10 +195,10 @@ export const StripePaymentMethodSelectorInner = <T extends PaymentFormFields>({
 
       <Separator />
       <span className="text-muted-foreground">
-        <FormattedMessage defaultMessage="or" id="Stripe / payment method selector / or" />
+        <FormattedMessage defaultMessage="ou" id="Stripe / payment method selector / or" />
       </span>
       <Button type="button" variant="link" onClick={handleNewCardSelected}>
-        <FormattedMessage defaultMessage="Use a new card" id="Stripe / payment method selector / new card option" />
+        <FormattedMessage defaultMessage="Use um novo cartão" id="Stripe / payment method selector / new card option" />
       </Button>
     </>
   );
@@ -209,12 +209,12 @@ export const StripePaymentMethodSelectorInner = <T extends PaymentFormFields>({
       <FormLabel>
         {isEmpty(paymentMethods) || isNewCardEnabled ? (
           <FormattedMessage
-            defaultMessage="Enter card details"
+            defaultMessage="Insira os dados do cartão"
             id="Stripe / payment method selector / enter card details"
           />
         ) : (
           <FormattedMessage
-            defaultMessage="Select payment method"
+            defaultMessage="Selecione o método de pagamento"
             id="Stripe / payment method selector / select payment method"
           />
         )}

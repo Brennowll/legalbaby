@@ -45,7 +45,7 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
       required: {
         value: true,
         message: intl.formatMessage({
-          defaultMessage: 'Card name is required',
+          defaultMessage: 'O nome é necessário',
           id: 'Stripe / Payment / Card name required',
         }),
       },
@@ -54,15 +54,15 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
 
   const stripeRequiredErrorMap: Partial<Record<StripeElementType, string>> = {
     cardNumber: intl.formatMessage({
-      defaultMessage: 'Card number is required',
+      defaultMessage: 'O número do cartão é necessário',
       id: 'Stripe / Payment / Card number required',
     }),
     cardExpiry: intl.formatMessage({
-      defaultMessage: 'Card expiry is required',
+      defaultMessage: 'A data de expiração é necessária',
       id: 'Stripe / Payment / Card expiry required',
     }),
     cardCvc: intl.formatMessage({
-      defaultMessage: 'Card CVC is required',
+      defaultMessage: 'O CVC é necessário',
       id: 'Stripe / Payment / Card CVC is required',
     }),
   };
@@ -72,7 +72,7 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
       return (
         stripeRequiredErrorMap[value.elementType] ||
         intl.formatMessage({
-          defaultMessage: 'This field is required',
+          defaultMessage: 'Esse campo é necessário',
           id: 'Stripe / Payment / Card field required',
         })
       );
@@ -130,11 +130,11 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
           {...nameController.field}
           required
           label={intl.formatMessage({
-            defaultMessage: 'Name',
+            defaultMessage: 'Nome',
             id: 'Stripe form / Name label',
           })}
           placeholder={intl.formatMessage({
-            defaultMessage: 'Write here...',
+            defaultMessage: 'Digite aqui...',
             id: 'Stripe form / Name placeholder',
           })}
           error={nameController.fieldState.error?.message?.toString()}
@@ -143,7 +143,7 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
         <div className="flex flex-row space-x-2">
           <div className="flex-1">
             <StripeField
-              label={intl.formatMessage({ defaultMessage: 'Card number', id: 'Stripe form / card number' })}
+              label={intl.formatMessage({ defaultMessage: 'Número do cartão', id: 'Stripe form / card number' })}
               hasError={!!cardNumberController.fieldState.error?.message?.toString()}
             >
               <CardNumberElement
@@ -154,7 +154,7 @@ export const NewCardInput = ({ control }: NewCardInputProps) => {
           </div>
           <div className="min-w-[90px] w-1/7">
             <StripeField
-              label={intl.formatMessage({ defaultMessage: 'Year', id: 'Stripe form / expiry date' })}
+              label={intl.formatMessage({ defaultMessage: 'Ano', id: 'Stripe form / expiry date' })}
               hasError={!!cardExpiryController.fieldState.error?.message?.toString()}
             >
               <CardExpiryElement

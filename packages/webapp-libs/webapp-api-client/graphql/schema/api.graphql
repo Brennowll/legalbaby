@@ -36,6 +36,14 @@ that will be handled by the multipart request spec
 """
 scalar Upload
 type Query {
+  states: [StateType]
+  courts: [CourtType]
+  certificateSubCategories: [CertificateSubCategorieType]
+  certificateCategories: [CertificateCategorieType]
+  documents: [DocumentType]
+  certificates: [CertificateType]
+  requestedCertificates: [RequestedCertificateType]
+  requests: [RequestType]
   allSubscriptionPlans(before: String, after: String, first: Int, last: Int): StripePriceConnection
   activeSubscription: SubscriptionScheduleType
   allPaymentMethods(before: String, after: String, first: Int, last: Int): PaymentMethodConnection
@@ -57,11 +65,18 @@ type Query {
     id: ID!
   ): Node
 }
-type StripePriceConnection {
+type StateType implements Node {
+  "The ID of the object"
+  id: ID!
+  name: String!
+  uf: CertificatesStateUfChoices!
+  courtSet(offset: Int, before: String, after: String, first: Int, last: Int): CourtTypeConnection!
+}
+type CourtTypeConnection {
   "Pagination data for this connection."
   pageInfo: PageInfo!
   "Contains the nodes in this connection."
-  edges: [StripePriceEdge]!
+  edges: [CourtTypeEdge]!
 }
 "The Relay compliant `PageInfo` type, containing data necessary to paginate this connection."
 type PageInfo {
@@ -73,6 +88,181 @@ type PageInfo {
   startCursor: String
   "When paginating forwards, the cursor to continue."
   endCursor: String
+}
+"A Relay edge containing a `CourtType` and its cursor."
+type CourtTypeEdge {
+  "The item at the end of the edge"
+  node: CourtType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type CourtType implements Node {
+  "The ID of the object"
+  id: ID!
+  name: String!
+  states(offset: Int, before: String, after: String, first: Int, last: Int): StateTypeConnection!
+  certificateSet(offset: Int, before: String, after: String, first: Int, last: Int): CertificateTypeConnection!
+}
+type StateTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [StateTypeEdge]!
+}
+"A Relay edge containing a `StateType` and its cursor."
+type StateTypeEdge {
+  "The item at the end of the edge"
+  node: StateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type CertificateTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [CertificateTypeEdge]!
+}
+"A Relay edge containing a `CertificateType` and its cursor."
+type CertificateTypeEdge {
+  "The item at the end of the edge"
+  node: CertificateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type CertificateType implements Node {
+  "The ID of the object"
+  id: ID!
+  name: String!
+  court: CourtType
+  availablePersonType: CertificatesCertificateAvailablePersonTypeChoices!
+  category: CertificateSubCategorieType!
+  creditsNeeded: Int!
+  deadlineDays: Int!
+  requestedcertificateSet(offset: Int, before: String, after: String, first: Int, last: Int): RequestedCertificateTypeConnection!
+}
+type CertificateSubCategorieType implements Node {
+  "The ID of the object"
+  id: ID!
+  name: String!
+  certificatecategorieSet(offset: Int, before: String, after: String, first: Int, last: Int): CertificateCategorieTypeConnection!
+  certificateSet(offset: Int, before: String, after: String, first: Int, last: Int): CertificateTypeConnection!
+}
+type CertificateCategorieTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [CertificateCategorieTypeEdge]!
+}
+"A Relay edge containing a `CertificateCategorieType` and its cursor."
+type CertificateCategorieTypeEdge {
+  "The item at the end of the edge"
+  node: CertificateCategorieType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type CertificateCategorieType implements Node {
+  "The ID of the object"
+  id: ID!
+  name: String!
+  subCategories(offset: Int, before: String, after: String, first: Int, last: Int): CertificateSubCategorieTypeConnection!
+}
+type CertificateSubCategorieTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [CertificateSubCategorieTypeEdge]!
+}
+"A Relay edge containing a `CertificateSubCategorieType` and its cursor."
+type CertificateSubCategorieTypeEdge {
+  "The item at the end of the edge"
+  node: CertificateSubCategorieType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type RequestedCertificateTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [RequestedCertificateTypeEdge]!
+}
+"A Relay edge containing a `RequestedCertificateType` and its cursor."
+type RequestedCertificateTypeEdge {
+  "The item at the end of the edge"
+  node: RequestedCertificateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type RequestedCertificateType implements Node {
+  "The ID of the object"
+  id: ID!
+  certificate: CertificateType!
+  url: String!
+  issued: Boolean!
+  requestSet(offset: Int, before: String, after: String, first: Int, last: Int): RequestTypeConnection!
+}
+type RequestTypeConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [RequestTypeEdge]!
+}
+"A Relay edge containing a `RequestType` and its cursor."
+type RequestTypeEdge {
+  "The item at the end of the edge"
+  node: RequestType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type RequestType implements Node {
+  "The ID of the object"
+  id: ID!
+  user: CurrentUserType!
+  document: DocumentType!
+  requestedCertificates(offset: Int, before: String, after: String, first: Int, last: Int): RequestedCertificateTypeConnection!
+  status: CertificatesRequestStatusChoices!
+}
+type CurrentUserType {
+  id: ID!
+  email: String!
+  otpEnabled: Boolean!
+  otpVerified: Boolean!
+  firstName: String
+  lastName: String
+  vat: String
+  phoneNumber: String
+  street: String
+  number: String
+  complement: String
+  neighborhood: String
+  city: String
+  state: String
+  postalCode: String
+  roles: [String]
+  avatar: String
+  certificateCredits: Int
+}
+type DocumentType implements Node {
+  "The ID of the object"
+  id: ID!
+  docId: String!
+  docIdState: String!
+  rg: String!
+  rgSsp: String!
+  name: String!
+  mother: String!
+  father: String!
+  gender: String!
+  birthDate: DateTime!
+  maritalStatus: String!
+  cityResidence: String!
+  socialSecurityNumber: String!
+  requestSet(offset: Int, before: String, after: String, first: Int, last: Int): RequestTypeConnection!
+}
+type StripePriceConnection {
+  "Pagination data for this connection."
+  pageInfo: PageInfo!
+  "Contains the nodes in this connection."
+  edges: [StripePriceEdge]!
 }
 "A Relay edge containing a `StripePrice` and its cursor."
 type StripePriceEdge {
@@ -584,16 +774,6 @@ type StripeChargeTypeEdge {
   "A cursor for use in pagination"
   cursor: String!
 }
-type CurrentUserType {
-  id: ID!
-  email: String!
-  otpEnabled: Boolean!
-  otpVerified: Boolean!
-  firstName: String
-  lastName: String
-  roles: [String]
-  avatar: String
-}
 type NotificationConnection {
   "Pagination data for this connection."
   pageInfo: PageInfo!
@@ -710,6 +890,30 @@ type FileFieldType {
   name: String
 }
 type ApiMutation {
+  createState(input: CreateStateInput!): CreateStatePayload
+  updateState(input: UpdateStateInput!): UpdateStatePayload
+  deleteState(input: DeleteStateInput!): DeleteStatePayload
+  createCourt(input: CreateCourtInput!): CreateCourtPayload
+  updateCourt(input: UpdateCourtInput!): UpdateCourtPayload
+  deleteCourt(input: DeleteCourtInput!): DeleteCourtPayload
+  createCertificateSubcategorie(input: CreateCertificateSubCategorieInput!): CreateCertificateSubCategoriePayload
+  updateCertificateSubcategorie(input: UpdateCertificateSubCategorieInput!): UpdateCertificateSubCategoriePayload
+  deleteCertificateSubcategorie(input: DeleteCertificateSubCategorieInput!): DeleteCertificateSubCategoriePayload
+  createCertificateCategorie(input: CreateCertificateCategorieInput!): CreateCertificateCategoriePayload
+  updateCertificateCategorie(input: UpdateCertificateCategorieInput!): UpdateCertificateCategoriePayload
+  deleteCertificateCategorie(input: DeleteCertificateCategorieInput!): DeleteCertificateCategoriePayload
+  createDocument(input: CreateDocumentInput!): CreateDocumentPayload
+  updateDocument(input: UpdateDocumentInput!): UpdateDocumentPayload
+  deleteDocument(input: DeleteDocumentInput!): DeleteDocumentPayload
+  createCertificate(input: CreateCertificateInput!): CreateCertificatePayload
+  updateCertificate(input: UpdateCertificateInput!): UpdateCertificatePayload
+  deleteCertificate(input: DeleteCertificateInput!): DeleteCertificatePayload
+  createRequestedCertificate(input: CreateRequestedCertificateInput!): CreateRequestedCertificatePayload
+  updateRequestedCertificate(input: UpdateRequestedCertificateInput!): UpdateRequestedCertificatePayload
+  deleteRequestedCertificate(input: DeleteRequestedCertificateInput!): DeleteRequestedCertificatePayload
+  createRequest(input: CreateRequestInput!): CreateRequestPayload
+  updateRequest(input: UpdateRequestInput!): UpdateRequestPayload
+  deleteRequest(input: DeleteRequestInput!): DeleteRequestPayload
   generateSaasIdeas(input: GenerateSaasIdeasMutationInput!): GenerateSaasIdeasMutationPayload
   changeActiveSubscription(input: ChangeActiveSubscriptionMutationInput!): ChangeActiveSubscriptionMutationPayload
   cancelActiveSubscription(input: CancelActiveSubscriptionMutationInput!): CancelActiveSubscriptionMutationPayload
@@ -738,6 +942,174 @@ type ApiMutation {
   deleteDocumentDemoItem(input: DeleteDocumentDemoItemMutationInput!): DeleteDocumentDemoItemMutationPayload
   createFavoriteContentfulDemoItem(input: CreateFavoriteContentfulDemoItemMutationInput!): CreateFavoriteContentfulDemoItemMutationPayload
   deleteFavoriteContentfulDemoItem(input: DeleteFavoriteContentfulDemoItemMutationInput!): DeleteFavoriteContentfulDemoItemMutationPayload
+}
+type CreateStatePayload {
+  state: StateType
+  stateEdge: StateEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `State` and its cursor."
+type StateEdge {
+  "The item at the end of the edge"
+  node: StateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateStatePayload {
+  state: StateType
+  stateEdge: StateEdge
+  clientMutationId: String
+}
+type DeleteStatePayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateCourtPayload {
+  court: CourtType
+  courtEdge: CourtEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `Court` and its cursor."
+type CourtEdge {
+  "The item at the end of the edge"
+  node: CourtType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateCourtPayload {
+  court: CourtType
+  courtEdge: CourtEdge
+  clientMutationId: String
+}
+type DeleteCourtPayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateCertificateSubCategoriePayload {
+  certificateSubCategorie: CertificateSubCategorieType
+  certificateSubCategorieEdge: CertificateSubCategorieEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `CertificateSubCategorie` and its cursor."
+type CertificateSubCategorieEdge {
+  "The item at the end of the edge"
+  node: CertificateSubCategorieType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateCertificateSubCategoriePayload {
+  certificateSubCategorie: CertificateSubCategorieType
+  certificateSubCategorieEdge: CertificateSubCategorieEdge
+  clientMutationId: String
+}
+type DeleteCertificateSubCategoriePayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateCertificateCategoriePayload {
+  certificateCategorie: CertificateCategorieType
+  certificateCategorieEdge: CertificateCategorieEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `CertificateCategorie` and its cursor."
+type CertificateCategorieEdge {
+  "The item at the end of the edge"
+  node: CertificateCategorieType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateCertificateCategoriePayload {
+  certificateCategorie: CertificateCategorieType
+  certificateCategorieEdge: CertificateCategorieEdge
+  clientMutationId: String
+}
+type DeleteCertificateCategoriePayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateDocumentPayload {
+  document: DocumentType
+  documentEdge: DocumentEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `Document` and its cursor."
+type DocumentEdge {
+  "The item at the end of the edge"
+  node: DocumentType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateDocumentPayload {
+  document: DocumentType
+  documentEdge: DocumentEdge
+  clientMutationId: String
+}
+type DeleteDocumentPayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateCertificatePayload {
+  certificate: CertificateType
+  certificateEdge: CertificateEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `Certificate` and its cursor."
+type CertificateEdge {
+  "The item at the end of the edge"
+  node: CertificateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateCertificatePayload {
+  certificate: CertificateType
+  certificateEdge: CertificateEdge
+  clientMutationId: String
+}
+type DeleteCertificatePayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateRequestedCertificatePayload {
+  requestedCertificate: RequestedCertificateType
+  requestedCertificateEdge: RequestedCertificateEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `RequestedCertificate` and its cursor."
+type RequestedCertificateEdge {
+  "The item at the end of the edge"
+  node: RequestedCertificateType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateRequestedCertificatePayload {
+  requestedCertificate: RequestedCertificateType
+  requestedCertificateEdge: RequestedCertificateEdge
+  clientMutationId: String
+}
+type DeleteRequestedCertificatePayload {
+  deletedIds: [ID]
+  clientMutationId: String
+}
+type CreateRequestPayload {
+  request: RequestType
+  requestEdge: RequestEdge
+  clientMutationId: String
+}
+"A Relay edge containing a `Request` and its cursor."
+type RequestEdge {
+  "The item at the end of the edge"
+  node: RequestType
+  "A cursor for use in pagination"
+  cursor: String!
+}
+type UpdateRequestPayload {
+  request: RequestType
+  requestEdge: RequestEdge
+  clientMutationId: String
+}
+type DeleteRequestPayload {
+  deletedIds: [ID]
+  clientMutationId: String
 }
 type GenerateSaasIdeasMutationPayload {
   ideas: [String]
@@ -832,6 +1204,16 @@ type UserProfileType implements Node {
   user: CurrentUserType!
   firstName: String!
   lastName: String!
+  vat: String!
+  phoneNumber: String!
+  postalCode: String!
+  street: String!
+  number: String!
+  complement: String!
+  neighborhood: String!
+  city: String!
+  state: UsersUserProfileStateChoices
+  certificateCredits: Int!
 }
 "A Relay edge containing a `CurrentUser` and its cursor."
 type CurrentUserEdge {
@@ -932,6 +1314,78 @@ type ApiSubscription {
 interface Node {
   "The ID of the object"
   id: ID!
+}
+enum CertificatesStateUfChoices {
+  "Acre"
+  AC
+  "Alagoas"
+  AL
+  "Amapá"
+  AP
+  "Amazonas"
+  AM
+  "Bahia"
+  BA
+  "Ceará"
+  CE
+  "Distrito Federal"
+  DF
+  "Espírito Santo"
+  ES
+  "Goiás"
+  GO
+  "Maranhão"
+  MA
+  "Mato Grosso"
+  MT
+  "Mato Grosso do Sul"
+  MS
+  "Minas Gerais"
+  MG
+  "Pará"
+  PA
+  "Paraíba"
+  PB
+  "Paraná"
+  PR
+  "Pernambuco"
+  PE
+  "Piauí"
+  PI
+  "Rio de Janeiro"
+  RJ
+  "Rio Grande do Norte"
+  RN
+  "Rio Grande do Sul"
+  RS
+  "Rondônia"
+  RO
+  "Roraima"
+  RR
+  "Santa Catarina"
+  SC
+  "São Paulo"
+  SP
+  "Sergipe"
+  SE
+  "Tocantins"
+  TO
+  "Nacional"
+  NA
+}
+enum CertificatesCertificateAvailablePersonTypeChoices {
+  "Pessoa Física"
+  PF
+  "Pessoa Jurídica"
+  PJ
+  "Pessoa Física e Pessoa Jurídica"
+  PF_PJ
+}
+enum CertificatesRequestStatusChoices {
+  "Em andamento"
+  AN
+  "Finalizado"
+  FN
 }
 enum DjstripeProductTypeChoices {
   "Good"
@@ -1347,6 +1801,214 @@ enum DjstripeSetupIntentUsageChoices {
   "On session"
   ON_SESSION
 }
+enum UsersUserProfileStateChoices {
+  "Acre"
+  AC
+  "Alagoas"
+  AL
+  "Amapá"
+  AP
+  "Amazonas"
+  AM
+  "Bahia"
+  BA
+  "Ceará"
+  CE
+  "Distrito Federal"
+  DF
+  "Espírito Santo"
+  ES
+  "Goiás"
+  GO
+  "Maranhão"
+  MA
+  "Mato Grosso"
+  MT
+  "Mato Grosso do Sul"
+  MS
+  "Minas Gerais"
+  MG
+  "Pará"
+  PA
+  "Paraíba"
+  PB
+  "Paraná"
+  PR
+  "Pernambuco"
+  PE
+  "Piauí"
+  PI
+  "Rio de Janeiro"
+  RJ
+  "Rio Grande do Norte"
+  RN
+  "Rio Grande do Sul"
+  RS
+  "Rondônia"
+  RO
+  "Roraima"
+  RR
+  "Santa Catarina"
+  SC
+  "São Paulo"
+  SP
+  "Sergipe"
+  SE
+  "Tocantins"
+  TO
+  "Nacional"
+  NA
+}
+input CreateStateInput {
+  name: String!
+  uf: String!
+  clientMutationId: String
+}
+input UpdateStateInput {
+  name: String!
+  uf: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteStateInput {
+  id: String
+  clientMutationId: String
+}
+input CreateCourtInput {
+  name: String!
+  states: String!
+  clientMutationId: String
+}
+input UpdateCourtInput {
+  name: String!
+  states: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteCourtInput {
+  id: String
+  clientMutationId: String
+}
+input CreateCertificateSubCategorieInput {
+  name: String!
+  clientMutationId: String
+}
+input UpdateCertificateSubCategorieInput {
+  name: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteCertificateSubCategorieInput {
+  id: String
+  clientMutationId: String
+}
+input CreateCertificateCategorieInput {
+  name: String!
+  subCategories: String!
+  clientMutationId: String
+}
+input UpdateCertificateCategorieInput {
+  name: String!
+  subCategories: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteCertificateCategorieInput {
+  id: String
+  clientMutationId: String
+}
+input CreateDocumentInput {
+  docId: String
+  docIdState: String
+  rg: String
+  rgSsp: String
+  name: String
+  mother: String
+  father: String
+  gender: String
+  birthDate: DateTime
+  maritalStatus: String
+  cityResidence: String
+  socialSecurityNumber: String
+  clientMutationId: String
+}
+input UpdateDocumentInput {
+  docId: String
+  docIdState: String
+  rg: String
+  rgSsp: String
+  name: String
+  mother: String
+  father: String
+  gender: String
+  birthDate: DateTime
+  maritalStatus: String
+  cityResidence: String
+  socialSecurityNumber: String
+  id: ID!
+  clientMutationId: String
+}
+input DeleteDocumentInput {
+  id: String
+  clientMutationId: String
+}
+input CreateCertificateInput {
+  name: String!
+  availablePersonType: String!
+  creditsNeeded: Int!
+  deadlineDays: Int!
+  court: String
+  category: String!
+  clientMutationId: String
+}
+input UpdateCertificateInput {
+  name: String!
+  availablePersonType: String!
+  creditsNeeded: Int!
+  deadlineDays: Int!
+  court: String
+  category: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteCertificateInput {
+  id: String
+  clientMutationId: String
+}
+input CreateRequestedCertificateInput {
+  url: String
+  issued: Boolean
+  certificate: String
+  clientMutationId: String
+}
+input UpdateRequestedCertificateInput {
+  url: String
+  issued: Boolean
+  certificate: String
+  id: ID!
+  clientMutationId: String
+}
+input DeleteRequestedCertificateInput {
+  id: String
+  clientMutationId: String
+}
+input CreateRequestInput {
+  status: String!
+  document: String!
+  requestedCertificates: String!
+  clientMutationId: String
+}
+input UpdateRequestInput {
+  status: String!
+  document: String!
+  requestedCertificates: String!
+  id: ID!
+  clientMutationId: String
+}
+input DeleteRequestInput {
+  id: String
+  clientMutationId: String
+}
 input GenerateSaasIdeasMutationInput {
   keywords: [String]
   clientMutationId: String
@@ -1388,7 +2050,17 @@ input ChangePasswordMutationInput {
 input UpdateCurrentUserMutationInput {
   firstName: String
   lastName: String
+  vat: String
+  phoneNumber: String
+  street: String
+  number: String
+  complement: String
+  neighborhood: String
+  city: String
+  state: String
+  postalCode: String
   avatar: Upload
+  certificateCredits: Int
   clientMutationId: String
 }
 input GenerateOTPMutationInput {

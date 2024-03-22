@@ -1,15 +1,14 @@
 from functools import lru_cache
-from unittest.mock import patch, PropertyMock
+from unittest.mock import PropertyMock, patch
 
 import boto3
 import pytest
-from django.contrib.auth.models import AnonymousUser
-from rest_framework.test import APIClient, APIRequestFactory
-from graphene.test import Client as GrapheneClient
-from moto import mock_s3
-
 from common.graphql.views import DRFAuthenticatedGraphQLView
 from config.schema import schema
+from django.contrib.auth.models import AnonymousUser
+from graphene.test import Client as GrapheneClient
+from moto import mock_s3
+from rest_framework.test import APIClient, APIRequestFactory
 from storages.backends.s3boto3 import S3Boto3Storage
 
 pytest_plugins = [
@@ -22,12 +21,17 @@ pytest_plugins = [
     'apps.notifications.tests.fixtures',
     'apps.websockets.tests.fixtures',
     'apps.integrations.tests.fixtures',
+    # 'apps.certificates.tests.fixtures',
 ]
 
 
 class CustomGrapheneClient(GrapheneClient):
     def __init__(self, schema, **execute_options):
-        super().__init__(schema, format_error=DRFAuthenticatedGraphQLView.format_error, **execute_options)
+        super().__init__(
+            schema,
+            format_error=DRFAuthenticatedGraphQLView.format_error,
+            **execute_options,
+        )
 
     def query(self, *args, **kwargs):
         self.execute_options["context_value"].method = "GET"
@@ -77,13 +81,16 @@ def storage(mocker):
     with mock_s3():
         storage = S3Boto3Storage()
         session = boto3.session.Session()
-        with patch(
-            "storages.backends.s3boto3.S3Boto3Storage.connection",
-            new_callable=PropertyMock,
-        ) as mock_connection_property, patch(
-            "storages.backends.s3boto3.S3Boto3Storage.bucket",
-            new_callable=PropertyMock,
-        ) as mock_bucket_property:
+        with (
+            patch(
+                "storages.backends.s3boto3.S3Boto3Storage.connection",
+                new_callable=PropertyMock,
+            ) as mock_connection_property,
+            patch(
+                "storages.backends.s3boto3.S3Boto3Storage.bucket",
+                new_callable=PropertyMock,
+            ) as mock_bucket_property,
+        ):
 
             @lru_cache(None)
             def get_connection():

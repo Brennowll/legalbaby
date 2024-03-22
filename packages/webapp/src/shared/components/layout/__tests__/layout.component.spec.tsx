@@ -96,7 +96,7 @@ describe('Layout: Component', () => {
           fillNotificationsSubscriptionQuery([notificationFactory()], { hasUnreadNotifications: true })
         );
         render(<Component />, { routerProps, apolloMocks });
-        expect(await screen.findByText(/privacy policy/i)).toBeInTheDocument();
+        expect(await screen.findByText(/políticas de privacidade/i)).toBeInTheDocument();
       });
 
       it('should not show dashboard menu link', async () => {
@@ -106,7 +106,7 @@ describe('Layout: Component', () => {
         );
 
         render(<Component />, { routerProps, apolloMocks });
-        expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/painel de controle/i)).not.toBeInTheDocument();
       });
     });
 
@@ -146,7 +146,7 @@ describe('Layout: Component', () => {
           ];
           render(<Component />, { apolloMocks, routerProps });
           await userEvent.click(await screen.findByLabelText(/open menu/i));
-          await userEvent.click(screen.getByText(/privacy policy/i));
+          await userEvent.click(screen.getByText(/políticas de privacidade/i));
           expect(screen.getByText(privacyPolicyPlaceholder)).toBeInTheDocument();
         });
 
@@ -167,7 +167,7 @@ describe('Layout: Component', () => {
           await userEvent.click(await screen.findByLabelText(/open menu/i));
           const closeBtn = screen.getByLabelText(/close menu/i);
           expect(closeBtn.classList).not.toContain('opacity-0');
-          await userEvent.click(screen.getByText(/privacy policy/i));
+          await userEvent.click(screen.getByText(/políticas de privacidade/i));
           expect(closeBtn.classList).toContain('opacity-0');
         });
 
@@ -217,7 +217,7 @@ describe('Layout: Component', () => {
         );
 
         render(<Component routeKey={authPath} />, { routerProps, apolloMocks });
-        expect(screen.queryByText(/privacy policy/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/políticas de privacidade/i)).not.toBeInTheDocument();
       });
     });
 
@@ -238,7 +238,7 @@ describe('Layout: Component', () => {
           fillNotificationsSubscriptionQuery([notificationFactory()], { hasUnreadNotifications: true })
         );
         render(<Component />, { routerProps, apolloMocks });
-        expect(await screen.findByText(/privacy policy/i)).toBeInTheDocument();
+        expect(await screen.findByText(/políticas de privacidade/i)).toBeInTheDocument();
       });
     });
 
@@ -267,7 +267,7 @@ describe('Layout: Component', () => {
         ];
         const routerProps = createMockRouterProps(homeRoutePath);
         render(<Component />, { apolloMocks, routerProps });
-        await userEvent.click(await screen.findByText(/privacy policy/i));
+        await userEvent.click(await screen.findByText(/políticas de privacidade/i));
         expect(screen.getByText(privacyPolicyPlaceholder)).toBeInTheDocument();
       });
     });
