@@ -1,30 +1,36 @@
 type Certificate = {
-  fullName: string;
-  state: string;
-  isLegalEntity: boolean;
-  certificateType: string;
+  name: string;
+  court: {
+    name: string;
+  };
+  category: {
+    name: string;
+  };
+  subCategory: {
+    name: string;
+  };
+  deadlineDays: number;
 };
 
-export type RequestedCertificatesQueryT = {
-  requestedCertificates: Certificate[];
+type RequestedCertificateNode = {
+  node: {
+    url: string;
+    issued: boolean;
+    certificate: Certificate;
+  };
 };
 
-type RequestedCertificate = {
-  fullName: string;
-  state: string;
-  isLegalEntity: boolean;
-  certificateType: string;
+type CertificateRequest = {
+  status: string;
+  document: {
+    docId: string;
+    docIdState: string;
+  };
+  requestedCertificates: {
+    edges: RequestedCertificateNode[];
+  };
 };
 
-type Document = {
-  link: string;
-};
-
-type IssuedCertificate = {
-  request: RequestedCertificate;
-  document: Document;
-};
-
-export type IssuedCertificatesQueryT = {
-  issuedCertificates: IssuedCertificate[];
+export type RequestQueryT = {
+  requests: CertificateRequest[];
 };

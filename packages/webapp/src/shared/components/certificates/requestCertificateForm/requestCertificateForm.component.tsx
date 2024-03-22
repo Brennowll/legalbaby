@@ -108,7 +108,7 @@ export const RequestCertificateForm = () => {
               },
             })}
             label={intl.formatMessage({
-              defaultMessage: 'CPF ou RG',
+              defaultMessage: 'CPF ou CNPJ',
               id: 'Auth / Update profile / vat label',
             })}
             error={errors.vat?.message}

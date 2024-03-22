@@ -41,3 +41,17 @@ export const MOTHER_NAME = ['SP', 'SC', 'PI', 'PB', 'MT', 'MS', 'MG', 'MA', 'CE'
 export const FATHER_NAME = ['CE'];
 export const MARITAL_STATE = ['SP', 'SC', 'MS', 'CE', 'AM', 'AL', 'AC'];
 export const CITY = ['RS', 'RN'];
+
+export const USER_PROFILE_KEYS = [
+  'firstName',
+  'lastName',
+  'vat',
+  'phoneNumber',
+  'postalCode',
+  'street',
+  'number',
+  'complement',
+  'neighborhood',
+  'city',
+  'state',
+];

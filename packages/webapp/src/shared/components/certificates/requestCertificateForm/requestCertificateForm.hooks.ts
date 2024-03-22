@@ -3,6 +3,8 @@ import { useApiForm } from '@sb/webapp-api-client/hooks';
 import { useToast } from '@sb/webapp-core/toast';
 import { useEffect, useState } from 'react';
 
+import { useAuth } from '../../../hooks';
+import { USER_PROFILE_KEYS } from './requestCertificateForm.constants';
 import { UserProfileQuery, certificatesQuery, createRequestCertificate } from './requestCertificateForm.graphql';
 import {
   Category,
@@ -18,6 +20,7 @@ export const useCreateRequestCertificate = () => {
 
   const form = useApiForm<RequestCertificate>();
   const { data: UserProfileData } = useQuery<UserProfile>(UserProfileQuery);
+  const { currentUser } = useAuth();
   const { loading, data: certificatesQueryData } = useQuery<CertificateQueryT>(certificatesQuery);
   const { toast } = useToast();
 
@@ -60,7 +63,7 @@ export const useCreateRequestCertificate = () => {
   }, [validVat]);
 
   const handleSubmit = form.handleSubmit(async (data: RequestCertificate) => {
-    if (!UserProfileData?.currentUser.certificateCredits) {
+    if (!UserProfileData?.currentUser) {
       return;
     }
 
@@ -76,6 +79,23 @@ export const useCreateRequestCertificate = () => {
         description: 'O usuário não têm créditos suficientes.',
         variant: 'destructive',
       });
+
+      return;
+    }
+
+    for (const key in currentUser) {
+      if (
+        (USER_PROFILE_KEYS.includes(key) && !currentUser[key as keyof typeof currentUser]) ||
+        currentUser[key as keyof typeof currentUser] === ''
+      ) {
+        toast({
+          title: 'Erro ao fazer pedido!',
+          description: 'O usuário não têm o perfil completo, por favor, acesse a página de perfil e complete os dados.',
+          variant: 'destructive',
+        });
+
+        return;
+      }
     }
 
     await commitMutation({

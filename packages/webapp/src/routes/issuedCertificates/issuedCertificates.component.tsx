@@ -13,12 +13,11 @@ import {
 import { Link } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
 
-import { issuedCertificatesQuery, requestedCertificatesQuery } from './issuedCertificates.graphql';
-import { IssuedCertificatesQueryT, RequestedCertificatesQueryT } from './issuedCertificates.types';
+import { requestQuery } from './issuedCertificates.graphql';
+import { RequestQueryT } from './issuedCertificates.types';
 
 export const IssuedCertificates = () => {
-  const { data: requestData } = useQuery<RequestedCertificatesQueryT>(requestedCertificatesQuery);
-  const { loading, data: issuedData } = useQuery<IssuedCertificatesQueryT>(issuedCertificatesQuery);
+  const { data: requestData } = useQuery<RequestQueryT>(requestQuery);
 
   return (
     <PageLayout>
@@ -42,70 +41,46 @@ export const IssuedCertificates = () => {
         <TableHeader>
           <TableRow>
             <TableHead>
-              <FormattedMessage defaultMessage="Nome" id="Request Certificates Table / Name" />
+              <FormattedMessage defaultMessage="CPF/CNPJ" id="Request Certificates Table / CPF/CNPJ" />
             </TableHead>
             <TableHead>
               <FormattedMessage defaultMessage="Estado" id="Request Certificates Table / State" />
             </TableHead>
             <TableHead>
-              <FormattedMessage defaultMessage="Pessoa jurídica." id="Request Certificates Table / Juridic Person" />
+              <FormattedMessage defaultMessage="Certidão" id="Request Certificates Table / Certificate" />
+            </TableHead>
+            <TableHead>
+              <FormattedMessage defaultMessage="Link" id="Request Certificates Table / Link" />
             </TableHead>
             <TableHead className="text-right">
-              <FormattedMessage defaultMessage="Tipo" id="Request Certificates Table / Type" />
+              <FormattedMessage defaultMessage="Status" id="Request Certificates Table / Status" />
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {requestData
-            ? requestData.requestedCertificates.map((data, index) => (
-                <TableRow key={index}>
-                  <TableCell>{data.fullName}</TableCell>
-                  <TableCell>{data.state}</TableCell>
-                  <TableCell>{data.isLegalEntity ? 'Sim' : 'Não'}</TableCell>
-                  <TableCell className="text-right">{data.certificateType}</TableCell>
-                </TableRow>
-              ))
-            : null}
-        </TableBody>
-      </Table>
-
-      <Table>
-        <TableCaption>
-          <FormattedMessage defaultMessage="Certificados emitidos." id="Issued Certificates Table / Caption" />
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <FormattedMessage defaultMessage="Nome" id="Issued Certificates Table / Name" />
-            </TableHead>
-            <TableHead>
-              <FormattedMessage defaultMessage="Estado" id="Issued Certificates Table / State" />
-            </TableHead>
-            <TableHead>
-              <FormattedMessage defaultMessage="Pessoa jurídica." id="Issued Certificates Table / Juridic Person" />
-            </TableHead>
-            <TableHead>
-              <FormattedMessage defaultMessage="Tipo" id="Issued Certificates Table / Type" />
-            </TableHead>
-            <TableHead className="text-right">
-              <FormattedMessage defaultMessage="Link" id="Issued Certificates Table / Link" />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {!loading && issuedData && issuedData.issuedCertificates.length !== 0
-            ? issuedData.issuedCertificates.map((data, index) => (
-                <TableRow key={index}>
-                  <TableCell>{data.request.fullName}</TableCell>
-                  <TableCell>{data.request.state}</TableCell>
-                  <TableCell>{data.request.isLegalEntity ? 'Sim' : 'Não'}</TableCell>
-                  <TableCell>{data.request.certificateType}</TableCell>
-                  <TableCell className="flex justify-end">
-                    <a href={`${data.document.link}`}>
-                      <Link />
-                    </a>
-                  </TableCell>
-                </TableRow>
+            ? requestData.requests.map((request) => (
+                <>
+                  {request.requestedCertificates.edges.map((requestedCertificate, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{request.document.docId}</TableCell>
+                      <TableCell>{request.document.docIdState}</TableCell>
+                      <TableCell>{requestedCertificate.node.certificate.name}</TableCell>
+                      <TableCell>
+                        {requestedCertificate.node.url && requestedCertificate.node.url !== '' ? (
+                          <a href={requestedCertificate.node.url} target="_blank" rel="noreferrer">
+                            <Link className="h-4 w-4" />
+                          </a>
+                        ) : (
+                          <Link className="h-4 w-4 opacity-40" />
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {requestedCertificate.node.issued === true ? 'Sim' : 'Não'}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
               ))
             : null}
         </TableBody>

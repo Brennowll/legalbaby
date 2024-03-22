@@ -1,27 +1,33 @@
 import { gql } from '@apollo/client';
 
-export const requestedCertificatesQuery = gql(`
+export const requestQuery = gql(`
     query {
-        requestedCertificates {
-            fullName
-            state
-            isLegalEntity
-            certificateType
-        }
-    }
-`);
-
-export const issuedCertificatesQuery = gql(`
-    query {
-        issuedCertificates {
-            request {
-                fullName
-                state
-                certificateType
-                isLegalEntity
-            }
+        requests {
+            status
             document {
-                link
+                docId
+                docIdState
+            }
+            requestedCertificates {
+                edges {
+                    node {
+                        url
+                        issued
+                        certificate {
+                            name
+                            court {
+                                name
+                            }
+                            category {
+                                name
+                            }
+                            subCategory {
+                                name
+                            }
+                            deadlineDays
+                        }
+                    }
+                }
             }
         }
     }
