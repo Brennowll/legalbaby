@@ -15,6 +15,7 @@ export const certificatesQuery = gql(`
         certificates {
             id
             name
+            slug
             court {
                 name
                 states {
@@ -47,6 +48,14 @@ export const certificatesQuery = gql(`
             }
             creditsNeeded
             deadlineDays
+        }
+    }
+`);
+
+export const UserProfileQuery = gql(`
+    query {
+        currentUser {
+            certificateCredits
         }
     }
 `);

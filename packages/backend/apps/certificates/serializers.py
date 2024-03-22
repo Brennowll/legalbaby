@@ -116,9 +116,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 
 class CertificateSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(
-        source_field="certificates.Certificate.id", read_only=True
-    )
+    id = serializers.ReadOnlyField()
 
     class Meta:
         model = Certificate
@@ -159,9 +157,10 @@ class RequestSerializer(serializers.ModelSerializer):
     city = serializers.CharField(
         allow_blank=True, required=False, write_only=True
     )
-    requested_certificates_ids = serializers.ListField(
+    requested_certificates_slugs = serializers.ListField(
         child=serializers.CharField(), write_only=True
     )
+    credits_to_decrease = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Request
@@ -175,6 +174,8 @@ class RequestSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context["request"].user
+        status = "AN"
+
         doc_id = validated_data.get("vat")
         doc_id_state = validated_data.get("state")
         rg = validated_data.get("rg")
@@ -183,9 +184,10 @@ class RequestSerializer(serializers.ModelSerializer):
         father_name = validated_data.get("father_name")
         marital_state = validated_data.get("marital_state")
         city = validated_data.get("city")
-        requested_certificates_ids = validated_data.get(
-            "requested_certificates_ids"
+        requested_certificates_slugs = validated_data.get(
+            "requested_certificates_slugs"
         )
+        credits_to_decrease = validated_data.get("credits_to_decrease")
 
         document = Document.objects.create(
             doc_id=doc_id,
@@ -197,13 +199,13 @@ class RequestSerializer(serializers.ModelSerializer):
             marital_status=marital_state,
             city_residence=city,
         )
+
         requested_certificates = [
             RequestedCertificate.objects.create(
-                certificate=Certificate.objects.get(id=certificate_id)
+                certificate=Certificate.objects.get(slug=certificate_slug)
             )
-            for certificate_id in requested_certificates_ids
+            for certificate_slug in requested_certificates_slugs
         ]
-        status = "AN"
 
         request_object = Request.objects.create(
             user=user,
@@ -212,5 +214,8 @@ class RequestSerializer(serializers.ModelSerializer):
         )
 
         request_object.requested_certificates.set(requested_certificates)
+
+        user.profile.certificate_credits -= credits_to_decrease
+        user.profile.save()
 
         return request_object

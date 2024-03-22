@@ -1,6 +1,14 @@
 import { Button } from '@sb/webapp-core/components/buttons';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@sb/webapp-core/components/collapsible';
-import { Form, FormDescription, FormField, FormItem, FormLabel, Input } from '@sb/webapp-core/components/forms';
+import {
+  Form,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from '@sb/webapp-core/components/forms';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@sb/webapp-core/components/select';
 import { Separator } from '@sb/webapp-core/components/separator';
 import { ToggleGroup, ToggleGroupItem } from '@sb/webapp-core/components/toggleGroup';
@@ -46,7 +54,7 @@ const CertificateCollapsible: React.FC<CertificateCollapsibleProps> = ({
           <Button type="button" variant="ghost" className="h-6 p-1">
             <ChevronRight className={`h-4 w-4 transition-all ${isOpen ? 'rotate-90' : ''}`} />
           </Button>
-          <FormLabel className={`ml-2 group-hover:text-opacity-70 ${labelClass}`}>{categoryName}</FormLabel>
+          <h3 className={`ml-2 group-hover:text-opacity-70 ${labelClass}`}>{categoryName}</h3>
         </CollapsibleTrigger>
         <CollapsibleContent className={`flex flex-col ${contentClass}`}>{children}</CollapsibleContent>
       </Collapsible>
@@ -109,6 +117,13 @@ export const RequestCertificateForm = () => {
           <FormField
             control={form.control}
             name="state"
+            rules={{
+              validate: (value) => {
+                if (!value || value === '') {
+                  return 'É necessário selecionar um estado';
+                }
+              },
+            }}
             render={({ field }) => (
               <FormItem className="space-y-0">
                 <FormLabel className="text-xs">Estado</FormLabel>
@@ -125,6 +140,7 @@ export const RequestCertificateForm = () => {
                 {form.watch('state') === '' ? (
                   <FormDescription className="pt-1 text-xs">Selecione "NA" para nacional</FormDescription>
                 ) : null}
+                <FormMessage />
               </FormItem>
             )}
           ></FormField>
@@ -282,15 +298,22 @@ export const RequestCertificateForm = () => {
               ) : null}
             </>
           ) : null}
-          {validVat && form.watch('state') !== '' ? (
+          {validVat && form.watch('state') !== '' && form.watch('state') ? (
             <>
               <Separator className="col-span-2 my-5" />
               <FormField
                 control={form.control}
-                name="requestedCertificatesIds"
+                name="requestedCertificatesSlugs"
+                rules={{
+                  validate: (value) => {
+                    if (!value || value.length === 0) {
+                      return 'É necessário selecionar pelo menos 1 certidão';
+                    }
+                  },
+                }}
                 render={({ field }) => (
                   <>
-                    <FormLabel className="col-span-2 mb-5">Escolha as certidões a serem emitidas</FormLabel>
+                    <h3 className="col-span-2 mb-5">Escolha as certidões a serem emitidas</h3>
                     <ToggleGroup
                       onValueChange={field.onChange}
                       type="multiple"
@@ -314,15 +337,15 @@ export const RequestCertificateForm = () => {
                                   )
                                   .map((certificate) => (
                                     <ToggleGroupItem
-                                      value={certificate.id}
+                                      value={certificate.slug}
                                       className="ml-7 py-0 text-xs hover:bg-transparent data-[state=on]:bg-transparent"
                                     >
                                       <div
                                         className={`mr-2 flex h-3 w-3 items-center justify-center rounded-full border-2 border-primary ${
-                                          field.value && field.value.includes(certificate.id) && 'bg-primary'
+                                          field.value && field.value.includes(certificate.slug) && 'bg-primary'
                                         }`}
                                       />
-                                      {certificate.name}
+                                      {`${certificate.name} - ${certificate.creditsNeeded} Créditos`}
                                     </ToggleGroupItem>
                                   ))}
                               </CertificateCollapsible>
@@ -331,6 +354,7 @@ export const RequestCertificateForm = () => {
                         </CertificateCollapsible>
                       ))}
                     </ToggleGroup>
+                    <FormMessage className="col-span-2" />
                   </>
                 )}
               ></FormField>

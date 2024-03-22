@@ -7,7 +7,7 @@ export type RequestCertificate = {
   fatherName?: string;
   maritalState?: string;
   city?: string;
-  requestedCertificatesIds: string[];
+  requestedCertificatesSlugs: string[];
 };
 
 type StateNode = {
@@ -48,6 +48,7 @@ export type Category = {
 export type Certificate = {
   id: string;
   name: string;
+  slug: string;
   court: Court;
   availablePersonType: string;
   category: Category;
@@ -58,4 +59,10 @@ export type Certificate = {
 
 export type CertificateQueryT = {
   certificates: Certificate[];
+};
+
+export type UserProfile = {
+  currentUser: {
+    certificateCredits: number;
+  };
 };

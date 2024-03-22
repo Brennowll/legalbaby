@@ -1,5 +1,6 @@
 import hashid_field
 from django.db import models
+from django.utils.text import slugify
 
 from django.utils import timezone
 from ..users.models import User
@@ -63,6 +64,7 @@ class Document(models.Model):
 class Certificate(models.Model):
     id = hashid_field.HashidAutoField(primary_key=True)
     name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
     court = models.ForeignKey(
         Court, blank=True, null=True, on_delete=models.PROTECT
     )
@@ -83,6 +85,11 @@ class Certificate(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.court}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class RequestedCertificate(models.Model):
