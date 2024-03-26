@@ -69,16 +69,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
             r'^(\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}|\d{3}\.\d{3}\.\d{3}-\d{2})$',
             vat,
         ):
-            raise exceptions.ValidationError(
-                "Invalid VAT. It must be a CPF or CNPJ."
-            )
+            raise exceptions.ValidationError("CPF ou CNPJ inválido.")
         return vat
 
     @staticmethod
     def validate_phone_number(phone_number):
-        if not re.match(r'^(\(\d{2}\)\s)?(\d{4,5}-\d{4})$', phone_number):
+        digits_only = re.sub(r'\D', '', phone_number)
+
+        if not re.match(
+            r'^(\(\d{2}\)\s)?(\d{4,5}-\d{4})$', phone_number
+        ) and not re.match(r'^\d{11}$', digits_only):
             raise exceptions.ValidationError(
-                "Invalid phone number. It must be in the format (XX)XXXXX-XXXX or XXXXXXXXXXX."
+                "Telefone inválido. Precisa ser no formato (XX)XXXXX-XXXX ou XXXXXXXXXXX."
             )
         return phone_number
 
@@ -88,7 +90,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             r'^[\d\w\sáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛãõÃÕ]*$', number
         ):
             raise exceptions.ValidationError(
-                "Invalid number. It can only contain numbers, letters, and accented letters."
+                "Número inválido. Pode conter somente números e letras."
             )
         return number
 
@@ -96,7 +98,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def validate_postal_code(postal_code):
         if not re.match(r'^\d{5}-\d{3}$', postal_code):
             raise exceptions.ValidationError(
-                "Invalid postal code. It must be in the format 12345-678."
+                "CEP inválido. Precisa estar no formato XXXXX-XXX."
             )
         return postal_code
 

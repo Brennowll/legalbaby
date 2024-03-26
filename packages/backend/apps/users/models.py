@@ -98,7 +98,9 @@ class UserAvatar(ImageWithThumbnailMixin, models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="profile"
+    )
     first_name = models.CharField(max_length=40, blank=True, default="")
     last_name = models.CharField(max_length=40, blank=True, default="")
     avatar = models.OneToOneField(
@@ -109,7 +111,7 @@ class UserProfile(models.Model):
         related_name="user_profile",
     )
 
-    vat = models.CharField(max_length=17, blank=True, default="")
+    vat = models.CharField(max_length=20, blank=True, default="")
     phone_number = models.CharField(max_length=17, blank=True, default="")
     postal_code = models.CharField(max_length=9, blank=True, default="")
     street = models.CharField(max_length=255, blank=True, default="")

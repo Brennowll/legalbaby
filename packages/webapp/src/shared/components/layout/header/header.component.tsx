@@ -3,13 +3,13 @@ import { Popover, PopoverContent, PopoverTrigger } from '@sb/webapp-core/compone
 import { useGenerateLocalePath, useOpenState } from '@sb/webapp-core/hooks';
 import { useTheme } from '@sb/webapp-core/hooks/useTheme/useTheme';
 import { cn } from '@sb/webapp-core/lib/utils';
-import { Notifications } from '@sb/webapp-notifications';
-import { Menu, Sun , LogOut, User } from 'lucide-react';
+// import { Notifications } from '@sb/webapp-notifications';
+import { LogOut, Menu, Sun, User } from 'lucide-react';
 import { HTMLAttributes, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { RoutesConfig } from '../../../../app/config/routes';
-import notificationTemplates from '../../../constants/notificationTemplates';
+// import notificationTemplates from '../../../constants/notificationTemplates';
 import { useAuth } from '../../../hooks';
 import { Avatar } from '../../avatar';
 import { LayoutContext } from '../layout.context';
@@ -51,7 +51,7 @@ export const Header = (props: HeaderProps) => {
 
         {isLoggedIn && (
           <>
-            <Notifications templates={notificationTemplates} />
+            {/* <Notifications templates={notificationTemplates} /> */}
 
             <div className="relative ml-2 hidden md:block">
               <Popover

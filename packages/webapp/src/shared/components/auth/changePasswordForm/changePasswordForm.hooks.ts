@@ -46,7 +46,7 @@ export const useChangePasswordForm = () => {
 
       toast({
         description: intl.formatMessage({
-          defaultMessage: 'Password successfully changed.',
+          defaultMessage: 'Senha alterada com sucesso.',
           id: 'Auth / Change password / Success message',
         }),
       });

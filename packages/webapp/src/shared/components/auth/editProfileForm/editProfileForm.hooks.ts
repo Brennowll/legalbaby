@@ -36,7 +36,7 @@ export const useEditProfileForm = () => {
 
       toast({
         description: intl.formatMessage({
-          defaultMessage: 'Personal data successfully changed.',
+          defaultMessage: 'Informações pessoais atualizadas com sucesso',
           id: 'Auth / Update profile/ Success message',
         }),
       });

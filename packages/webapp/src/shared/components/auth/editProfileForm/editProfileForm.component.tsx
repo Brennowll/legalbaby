@@ -1,5 +1,5 @@
 import { Button } from '@sb/webapp-core/components/buttons';
-import { Form, FormDescription, FormField, FormItem, FormLabel, Input } from '@sb/webapp-core/components/forms';
+import { Form, FormField, FormItem, FormLabel, Input } from '@sb/webapp-core/components/forms';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@sb/webapp-core/components/select';
 import { Small } from '@sb/webapp-core/components/typography';
 import { cn } from '@sb/webapp-core/lib/utils';
@@ -116,9 +116,10 @@ export const EditProfileForm = () => {
                 },
                 validate: {
                   isValidFormat: (value) =>
-                    /^(\(\d{2}\)\s?)?(\d{4,5}-?\d{4})$/.test(value) ||
+                    /^\(\d{2}\)\s?\d{4,5}-\d{4}$/.test(value) ||
+                    /^\d{10,11}$/.test(value) ||
                     intl.formatMessage({
-                      defaultMessage: 'O telefone é inválido (00912345678, ou (00) 91234-5678',
+                      defaultMessage: 'O telefone é inválido: 00912345678, ou (00) 91234-5678',
                       id: 'Auth / Update profile/ phoneNumber invalid error',
                     }),
                 },
@@ -256,7 +257,6 @@ export const EditProfileForm = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription className="pt-1 text-xs">Selecione "NA" para nacional</FormDescription>
                 </FormItem>
               )}
             />

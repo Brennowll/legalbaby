@@ -17,7 +17,7 @@ export const PaymentConfirm = () => {
   const generateLocalePath = useGenerateLocalePath();
 
   const successMessage = intl.formatMessage({
-    defaultMessage: 'Payment successful',
+    defaultMessage: 'Pagamento feito com sucesso',
     id: 'Stripe payment confirm / payment successful',
   });
 

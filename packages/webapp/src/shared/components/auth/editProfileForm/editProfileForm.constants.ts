@@ -37,5 +37,4 @@ export const STATE_OPTIONS = [
   'SP',
   'SE',
   'TO',
-  'NA',
 ];
